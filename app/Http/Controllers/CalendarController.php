@@ -80,7 +80,7 @@ class CalendarController extends Controller
 
 		do {
 			for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++) {
-				if ($oToday>$oDateTime || $oDateTime->format('Y-m-d')>=$oLimitDate->format('Y-m-d') || $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m'))
+				if ($oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') || $oDateTime->format('Y-m-d')>=$oLimitDate->format('Y-m-d') || $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m'))
 					$sClasses = 'd-sm-inline-block bg-light text-muted';
 				else
 					if (in_array($iWeekDay, config('app.non_working_days')))
@@ -88,7 +88,7 @@ class CalendarController extends Controller
 					else
 						$sClasses = 'bookable-day';
 
-				$sClasses .= ($oToday == $oDateTime) ? ' current-day' : '';
+				$sClasses .= ($oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') && ($oDateTime->format('Y-m')!=$oToday->format('Y-m') || $oRequestDateTime->format('Y-m')==$oToday->format('Y-m'))) ? ' d-none d-md-block' : (($oToday->format('Y-m-d') == $oDateTime->format('Y-m-d')) ? ' current-day' : '');
 
 				$sOutput .= "
 					<div class=\"day col-sm p-2 border border-left-0 border-top-0 text-truncate {$sClasses}\"
