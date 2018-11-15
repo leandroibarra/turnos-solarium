@@ -120,20 +120,30 @@ function drawCalendar(piYear, piMonth) {
     // Show spinner
     jQuery('.spinner-container').removeClass('d-none');
 
+    // Ajax request time
+    var iRequest = new Date().getTime();
+
     jQuery.ajax({
         type: 'GET',
         url: '/calendar/'+piYear+'/'+piMonth,
         success: function(data) {
             jQuery('.calendar-container').html(data);
-
-            // Add timeout to simulate delay
-            setTimeout(function() {
-                jQuery('.spinner-container').addClass('d-none');
-            }, 500);
         },
-        error: function(jqXHR, textSattus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
             if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')
                 window.location.href = '{{ route('login') }}';
+        },
+        complete: function(jqXHR, textStatus) {
+            // Ajax complete time
+            var iComplete = new Date().getTime();
+
+            // Calculate time remaining to hide loading
+            var iRemainig = (iComplete-iRequest < 600) ? 600-(iComplete-iRequest) : 0;
+
+            // Hide loading
+            setTimeout(function() {
+                jQuery('.spinner-container').addClass('d-none');
+            }, iRemainig);
         }
     });
 }
