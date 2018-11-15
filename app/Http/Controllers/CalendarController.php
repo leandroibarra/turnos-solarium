@@ -80,7 +80,7 @@ class CalendarController extends Controller
 
 		do {
 			for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++) {
-				if ($oToday>$oDateTime || $oDateTime->format('Y-m-d')>=$oLimitDate->format('Y-m-d'))
+				if ($oToday>$oDateTime || $oDateTime->format('Y-m-d')>=$oLimitDate->format('Y-m-d') || $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m'))
 					$sClasses = 'd-sm-inline-block bg-light text-muted';
 				else
 					if (in_array($iWeekDay, config('app.non_working_days')))
