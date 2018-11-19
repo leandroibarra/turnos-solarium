@@ -28,7 +28,7 @@ class CalendarController extends Controller
 
 		$sOutput = "
 			<header>\n
-				<div class=\"row p-1\">\n
+				<div class=\"row mx-auto p-1\">\n
 					<div class=\"col-2 text-center\">\n
 		";
 
@@ -61,7 +61,7 @@ class CalendarController extends Controller
 		$sOutput .= "
 					</div>\n
 				</div>\n
-				<div class=\"row d-none d-sm-flex p-1 bg-dark text-white\">\n
+				<div class=\"row mx-auto d-none d-sm-flex p-1 bg-dark text-white\">\n
 		";
 
 		for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++) {
@@ -73,7 +73,7 @@ class CalendarController extends Controller
 		$sOutput .= "
 				</div>\n
 			</header>\n
-			<div class=\"row border border-right-0 border-bottom-0\">\n
+			<div class=\"row mx-auto border border-right-0 border-bottom-0\">\n
 		";
 
 		$iDays = 1;
@@ -95,7 +95,7 @@ class CalendarController extends Controller
 						".((strpos($sClasses, 'bookable-day') !== false) ? "
 						data-year=\"{$oDateTime->format('Y')}\"
 						data-month=\"{$oDateTime->format('m')}\"
-						data-day=\"{$oDateTime->format('j')}\"
+						data-day=\"{$oDateTime->format('d')}\"
 						data-month-label=\"{$oDateTime->format('F')}\"
 						data-target=\"#appointmentModal\"
 						data-toggle=\"modal\"

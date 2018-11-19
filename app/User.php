@@ -27,4 +27,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+	/**
+	 * The appointments assigned to the user.
+	 */
+	public function appointments()
+	{
+		return $this->hasMany('App\Appointment');
+	}
 }
