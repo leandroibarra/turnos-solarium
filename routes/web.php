@@ -18,14 +18,46 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/book', 'BookController@index')
-	->middleware(['auth'])
-	->name('book.index');
+// Define global parameter patterns
+Route::pattern('iYear', '^(19\d|2\d\d)\d$');
+Route::pattern('iMonth', '^(0[1-9]|1[012])$');
+Route::pattern('iDay', '^(0[1-9]|[1-2][0-9]|3[0-1])$');
 
-Route::get('/calendar/{iYear}/{iMonth}', 'CalendarController@index')
-	->where([
-		'iYear' => '^(19\d|2\d\d)\d$',
-		'iMonth' => '^(0[1-9]|1[012])$'
-	])
+Route::group(
+	[
+		'prefix' => '/book',
+		'middleware' => [
+			'auth'
+		]
+	],
+	function() {
+		Route::get('/', 'BookController@index')->name('book.index');
+
+		Route::get('/confirm', 'BookController@create')
+			->middleware(['check-appointment'])
+			->name('book.create');
+	}
+);
+
+Route::group(
+	[
+		'prefix' => '/appointments',
+		'middleware' => [
+			'auth'
+		]
+	],
+	function() {
+		Route::get('/{iYear}/{iMonth}/{iDay}', 'AppointmentController@index')->name('appointment.index');
+
+		Route::post('/set', 'AppointmentController@set')
+			->name('appointment.set');
+
+		Route::post('/', 'AppointmentController@store')
+			->middleware(['check-appointment'])
+			->name('appointment.store');
+	}
+);
+
+Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
 	->middleware(['auth'])
 	->name('calendar.index');

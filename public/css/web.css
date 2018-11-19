@@ -2,11 +2,14 @@
  * Arrows navigation
  */
 i.arrow {
-    border-color: #000000;
+    border-color: #5A5A5A !important;
     border-style: solid;
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 7px;
+}
+i.arrow:hover {
+    border-color: #000000 !important;
 }
 .arrow.right {
     transform: rotate(-45deg);
@@ -162,6 +165,33 @@ i.arrow {
 }
 
 /*
+ * Appointment (Sidebar)
+ */
+.appointment-content h5:after {
+    border-top: 1px solid #DEE2E6;
+    content: '';
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/*
+ * Appointment confirm form
+ */
+.appointment-confirm-form a {
+    color: #5A5A5A !important;
+}
+.appointment-confirm-form a:hover {
+    color: #000000 !important;
+    text-decoration: none;
+}
+.appointment-confirm-form a i {
+    padding: 5px;
+}
+.appointment-confirm-form a:hover i {
+    border-color: #000000 !important;
+}
+
+/*
  * Theme
  */
 .label-form {
@@ -175,17 +205,24 @@ i.arrow {
     border-color: #D8A62A;
     box-shadow: none;
 }
+textarea {
+    resize: none;
+}
 
 .btn-gold {
     background-color: #5A5A5A;
     border-color: #5A5A5A;
     color: #FFFFFF;
 }
-.btn-gold:hover,
-.btn-gold:focus {
+.btn-gold:not(:disabled):hover,
+.btn-gold:not(:disabled):focus {
     background-color: #D8A62A;
     border-color: #D8A62A;
     box-shadow: none;
+    color: #FFFFFF;
+}
+.btn-gold:disabled:hover {
+    cursor: not-allowed;
 }
 
 .btn-grey {
@@ -200,8 +237,19 @@ i.arrow {
     box-shadow: none;
 }
 
-a,
-a:hover {
+#appointmentModal .appointment-hour {
+    border: 1px solid #5A5A5A;
+}
+#appointmentModal .appointment-hour.active,
+#appointmentModal .appointment-hour:hover {
+    background-color: #D8A62A;
+    border-color: #D8A62A;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+a:not(.btn),
+a:not(.btn):hover {
     color: #000000;
     font-weight: bold;
 }
@@ -258,22 +306,34 @@ a:hover {
      * Arrows navigation
      */
     i.arrow {
+        border-color: #000000;
         padding: 5px;
     }
 
     /*
      * Calendar
      */
-    .calendar-container h2,
-    .sidebar-container h2 {
+    .calendar-container h2 {
         font-size: 1.2rem;
     }
-    .sidebar-container .day h5 {
+
+    /*
+     * Appointment (Sidebar)
+     */
+    .appointment-container .day h5 {
         padding: 10px;
         margin: -8px;
     }
-    .sidebar-container .date {
+    .appointment-container .date {
         padding-left: 4px;
+    }
+    .appointment-container h2,
+    .appointment-content h5 {
+        font-size: 1.2rem;
+    }
+    .appointment-content span,
+    .appointment-content button {
+        font-size: 0.9rem;
     }
 }
 
