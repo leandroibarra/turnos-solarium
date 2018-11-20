@@ -12,7 +12,7 @@
                 <div class="form-group mb-2">
                     <label for="email" class="mb-1 label-form">{{ __('E-Mail Address') }}</label>
 
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus />
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus />
 
                     @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
@@ -24,7 +24,7 @@
                 <div class="form-group mb-2">
                     <label for="password" class="mb-1 label-form">{{ __('Password') }}</label>
 
-                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required />
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" />
 
                     @if ($errors->has('password'))
                     <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="form-group my-3 text-center">
-                    <button type="submit" class="btn btn-gold">{{ __('Login') }}</button>
+                    <button type="submit" class="btn btn-block btn-gold">{{ __('Login') }}</button>
                 </div>
 
                 @if (Route::has('register'))

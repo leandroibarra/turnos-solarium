@@ -12,7 +12,7 @@
                 <div class="form-group mb-2">
                     <label for="email" class="mb-1 label-form">{{ __('E-Mail Address') }}</label>
 
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
 
                     @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
@@ -24,7 +24,7 @@
                 <div class="form-group mb-2">
                     <label for="password" class="mb-1 label-form">{{ __('Password') }}</label>
 
-                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required />
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" />
 
                     @if ($errors->has('password'))
                     <span class="invalid-feedback" role="alert">
@@ -36,11 +36,11 @@
                 <div class="form-group mb-2">
                     <label for="password-confirm" class="mb-1 label-form">{{ __('Confirm Password') }}</label>
 
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required />
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" />
                 </div>
 
                 <div class="form-group my-3 text-center">
-                    <button type="submit" class="btn btn-gold">{{ __('Register') }}</button>
+                    <button type="submit" class="btn btn-block btn-gold">{{ __('Register') }}</button>
                 </div>
 
                 <div class="form-group mb-0 text-center">

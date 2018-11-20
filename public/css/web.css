@@ -80,6 +80,12 @@ i.arrow:hover {
 .dropdown-menu {
     min-width: 100px;
 }
+.dropdown-item.active,
+.dropdown-item:active,
+.dropdown-item:focus {
+    color: #000000;
+    background-color: #F8F9FA;
+}
 
 /*
  * Top navigation link

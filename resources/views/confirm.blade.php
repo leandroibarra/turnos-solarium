@@ -75,7 +75,7 @@
                         <span class="d-block d-md-inline-block">{{ $oDateTime->format('H:ia') }}</span>
                     </div>
                     <div class="mt-1 text-center">
-                        <button type="submit" class="btn btn-gold">{{ __('Book') }}</button>
+                        <button type="submit" class="btn btn-block btn-gold">{{ __('Book') }}</button>
                     </div>
                 </div>
             </div>

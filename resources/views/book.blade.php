@@ -171,7 +171,7 @@ jQuery(document).ready(function() {
                         '<span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>' +
                     '</div>' +
                     '<div class="mt-1 text-center">' +
-                        '<a href="{{ route('book.create') }}" role="button" class="btn btn-gold">{{ __('Confirm') }}</a>' +
+                        '<a href="{{ route('book.create') }}" role="button" class="btn btn-block btn-gold">{{ __('Confirm') }}</a>' +
                     '</div>';
 
                 jQuery('.appointment-content').html(sContent);
