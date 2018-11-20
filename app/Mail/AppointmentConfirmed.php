@@ -30,14 +30,17 @@ class AppointmentConfirmed extends Mailable
      */
     public function build()
     {
+		$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+
         return $this
 			->from([
 				'address' => config('mail.username'),
 				'name' => config('app.name')
 			])
-			->subject(__('Appointment Confirmed'))
+			->subject($aSystemParameters['appointment_confirmed_email_subject'])
 			->view('emails.appointment-confirmed')
 			->with([
+				'sBody' => $aSystemParameters['appointment_confirmed_email_body'],
 				'sName' => $this->oContent->sName,
 				'sDate' => $this->oContent->sDate,
 				'sTime' => $this->oContent->sTime,

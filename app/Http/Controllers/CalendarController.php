@@ -7,11 +7,13 @@ use Jenssegers\Date\Date;
 
 class CalendarController extends Controller
 {
-    public function index($piYear, $piMonth, Request $request) {
+    public function index($piYear, $piMonth) {
+    	$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+
 		$oToday = new Date();
 
 		$oLimitDate = clone $oToday;
-		$oLimitDate->modify('+60 days');
+		$oLimitDate->modify("+{$aSystemParameters['appointment_until_days']} days");
 
 		$oRequestDateTime = new Date("{$piYear}-{$piMonth}");
 

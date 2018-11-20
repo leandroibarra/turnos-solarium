@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 class AppointmentController extends Controller
 {
 	public function index($piYear, $piMonth, $piDay, Request $request) {
+		$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+
 		$oToday = new Date();
 
 		$oRequestDateTime = new Date("{$piYear}-{$piMonth}-{$piDay}");
@@ -36,6 +38,7 @@ class AppointmentController extends Controller
 		$oAppointment = new \App\Appointment();
 
 		return view('partials.appointment')->with([
+			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'oToday' => $oToday,
 			'oRequestDateTime' => $oRequestDateTime,
 			'aGrantedAppointments' => $oAppointment->getGrantedByDate("{$piYear}-{$piMonth}-{$piDay}")->toArray(),

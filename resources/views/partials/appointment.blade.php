@@ -14,7 +14,7 @@
 
                 @for ($iMinute=0; $iMinute<6; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * 10);
+                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
@@ -62,7 +62,7 @@
 
                 @for ($iMinute=0; $iMinute<6; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * 10);
+                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
@@ -117,7 +117,7 @@
 
                 @for ($iMinute=0; $iMinute<6; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * 10);
+                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
