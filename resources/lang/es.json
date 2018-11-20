@@ -37,5 +37,6 @@
   "Choose other appointment": "Elegir otro turno",
   "The :attribute field is not valid.": "El campo :attribute no es válido.",
   "Appointment has been granted successfully. We sent you an email with appointment data.": "El turno ha sido otorgado con éxito. Le enviamos un correo electrónico con los datos del turno.",
-  "Appointment Confirmed": "Turno Confirmado"
+  "Appointment Confirmed": "Turno Confirmado",
+  "Processing": "Procesando"
 }

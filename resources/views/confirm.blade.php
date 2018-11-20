@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{ route('appointment.store') }}" class="appointment-confirm-form">
+    <form method="POST" action="{{ route('appointment.store') }}" id="confirmForm" class="appointment-confirm-form">
         @csrf
 
         <div class="row">
@@ -104,9 +104,14 @@ jQuery(document).ready(function() {
             });
     });
 
-    jQuery('button[type=submit]').on('click', function() {
-        jQuery(this).attr('disabled', true);
-    })
+    // Prevent multiple clicks
+    jQuery('#confirmForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
 });
 </script>
 @endsection
