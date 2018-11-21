@@ -12,7 +12,7 @@
                 <div class="form-group mb-2">
                     <label for="email" class="mb-1 label-form">{{ __('E-Mail Address') }}</label>
 
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus />
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" oninvalid="this.setCustomValidity('{{ __('Please, enter a valid email address') }}')" autofocus />
 
                     @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
