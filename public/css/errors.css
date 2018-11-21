@@ -1,0 +1,93 @@
+.min-h-screen {
+    min-height: 100vh;
+}
+.bg-gold {
+    background-color: #D8A62A;
+}
+.flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.items-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.justify-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.font-light {
+    font-weight: 300;
+}
+.font-black {
+    font-weight: 900;
+}
+.h-1 {
+    height: .25rem;
+}
+.leading-normal {
+    line-height: 1.5;
+}
+.m-8 {
+    margin: 2rem;
+}
+.my-3 {
+    margin-top: .75rem;
+    margin-bottom: .75rem;
+}
+.mb-8 {
+    margin-bottom: 2rem;
+}
+.max-w-sm {
+    max-width: 30rem;
+}
+.text-black {
+    color: #22292F;
+}
+.text-grey-darker {
+    color: #606F7B;
+}
+.text-2xl {
+    font-size: 1.5rem;
+}
+.text-5xl {
+    font-size: 3rem;
+}
+.w-16 {
+    width: 4rem;
+}
+.w-full {
+    width: 100%;
+}
+.btn-gold {
+    background-color: #5A5A5A;
+    border-color: #5A5A5A;
+    color: #FFFFFF;
+}
+.btn-gold:not(:disabled):hover,
+.btn-gold:not(:disabled):focus {
+    background-color: #D8A62A;
+    border-color: #D8A62A;
+    box-shadow: none;
+    color: #FFFFFF;
+}
+@media (min-width: 768px) {
+    .md\:flex {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    .md\:my-6 {
+        margin-bottom: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .md\:text-3xl {
+        font-size: 1.875rem;
+    }
+    .md\:text-15xl {
+        font-size: 9rem;
+    }
+}

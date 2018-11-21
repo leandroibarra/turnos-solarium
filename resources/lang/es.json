@@ -38,5 +38,18 @@
   "The :attribute field is not valid.": "El campo :attribute no es válido.",
   "Appointment has been granted successfully. We sent you an email with appointment data.": "El turno ha sido otorgado con éxito. Le enviamos un correo electrónico con los datos del turno.",
   "Appointment Confirmed": "Turno Confirmado",
-  "Processing": "Procesando"
+  "Processing": "Procesando",
+  "Go Home": "Inicio",
+  "Page Expired": "Página Expirada",
+  "Sorry, your session has expired. Please refresh and try again.": "Lo sentimos, tu sesión ha expirado. Por favor, refresque y pruebe de nuevo.",
+  "Too Many Requests": "Demasiadas Solicitudes",
+  "Sorry, you are making too many requests to our servers.": "Lo sentimos, estás haciendo demasiadas solicitudes a nuestros servidores.",
+  "Unauthorized": "No Autorizado",
+  "Sorry, you are not authorized to access this page.": "Lo sentimos, no estás autorizado para acceder a esta página.",
+  "Forbidden": "Prohibido",
+  "Sorry, you are forbidden from accessing this page.": "Lo sentimos, está prohibido acceder a esta página.",
+  "Service Unavailable": "Servicio No Disponible",
+  "Sorry, we are doing some maintenance. Please check back soon.": "Lo sentimos, estamos haciendo un poco de mantenimiento. Por favor, revise luego.",
+  "Whoops, something went wrong on our servers.": "Vaya, algo salió mal en nuestros servidores.",
+  "Please, enter a valid email address": "Por favor, ingrese un email válido"
 }
