@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Caffeinated\Shinobi\Traits\ShinobiTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, ShinobiTrait;
 
     /**
      * The attributes that are mass assignable.
