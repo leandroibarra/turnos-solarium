@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
 		 * Custom Middlewares
 		 */
 		'check-appointment' => \App\Http\Middleware\CheckAppointment::class,
+		'check-admin' => \App\Http\Middleware\CheckAdmin::class,
     ];
 
     /**

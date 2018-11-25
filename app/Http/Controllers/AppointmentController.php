@@ -37,7 +37,7 @@ class AppointmentController extends Controller
 
 		$oAppointment = new \App\Appointment();
 
-		return view('partials.appointment')->with([
+		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'oToday' => $oToday,
 			'oRequestDateTime' => $oRequestDateTime,
@@ -119,5 +119,13 @@ class AppointmentController extends Controller
 		Flash()->success(__('Appointment has been granted successfully. We sent you an email with appointment data.'))->important();
 
 		return redirect('/book');
+	}
+
+	public function list() {
+		$oAppointment = new \App\Appointment();
+
+		return view('admin.appointment')->with([
+			'aGrantedAppointments' => $oAppointment->getNextGranted()->toArray()
+		]);
 	}
 }

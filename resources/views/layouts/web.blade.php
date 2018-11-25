@@ -18,11 +18,11 @@
     <link href="{{ asset('css/web.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    @include('partials.topnav')
+    @include('web.partials.topnav')
 
     @yield('content')
 
-    @include('partials.footer')
+    @include('web.partials.footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.3.1.js') }}" type="text/javascript"></script>

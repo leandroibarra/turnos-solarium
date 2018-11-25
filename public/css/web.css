@@ -207,7 +207,8 @@ i.arrow:hover {
 .form-control {
     border-color: #5A5A5A;
 }
-.form-control:focus {
+.form-control:focus,
+.form-control.is-invalid:focus {
     border-color: #D8A62A;
     box-shadow: none;
 }

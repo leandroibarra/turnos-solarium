@@ -61,3 +61,27 @@ Route::group(
 Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
 	->middleware(['auth'])
 	->name('calendar.index');
+
+Route::group(
+	[
+		'prefix' => '/admin',
+		'middleware' => [
+//			'check-admin'
+		]
+	],
+	function() {
+		Route::get('/', function() {
+			return redirect('admin/login');
+		});
+
+		Route::get('/login', 'AdminController@showLoginForm')->name('admin.login');
+
+		Route::post('/login', 'AdminController@login')->name('admin.create');
+
+		Route::post('/logout', 'AdminController@logout')->name('admin.logout');
+
+		Route::get('/appointments', 'AppointmentController@list')
+			->middleware(['check-admin'])
+			->name('appointment.list');
+	}
+);

@@ -28,7 +28,7 @@ class CalendarController extends Controller
 
 		$oHeaderDateTime = clone $oDateTime;
 
-		return view('partials.calendar')->with([
+		return view('web.partials.calendar')->with([
 			'oToday' => $oToday,
 			'oLimitDate' => $oLimitDate,
 			'oRequestDateTime' => $oRequestDateTime,

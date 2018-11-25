@@ -30,7 +30,7 @@ class Appointment extends Model
 	}
 
 	/**
-	 * Retrieve granted appointments belongint to date grouped by time.
+	 * Retrieve granted appointments belonging to date grouped by time.
 	 *
 	 * @param string $psDate
 	 * @return \Illuminate\Support\Collection
@@ -41,6 +41,20 @@ class Appointment extends Model
 			->where('date', '=', $psDate)
 			->where('status', '=', 'granted')
 			->groupBy('time')
+			->get();
+	}
+
+	/**
+	 * Retrieve granted appointments for the future.
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getNextGranted() {
+		return $this
+			->where('date', '>', date('Y-m-d H:i:s'))
+			->where('status', '=', 'granted')
+			->orderBy('date', 'ASC')
+			->orderBy('time', 'ASC')
 			->get();
 	}
 }

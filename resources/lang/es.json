@@ -51,5 +51,11 @@
   "Service Unavailable": "Servicio No Disponible",
   "Sorry, we are doing some maintenance. Please check back soon.": "Lo sentimos, estamos haciendo un poco de mantenimiento. Por favor, revise luego.",
   "Whoops, something went wrong on our servers.": "Vaya, algo salió mal en nuestros servidores.",
-  "Please, enter a valid email address": "Por favor, ingrese un email válido"
+  "Please, enter a valid email address": "Por favor, ingrese un email válido",
+  "Sorry, the page you are looking for could not be found.": "Lo sentimos, no se pudo encontrar la página que estás buscando.",
+  "Administration": "Administración",
+  "Enter": "Ingresar",
+  "You do not have permission to access this section": "No tienes permisos para acceder a esta sección",
+  "Appointments": "Turnos",
+  "l j \\of F": "l j \\d\\e F"
 }
