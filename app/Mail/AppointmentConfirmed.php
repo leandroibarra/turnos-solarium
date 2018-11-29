@@ -40,7 +40,7 @@ class AppointmentConfirmed extends Mailable
 			->subject($aSystemParameters['appointment_confirmed_email_subject'])
 			->view('emails.appointment-confirmed')
 			->with([
-				'sBody' => $aSystemParameters['appointment_confirmed_email_body'],
+				'sBody' => html_entity_decode($aSystemParameters['appointment_confirmed_email_body']),
 				'sName' => $this->oContent->sName,
 				'sDate' => $this->oContent->sDate,
 				'sTime' => $this->oContent->sTime,

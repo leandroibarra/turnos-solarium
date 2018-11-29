@@ -83,5 +83,13 @@ Route::group(
 		Route::get('/appointments', 'AppointmentController@list')
 			->middleware(['check-admin'])
 			->name('appointment.list');
+
+		Route::get('/system-parameters', 'SystemParameterController@edit')
+			->middleware(['check-admin'])
+			->name('system-parameters.edit');
+
+		Route::put('/system-parameters/{id}', 'SystemParameterController@update')
+			->middleware(['check-admin'])
+			->name('system-parameters.update');
 	}
 );

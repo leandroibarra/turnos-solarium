@@ -57,5 +57,19 @@
   "Enter": "Ingresar",
   "You do not have permission to access this section": "No tienes permisos para acceder a esta sección",
   "Appointments": "Turnos",
-  "l j \\of F": "l j \\d\\e F"
+  "l j \\of F": "l j \\d\\e F",
+  "System Parameters": "Parámetros del Sistema",
+  "Appointment duration": "Duración del turno",
+  "Minutes of each appointment to be shown in the calendar": "Minutos de cada turno para ser mostrados en el calendario",
+  "Reservation days limit": "Límite de días de reserva",
+  "Number of days that will be enabled in the calendar to reserve appointments from the current date": "Número de días que estarán habilitados en el calendario para reservar turnos a partir de la fecha actual",
+  "Confirmation email subject": "Asunto de email de confirmación",
+  "Email subject that will be sent after booking an appointment": "Asunto de email que será enviado luego de la reserva de un turno",
+  "Confirmation email body": "Cuerpo de email de confirmación",
+  "Email body that will be sent after booking an appointment in which you can use the following tags that will be replaced with corresponding data": "Cuerpo de email que será enviado luego de la reserva de un turno en el que puedes utilizar las siguientes etiquetas que serán reemplazadas con los datos correspondientes",
+  "Name of the user who booked the appointment": "Nombre del usuario que reservó el turno",
+  "Date of the appointment booked (For example: 21 of January)": "Fecha del turno reservado (Por ejemplo: 21 de Enero)",
+  "Time of the appointment booked (For example: 16:30 pm)": "Hora del turno reservado (Por ejemplo: 16:30 pm)",
+  "Parameters were saved successfully": "Los parámetros fueron guardados exitosamente",
+  "Save": "Guardar"
 }
