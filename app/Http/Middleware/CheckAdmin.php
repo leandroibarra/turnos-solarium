@@ -16,7 +16,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-    	if (!in_array(current(Auth::user()->getRoles()), ['sysadmin', 'admin']))
+    	if (!Auth::user() || !in_array(current(Auth::user()->getRoles()), ['sysadmin', 'admin']))
 			abort(401);
 
         return $next($request);
