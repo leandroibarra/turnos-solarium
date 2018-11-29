@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', __('Appointments'))
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -22,11 +20,11 @@
                 if ($sCurrentDate != $aAppointment['date']) {
                     $sCurrentDate = $aAppointment['date'];
                 @endphp
-                <li class="list-group-item list-group-item-secondary font-weight-bold text-center mt-3">{{ Date::createFromFormat('Y-m-d', $aAppointment['date'])->format(__('l j \\of F')) }}</li>
+                <li class="list-group-item list-group-item-secondary font-weight-bold text-center p-2 mt-3">{{ Date::createFromFormat('Y-m-d', $aAppointment['date'])->format(__('l j \\of F')) }}</li>
                 @php
                 }
                 @endphp
-                <li class="list-group-item">{{ Date::createFromFormat('H:i:s', $aAppointment['time'])->format('H:i a') }} | {{ $aAppointment['name'] }}</li>
+                <li class="list-group-item p-2">{{ Date::createFromFormat('H:i:s', $aAppointment['time'])->format('H:i a') }} | {{ $aAppointment['name'] }}</li>
             @endforeach
             </ul>
         </div>
