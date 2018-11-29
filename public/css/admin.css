@@ -12,6 +12,13 @@
 }
 
 /*
+ * Top navigation bar
+ */
+.navbar a,
+.navbar button {
+    font-size: 1rem !important;
+}
+/*
  * Top navigation link
  */
 .nav-link {
@@ -27,6 +34,9 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+}
+body > .container {
+    padding-top: 56px;
 }
 @media (min-width: 576px) {
     .container {
@@ -77,6 +87,14 @@
 }
 
 /*
+ * Summernote
+ */
+textarea.is-invalid + div.note-editor.note-frame {
+    border-color: #DC3545;
+    overflow: hidden;
+}
+
+/*
  * Theme
  */
 .label-form {
@@ -113,7 +131,7 @@ textarea {
 }
 .spinner .path {
     animation: dash 1.5s ease-in-out infinite;
-    stroke: hsl(43, 69%, 51%);
+    stroke: hsl(211, 100%, 50%);
     stroke-linecap: round;
 }
 @keyframes rotate {
