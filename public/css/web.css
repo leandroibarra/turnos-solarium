@@ -75,84 +75,6 @@ i.arrow:hover {
 }
 
 /*
- * Top navigation drop down menu
- */
-.dropdown-menu {
-    min-width: 100px;
-}
-.dropdown-item.active,
-.dropdown-item:active,
-.dropdown-item:focus {
-    color: #000000;
-    background-color: #F8F9FA;
-}
-
-/*
- * Top navigation link
- */
-.nav-link {
-    border-bottom: none;
-}
-
-/*
- * Container
- */
-.container {
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
-}
-@media (min-width: 768px) {
-    .container {
-        max-width: 720px;
-    }
-}
-@media (min-width: 992px) {
-    .container {
-        max-width: 960px;
-    }
-    .navbar-expand-lg>.container,
-    .navbar-expand-lg>.container-fluid {
-        flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-    }
-    .dropdown-menu {
-        padding-bottom: 0;
-        padding-top: 0;
-    }
-    .dropdown-menu .dropdown-item {
-        padding-bottom: 0.5rem;
-        padding-top: 0.5rem;
-    }
-    .dropdown-menu .dropdown-item:hover {
-        border-radius: 0.25rem;
-    }
-}
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px;
-    }
-}
-
-.container-center {
-    bottom: 0;
-    height: 50%;
-    left: 0;
-    margin: auto;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50%;
-}
-
-/*
  * Calendar
  */
 .calendar-container .weekend-day {
@@ -261,50 +183,11 @@ a:not(.btn):hover {
     font-weight: bold;
 }
 
-.spinner-container {
-    background-color: rgba(255, 255, 255, 0.3);
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-}
-.spinner {
-    animation: rotate 2s linear infinite;
-    height: 50px;
-    left: 50%;
-    margin: -25px 0 0 -25px;
-    position: absolute;
-    top: 50%;
-    width: 50px;
-    z-index: 1000;
-}
+/*
+ * Spinner
+ */
 .spinner .path {
-    animation: dash 1.5s ease-in-out infinite;
     stroke: hsl(43, 69%, 51%);
-    stroke-linecap: round;
-}
-@keyframes rotate {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-@keyframes dash {
-    0% {
-        stroke-dasharray: 1, 150;
-        stroke-dashoffset: 0;
-    }
-    50% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -35;
-    }
-    100% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -124;
-    }
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
