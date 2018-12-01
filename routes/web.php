@@ -84,6 +84,14 @@ Route::group(
 			->middleware(['check-admin'])
 			->name('appointment.list');
 
+		Route::put('/appointments/{id}/cancel', 'AppointmentController@cancel')
+			->middleware(['check-admin'])
+			->name('appointment.cancel');
+
+		Route::get('/appointments/{id}/reschedule', 'AppointmentController@reschedule')
+			->middleware(['check-admin'])
+			->name('appointment.reschedule');
+
 		Route::get('/system-parameters', 'SystemParameterController@edit')
 			->middleware(['check-admin'])
 			->name('system-parameters.edit');

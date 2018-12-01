@@ -71,5 +71,14 @@
   "Date of the appointment booked (For example: 21 of January)": "Fecha del turno reservado (Por ejemplo: 21 de Enero)",
   "Time of the appointment booked (For example: 16:30 pm)": "Hora del turno reservado (Por ejemplo: 16:30 pm)",
   "Parameters were saved successfully": "Los parámetros fueron guardados exitosamente",
-  "Save": "Guardar"
+  "Save": "Guardar",
+  "Reschedule": "Reprogramar",
+  "There are no scheduled appointments yet": "Todavía no hay turnos reservados",
+  "Appointment cancellation": "Cancelación de turno",
+  "Yes": "Si",
+  "Are you sure you want to cancel the scheduled appointment to day": "¿Está seguro que desea cancelar el turno programado para el día",
+  "to": "a las",
+  "There are no more scheduled appointments": "No hay más turnos reservados",
+  "The appointment has been cancelled successfully.": "El turno ha sido cancelado exitosamente.",
+  "The appointment could not be cancelled. Please, try again.": "El turno no pudo ser cancelado. Por favor, inténtelo nuevamente."
 }

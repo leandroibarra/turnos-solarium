@@ -35,7 +35,7 @@ class AppointmentController extends Controller
 				$aNight[] = $iHour;
 		}
 
-		$oAppointment = new \App\Appointment();
+		$oAppointment = new Appointment();
 
 		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
@@ -47,23 +47,6 @@ class AppointmentController extends Controller
 			'aNight' => $aNight
 		]);
 	}
-
-	/*
-	public function create(Request $request) {
-//		Flash()->error(__('Appointment is already granted.'))->important();
-//		Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
-//		return redirect('/book');
-//    	dd($request->input());
-
-		$oDateTime = new Date("{$request->input('date')} {$request->input('time')}");
-
-		return view('confirm')->with([
-			'date' => $request->input('date'),
-			'time' => $request->input('time'),
-			'oDateTime' => $oDateTime
-		]);
-	}
-	*/
 
 	public function set(Request $request) {
 		Session::put('date', $request->input('date'));
@@ -122,10 +105,39 @@ class AppointmentController extends Controller
 	}
 
 	public function list() {
-		$oAppointment = new \App\Appointment();
+		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getNextGranted()->toArray()
+			'aGrantedAppointments' => $oAppointment->getNextGranted()
 		]);
+	}
+
+	public function cancel(Request $request, $id) {
+		if ($request->ajax()) {
+			$aAppointment = Appointment::find($id);
+
+			if ($aAppointment->status == 'granted') {
+				Appointment::whereId($id)->update([
+					'status' => 'cancelled',
+					'updated_at' => date('Y-m-d H:i:s')
+				]);
+
+				$aResponse = [
+					'status' => 'success',
+					'message' => __('The appointment has been cancelled successfully.')
+				];
+			} else {
+				$aResponse = [
+					'status' => 'error',
+					'message' => __('The appointment could not be cancelled. Please, try again.')
+				];
+			}
+
+			return response()->json($aResponse);
+		}
+	}
+
+	public function reschedule($id) {
+		dd($id);
 	}
 }
