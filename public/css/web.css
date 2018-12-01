@@ -75,34 +75,6 @@ i.arrow:hover {
 }
 
 /*
- * Calendar
- */
-.calendar-container .weekend-day {
-    background: #F0F0F0;
-}
-.calendar-container .current-day span.date:after {
-    border-top-style: solid;
-    border-top-width: 2px;
-    content: '';
-    display: block;
-    width: 22px;
-}
-.calendar-container .bookable-day:hover {
-    background-color: #D8A62A;
-    cursor: pointer;
-}
-
-/*
- * Appointment (Sidebar)
- */
-.appointment-content h5:after {
-    border-top: 1px solid #DEE2E6;
-    content: '';
-    display: block;
-    margin-top: 0.25rem;
-}
-
-/*
  * Appointment confirm form
  */
 .appointment-confirm-form a {
@@ -198,32 +170,6 @@ a:not(.btn):hover {
     i.arrow {
         border-color: #000000;
         padding: 5px;
-    }
-
-    /*
-     * Calendar
-     */
-    .calendar-container h2 {
-        font-size: 1.2rem;
-    }
-
-    /*
-     * Appointment (Sidebar)
-     */
-    .appointment-container .day h5 {
-        padding: 10px;
-        margin: -8px;
-    }
-    .appointment-container .date {
-        padding-left: 4px;
-    }
-    .appointment-container h2,
-    .appointment-content h5 {
-        font-size: 1.2rem;
-    }
-    .appointment-content span,
-    .appointment-content button {
-        font-size: 0.9rem;
     }
 }
 
