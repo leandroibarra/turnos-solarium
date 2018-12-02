@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12">
             @include('flash::message')
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row">
         <div class="col-12 appointments-container">
             @if (!$aGrantedAppointments->isEmpty())
                 <ul class="list-group">

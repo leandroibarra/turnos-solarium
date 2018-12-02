@@ -1,10 +1,10 @@
-@extends('layouts.web')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12">
-            <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Book online') }}</h2>
+            <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Appointment rescheduling') }}</h2>
 
             @include('flash::message')
         </div>
@@ -21,9 +21,11 @@
                     <h2>&nbsp;</h2>
                 </div>
             </header>
-            <div class="border p-3 appointment-content">
-                <div class="text-center text-md-left">{{ __('Select a day and choose the time you wish book.') }}</div>
-            </div>
+            <form method="POST" action="{{ route('appointment.update', ['id' => request()->segment(3) ]) }}" id="rescheduleForm">
+                <div class="border p-3 appointment-content">
+                    <div class="text-center text-md-left">{{ __('Select a day and choose the time you want to reschedule the appointment.') }}</div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -46,8 +48,8 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-grey" data-dismiss="modal">{{ __('Cancel') }}</button>
-                <button type="button" class="btn btn-gold" id="readyAppointment" disabled>{{ __('Ready') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="readyAppointment" disabled>{{ __('Ready') }}</button>
             </div>
         </div>
     </div>
@@ -107,6 +109,9 @@ jQuery(document).ready(function() {
         jQuery.ajax({
             type: 'GET',
             url: '/appointments/'+oTarget.data('year')+'/'+oTarget.data('month')+'/'+oTarget.data('day'),
+            headers: {
+                'appointment-id': '{{ request()->segment(3) }}'
+            },
             success: function(data) {
                 // Ajax complete time
                 var iComplete = new Date().getTime();
@@ -156,38 +161,35 @@ jQuery(document).ready(function() {
     jQuery('#readyAppointment').click(function() {
         var oActive = jQuery('.appointment-hour.active');
 
-        jQuery.ajax({
-            type: 'POST',
-            url: '/appointments/set',
-            data: {
-                _token: '{{ csrf_token() }}',
-                date: [oActive.data('year'), oActive.data('month'), oActive.data('day')].join('-'),
-                time: oActive.data('hour').replace(/\s(a|p)m/i, '')
-            },
-            success: function(data) {
-                var sContent = '' +
-                    '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>\n' +
-                    '<div>\n' +
-                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
-                    '   <span class="d-block d-md-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +
-                    '</div>\n' +
-                    '<div class="mt-1 mt-md-0">\n' +
-                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>\n' +
-                    '   <span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>\n' +
-                    '</div>\n' +
-                    '<div class="mt-1 text-center">\n' +
-                    '   <a href="{{ route('book.create') }}" role="button" class="btn btn-block btn-gold">{{ __('Confirm') }}</a>\n' +
-                    '</div>\n';
+        var sContent = '' +
+            '<input type="hidden" name="_token" value="{{ csrf_token() }}" />\n' +
+            '<input type="hidden" name="date" value="' + [oActive.data('year'), oActive.data('month'), oActive.data('day')].join('-') + '" />\n' +
+            '<input type="hidden" name="time" value="' + oActive.data('hour').replace(/\s(a|p)m/i, '') + '" />\n' +
+            '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>\n' +
+            '<div>\n' +
+            '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
+            '   <span class="d-block d-md-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +
+            '</div>\n' +
+            '<div class="mt-1 mt-md-0">\n' +
+            '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>\n' +
+            '   <span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>\n' +
+            '</div>\n' +
+            '<div class="mt-1 text-center">\n' +
+            '   <button type="submit" class="btn btn-block btn-primary">{{ __('Reschedule') }}</button>\n' +
+            '</div>\n';
 
-                jQuery('.appointment-content').html(sContent);
+        jQuery('.appointment-content').html(sContent);
 
-                jQuery('#appointmentModal').modal('hide');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')
-                    window.location.href = '{{ route('login') }}';
-            }
-        });
+        jQuery('#appointmentModal').modal('hide');
+    });
+
+    // Prevent multiple clicks
+    jQuery('#rescheduleForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
     });
 });
 

@@ -14,6 +14,13 @@ body > .container {
 }
 
 /*
+ * Calendar
+ */
+.calendar-container .bookable-day:hover {
+    background-color: #0293FF;
+}
+
+/*
  * Summernote
  */
 textarea.is-invalid + div.note-editor.note-frame {
@@ -33,6 +40,12 @@ textarea.is-invalid + div.note-editor.note-frame {
 }
 textarea {
     resize: none;
+}
+
+#appointmentModal .appointment-hour.active,
+#appointmentModal .appointment-hour:hover {
+    background-color: #0293FF;
+    border-color: #0293FF;
 }
 
 /*

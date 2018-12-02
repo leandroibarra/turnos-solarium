@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Mail\AppointmentConfirmed;
+use App\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
@@ -41,6 +42,7 @@ class AppointmentController extends Controller
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'oToday' => $oToday,
 			'oRequestDateTime' => $oRequestDateTime,
+			'aAppointmentToExclude' => ((bool) $request->headers->get('appointment-id')) ? $oAppointment::find($request->headers->get('appointment-id'))->toArray() : [],
 			'aGrantedAppointments' => $oAppointment->getGrantedByDate("{$piYear}-{$piMonth}-{$piDay}")->toArray(),
 			'aMorning' => $aMorning,
 			'aAfternoon' => $aAfternoon,
@@ -85,15 +87,12 @@ class AppointmentController extends Controller
 		$oAppointment = new Appointment($request->all());
 		$oAppointment->save();
 
-		$oDateTime = new Date(Session::get('date').' '.Session::get('time'));
-
-		$oContent = new \stdClass();
-		$oContent->sName = $request->input('name');
-		$oContent->sDate = $oDateTime->format('j').' '.__('of').' '.$oDateTime->format('F');
-		$oContent->sTime = $oDateTime->format('H:i a');
-
-		// Send confirmation email
-		Mail::to(Auth::user()->email)->send(new AppointmentConfirmed($oContent));
+		$this->sendConfirmationEmail(
+			Auth::user()->email,
+			$request->input('name'),
+			Session::get('date'),
+			Session::get('time')
+		);
 
 		// Clean session data to prevent errors
 		Session::forget('date');
@@ -138,6 +137,92 @@ class AppointmentController extends Controller
 	}
 
 	public function reschedule($id) {
-		dd($id);
+		$aAppointment = $this->validateStatus($id, 'granted');
+
+		if (!(bool) $aAppointment) {
+			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
+
+			return redirect('/admin/appointments');
+		}
+
+		return view('admin.appointment-reschedule')->with([
+			'aAppointment' => $aAppointment
+		]);
+	}
+
+	public function update(Request $request) {
+		$aAppointment = $this->validateStatus($request->segment(3), 'granted');
+
+		if (!(bool) $aAppointment) {
+			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
+
+			return redirect('/admin/appointments');
+		}
+
+		if (
+			validateGrantedAppointments(
+				$request->input('time'),
+				[
+					'time' => $request->input('time'),
+					'amount' => Appointment::where([
+						'date' => $request->input('date'),
+						'time' => $request->input('time'),
+						'status' => 'granted'
+					])->get()->count()
+				]
+			)
+		) {
+			Flash()->error(__('Appointment selected is already granted.'))->important();
+
+			return redirect('/admin/appointments');
+		}
+
+		Appointment::whereId($aAppointment['id'])->update([
+			'status' => 'rescheduled',
+			'updated_at' => date('Y-m-d H:i:s')
+		]);
+
+		$oAppointment = new Appointment([
+			'parent_appointment_id' => $aAppointment['id'],
+			'user_id' => $aAppointment['user_id'],
+			'date' => $request->input('date'),
+			'time' => $request->input('time'),
+			'name' => $aAppointment['name'],
+			'phone' => $aAppointment['phone'],
+			'comment' => $aAppointment['comment'],
+			'status' => 'granted',
+			'created_at' => date('Y-m-d H:i:s')
+		]);
+		$oAppointment->save();
+
+		$this->sendConfirmationEmail(
+			User::find($aAppointment['user_id'])->email,
+			$aAppointment['name'],
+			$request->input('date'),
+			$request->input('time')
+		);
+
+		Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
+
+		return redirect('/admin/appointments');
+	}
+
+	public function validateStatus($piAppointmentId, $psStatus='granted') {
+		$oAppointment = Appointment::find($piAppointmentId);
+
+		return ($oAppointment->status == $psStatus) ? $oAppointment->toArray() : [];
+	}
+
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime) {
+		$oDateTime = new Date("{$psDate} {$psTime}");
+
+		$oContent = new \stdClass();
+
+		$oContent->sName = $psName;
+		$oContent->sDate = $oDateTime->format('j').' '.__('of').' '.$oDateTime->format('F');
+		$oContent->sTime = $oDateTime->format('H:i a');
+
+		// Send confirmation email
+		Mail::to($psTo)->send(new AppointmentConfirmed($oContent));
 	}
 }

@@ -1,4 +1,42 @@
 /*
+ * Arrows navigation
+ */
+i.arrow {
+    border-color: #5A5A5A !important;
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 7px;
+}
+i.arrow:hover {
+    border-color: #000000 !important;
+}
+.arrow.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+.arrow.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.arrow.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+.arrow.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+/*
+ * Calendar navigation
+ */
+.prev-month:hover,
+.next-month:hover {
+    cursor: pointer;
+}
+
+/*
  * Top navigation drop down menu
  */
 .dropdown-menu {
@@ -93,7 +131,6 @@
     width: 22px;
 }
 .calendar-container .bookable-day:hover {
-    background-color: #D8A62A;
     cursor: pointer;
 }
 
@@ -105,6 +142,15 @@
     content: '';
     display: block;
     margin-top: 0.25rem;
+}
+
+#appointmentModal .appointment-hour {
+    border: 1px solid #5A5A5A;
+}
+#appointmentModal .appointment-hour.active,
+#appointmentModal .appointment-hour:hover {
+    color: #FFFFFF;
+    cursor: pointer;
 }
 
 /*
@@ -159,6 +205,14 @@
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
     /*
+     * Arrows navigation
+     */
+    i.arrow {
+        border-color: #000000;
+        padding: 5px;
+    }
+
+    /*
      * Calendar
      */
     .calendar-container h2 {
@@ -182,5 +236,26 @@
     .appointment-content span,
     .appointment-content button {
         font-size: 0.9rem;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .day {
+        height: 6vw;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .day {
+        height: 6vw;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .day {
+        height: 6vw;
     }
 }

@@ -9,7 +9,7 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item {{ (request()->route()->getName() == 'appointment.list') ? 'active' : '' }}">
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['appointment.list', 'appointment.reschedule'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('appointment.list') }}">{{ __('Appointments') }}</a>
                 </li>
                 <li class="nav-item {{ (request()->route()->getName() == 'system-parameters.edit') ? 'active' : '' }}">

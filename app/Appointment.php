@@ -19,7 +19,7 @@ class Appointment extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['user_id', 'date', 'time', 'name', 'phone', 'comment'];
+	protected $fillable = ['parent_appointment_id', 'user_id', 'date', 'time', 'name', 'phone', 'comment'];
 
 	/**
 	 * The user that appointment belongs to.

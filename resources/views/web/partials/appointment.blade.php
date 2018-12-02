@@ -20,6 +20,10 @@
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
                         (
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                        ) &&
+                        (
                             ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))
                         )
@@ -67,6 +71,10 @@
 
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
+                        (
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                        ) &&
                         (
                             ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))
@@ -122,6 +130,10 @@
 
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
+                        (
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                        ) &&
                         (
                             ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))

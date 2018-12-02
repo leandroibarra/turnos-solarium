@@ -42,7 +42,7 @@ class CheckAppointment
 				]
 			)
 		) {
-			Flash()->error(__('Appointment is already granted.'))->important();
+			Flash()->error(__('Appointment selected is already granted.'))->important();
 
 			// Clean session data to prevent errors
 			Session::forget('date');

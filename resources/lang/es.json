@@ -25,7 +25,7 @@
   "Time": "Hora",
   "Selected appointment": "Turno seleccionado",
   "Appointment": "Turno",
-  "Appointment is already granted.": "El turno ya está reservado.",
+  "Appointment selected is already granted.": "El turno seleccionado ya está reservado.",
   "Appointment could not been granted. Please, try again.": "El turno no pudo ser reservado. Por favor, inténtelo nuevamente.",
   "Your data": "Tus datos",
   "To complete the reservation, please complete the following data": "Para finalizar la reserva, por favor complete los siguientes datos",
@@ -80,5 +80,9 @@
   "to": "a las",
   "There are no more scheduled appointments": "No hay más turnos reservados",
   "The appointment has been cancelled successfully.": "El turno ha sido cancelado exitosamente.",
-  "The appointment could not be cancelled. Please, try again.": "El turno no pudo ser cancelado. Por favor, inténtelo nuevamente."
+  "The appointment could not be cancelled. Please, try again.": "El turno no pudo ser cancelado. Por favor, inténtelo nuevamente.",
+  "Appointment rescheduling": "Reprogramación de turno",
+  "This appointment already has been cancelled or rescheduled.": "Este turno ya ha sido cancelado o reprogramado.",
+  "Select a day and choose the time you want to reschedule the appointment.": "Seleccione un día y elija la hora en que desea reprogramar el turno.",
+  "Appointment has been rescheduled successfully. An email was sent to the user with appointment data.": "El turno ha sido reprogramado con éxito. Un correo electrónico fue enviado al usuario con los datos del turno."
 }
