@@ -9,6 +9,18 @@
     </div>
 
     <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3">
+                {{ __('Appointments') }}
+                <a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                    {{ __('Create') }}
+                </a>
+            </h4>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-12 appointments-container">
             @if (!$aGrantedAppointments->isEmpty())
                 <ul class="list-group">
@@ -23,7 +35,7 @@
 
                         $sDateHeader = Date::createFromFormat('Y-m-d', $aAppointment->date)->format(__('l j \\of F'))
                     @endphp
-                    <li class="list-group-item list-group-item-secondary font-weight-bold text-center p-2 mt-3">{{ $sDateHeader }}</li>
+                    <li class="list-group-item list-group-item-secondary font-weight-bold text-center p-2 {{ ($iKey>0) ? 'mt-3' : '' }}">{{ $sDateHeader }}</li>
                     @php
                     }
 
@@ -56,8 +68,6 @@
                     </li>
                 @endforeach
                 </ul>
-            @else
-                <div class="alert alert-warning" role="alert">{{ __('There are no scheduled appointments yet') }}</div>
             @endif
         </div>
     </div>
@@ -144,15 +154,6 @@ jQuery(document).ready(function() {
                     // Remove header if correspond
                     if (jQuery('button[data-date-header="' + sDateHeader + '"]').length == 0)
                         jQuery('li:contains(' + sDateHeader + ')').remove();
-
-                    // Add message if correspond
-                    if (jQuery('ul.list-group li').length == 0) {
-                        jQuery('ul.list-group li').remove();
-
-                        jQuery('.appointments-container').html(
-                            '<div class="alert alert-warning mt-3" role="alert">' + '{{ __('There are no more scheduled appointments') }}' + '</div>'
-                        );
-                    }
                 }
 
                 // Add message from result process

@@ -51,8 +51,6 @@
                     </li>
                 @endforeach
                 </ul>
-            @else
-                <div class="alert alert-warning" role="alert">{{ __('There are no exceptions yet') }}</div>
             @endif
         </div>
     </div>
@@ -133,15 +131,6 @@ jQuery(document).ready(function() {
 
                     // Remove element from list
                     jQuery('button[data-exception-id=' + iExceptionId + ']').closest('li.list-group-item').remove();
-
-                    // Add message if correspond
-                    if (jQuery('ul.list-group li').length == 0) {
-                        jQuery('ul.list-group li').remove();
-
-                        jQuery('.exceptions-container').html(
-                            '<div class="alert alert-warning mt-3" role="alert">' + '{{ __('There are no more exceptions') }}' + '</div>'
-                        );
-                    }
                 }
 
                 // Add message from result process
