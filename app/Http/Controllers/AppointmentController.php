@@ -150,8 +150,8 @@ class AppointmentController extends Controller
 		]);
 	}
 
-	public function update(Request $request) {
-		$aAppointment = $this->validateStatus($request->segment(3), 'granted');
+	public function update(Request $request, $id) {
+		$aAppointment = $this->validateStatus($id, 'granted');
 
 		if (!(bool) $aAppointment) {
 			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
