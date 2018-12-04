@@ -55,6 +55,21 @@ textarea {
     stroke: hsl(211, 100%, 50%);
 }
 
+/*
+ * Read more / Read less
+ */
+.hidden-content span {
+    display: none;
+}
+.more-link {
+    color: #0293FF;
+    display: inline-block !important;
+}
+.more-link:hover {
+    color: #007BFF;
+    cursor: pointer;
+}
+
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {}
 

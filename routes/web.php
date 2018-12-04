@@ -103,5 +103,27 @@ Route::group(
 		Route::put('/system-parameters/{id}', 'SystemParameterController@update')
 			->middleware(['check-admin'])
 			->name('system-parameters.update');
+
+		Route::group(
+			[
+				'prefix' => '/exceptions',
+				'middleware' => [
+					'check-admin'
+				]
+			],
+			function() {
+				Route::get('/', 'ExceptionController@list')
+					->name('exception.list');
+
+				Route::get('/{id}/edit', 'ExceptionController@list')
+					->name('exception.edit');
+
+				Route::put('/{id}/delete', 'ExceptionController@delete')
+					->name('exception.delete');
+
+				Route::get('/create', 'ExceptionController@create')
+					->name('exception.create');
+			}
+		);
 	}
 );
