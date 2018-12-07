@@ -38,6 +38,8 @@ class AppointmentController extends Controller
 
 		$oAppointment = new Appointment();
 
+		$oException = new  \App\Exception();
+
 		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'oToday' => $oToday,
@@ -46,7 +48,8 @@ class AppointmentController extends Controller
 			'aGrantedAppointments' => $oAppointment->getGrantedByDate("{$piYear}-{$piMonth}-{$piDay}")->toArray(),
 			'aMorning' => $aMorning,
 			'aAfternoon' => $aAfternoon,
-			'aNight' => $aNight
+			'aNight' => $aNight,
+			'aExceptions' => $oException->getEnabledByDate($oRequestDateTime->format('Y-m-d'))->toArray()
 		]);
 	}
 
@@ -76,6 +79,18 @@ class AppointmentController extends Controller
 				'phone' => strtolower(__('Phone Number'))
 			]
 		);
+
+		$oException = new \App\Exception();
+
+		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))) {
+			// Clean session data to prevent errors
+			Session::forget('date');
+			Session::forget('time');
+
+			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
+
+			return redirect('/book');
+		}
 
 		// Complete rest of data
 		$request->request->add([
@@ -155,6 +170,14 @@ class AppointmentController extends Controller
 
 		if (!(bool) $aAppointment) {
 			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
+
+			return redirect('/admin/appointments');
+		}
+
+		$oException = new \App\Exception();
+
+		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))) {
+			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
 
 			return redirect('/admin/appointments');
 		}

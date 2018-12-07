@@ -41,7 +41,11 @@
     @endphp
 
     @for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
-        @if ($oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') || $oDateTime->format('Y-m-d')>$oLimitDate->format('Y-m-d') || $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m'))
+        @if (
+            $oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') ||
+            $oDateTime->format('Y-m-d')>$oLimitDate->format('Y-m-d') ||
+            $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m')
+        )
             @php
             $sClasses = 'd-sm-inline-block bg-light text-muted';
             @endphp
@@ -49,6 +53,10 @@
             @if (in_array($iWeekDay, $aNonWorkingDays))
                 @php
                 $sClasses = 'weekend-day text-muted';
+                @endphp
+            @elseif (validateDateInExceptions($oDateTime->format('Y-m-d'), $aExceptions))
+                @php
+                $sClasses = 'exception-day bg-light text-muted';
                 @endphp
             @else
                 @php

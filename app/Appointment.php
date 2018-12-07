@@ -36,8 +36,8 @@ class Appointment extends Model
 	 * @return \Illuminate\Support\Collection
 	 */
 	public function getGrantedByDate($psDate) {
-		return DB::table('appointments')
-			->select(DB::raw("COUNT(*) AS amount, TIME_FORMAT(time, '%H:%i') AS time"))
+		return DB::table($this->table)
+			->selectRaw("COUNT(*) AS amount, TIME_FORMAT(time, '%H:%i') AS time")
 			->where('date', '=', $psDate)
 			->where('status', '=', 'granted')
 			->groupBy('time')

@@ -33,6 +33,7 @@ class CheckAppointment
 			'status' => 'granted'
 		])->get();
 
+    	// Already granted appointment
     	if (
     		validateGrantedAppointments(
 				Session::get('time'),

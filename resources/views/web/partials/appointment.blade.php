@@ -19,6 +19,7 @@
 
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
                             ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
@@ -71,6 +72,7 @@
 
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
                             ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
@@ -130,6 +132,7 @@
 
                     @if (
                         !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
                             ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
