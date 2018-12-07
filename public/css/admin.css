@@ -31,7 +31,7 @@ textarea.is-invalid + div.note-editor.note-frame {
 /*
  * Theme
  */
-.label-form {
+.loginForm .label-form {
     font-size: 0.9rem;
 }
 .form-control:focus,

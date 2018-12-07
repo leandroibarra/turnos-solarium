@@ -8,7 +8,7 @@
 
             @include('flash::message')
 
-            <form method="POST" action="{{ route('admin.create') }}">
+            <form method="POST" action="{{ route('admin.create') }}" class="loginForm">
                 @csrf
 
                 <div class="form-group mb-2">

@@ -115,14 +115,20 @@ Route::group(
 				Route::get('/', 'ExceptionController@list')
 					->name('exception.list');
 
-				Route::get('/{id}/edit', 'ExceptionController@list')
+				Route::get('/{id}/edit', 'ExceptionController@edit')
 					->name('exception.edit');
+
+				Route::put('/{id}', 'ExceptionController@update')
+					->name('exception.update');
 
 				Route::put('/{id}/delete', 'ExceptionController@delete')
 					->name('exception.delete');
 
 				Route::get('/create', 'ExceptionController@create')
 					->name('exception.create');
+
+				Route::post('/', 'ExceptionController@store')
+					->name('exception.store');
 			}
 		);
 	}

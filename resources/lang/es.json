@@ -87,6 +87,7 @@
   "To": "Hasta",
   "Type": "Tipo",
   "Obs.": "Obs.",
+  "Observations": "Observaciones",
   "Holiday": "Feriado/Vacaciones",
   "Other": "Otro",
   "m/d/y H:i \\h\\s": "d/m/y H:i \\h\\s",
@@ -94,10 +95,18 @@
   "Edit": "Editar",
   "Exceptions": "Excepciones",
   "Exception deletion": "Eliminación de excepción",
+  "Exception creation": "Creación de excepción",
+  "Exception edition": "Edición de excepción",
   "Are you sure you want to delete the exception?": "¿Está seguro que desea eliminar la excepción?",
   "more": "más",
   "less": "menos",
   "The exception has been deleted successfully.": "La excepción ha sido eliminada exitosamente.",
   "The exception could not be deleted. Please, try again.": "La excepción no pudo ser eliminada. Por favor, inténtelo nuevamente.",
-  "Create": "Crear"
+  "Create": "Crear",
+  "Date and time range": "Rango de fecha y hora",
+  "YYYY-MM-DD HH:mm": "DD/MM/YYYY HH:mm",
+  " - ": " - ",
+  "The exception has been created successfully.": "La excepción ha sido creada exitosamente.",
+  "The exception is not valid or has been deleted.": "La excepción no es válida o ha sido eliminada.",
+  "The exception has been edited successfully.": "La excepción ha sido editada exitosamente."
 }

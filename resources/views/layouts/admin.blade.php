@@ -15,6 +15,8 @@
     <link href="{{ asset('css/fontawesome-5.3.1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet" type="text/css" />
+
+    @yield('page-styles')
 </head>
 <body>
 @include('admin.partials.topnav')

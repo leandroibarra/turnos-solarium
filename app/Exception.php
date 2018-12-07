@@ -30,6 +30,7 @@ class Exception extends Model
 			->where('datetime_from', '>', date('Y-m-d H:i:s'))
 			->where('enable', '=', '1')
 			->orderBy('datetime_from', 'ASC')
+			->orderBy('datetime_to', 'ASC')
 			->get();
 	}
 }

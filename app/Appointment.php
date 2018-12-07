@@ -45,6 +45,21 @@ class Appointment extends Model
 	}
 
 	/**
+	 * Retrieve granted appointments between two date and times.
+	 *
+	 * @param string $psDateFrom
+	 * @param string $psDateTo
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getGrantedBetweenDates($psDateFrom, $psDateTo) {
+		return $this
+			->where('date', '>=', $psDateFrom)
+			->where('date', '<=', $psDateTo)
+			->where('status', '=', 'granted')
+			->get();
+	}
+
+	/**
 	 * Retrieve granted appointments for the future.
 	 *
 	 * @return \Illuminate\Support\Collection

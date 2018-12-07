@@ -15,7 +15,7 @@
                 <li class="nav-item {{ (request()->route()->getName() == 'system-parameters.edit') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('system-parameters.edit') }}">{{ __('System Parameters') }}</a>
                 </li>
-                <li class="nav-item {{ (in_array(request()->route()->getName(), ['exception.list', 'exception.edit'])) ? 'active' : '' }}">
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['exception.list', 'exception.create', 'exception.edit'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('exception.list') }}">{{ __('Exceptions') }}</a>
                 </li>
             </ul>
