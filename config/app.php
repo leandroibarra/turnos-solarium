@@ -235,6 +235,7 @@ return [
 		 */
 		Laracasts\Flash\FlashServiceProvider::class,
 		Jenssegers\Date\DateServiceProvider::class,
+		Caffeinated\Shinobi\ShinobiServiceProvider::class,
     ],
 
     /*

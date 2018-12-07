@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Jenssegers\Date\Date;
 
 class CalendarController extends Controller
@@ -28,7 +27,9 @@ class CalendarController extends Controller
 
 		$oHeaderDateTime = clone $oDateTime;
 
-		return view('partials.calendar')->with([
+		$oException = new  \App\Exception();
+
+		return view('web.partials.calendar')->with([
 			'oToday' => $oToday,
 			'oLimitDate' => $oLimitDate,
 			'oRequestDateTime' => $oRequestDateTime,
@@ -36,7 +37,11 @@ class CalendarController extends Controller
 			'oLimitNextNav' => $oLimitNextNav,
 			'oDateTime' => $oDateTime,
 			'oHeaderDateTime' => $oHeaderDateTime,
-			'aNonWorkingDays' => config('app.non_working_days')
+			'aNonWorkingDays' => config('app.non_working_days'),
+			'aExceptions' => $oException->getEnabledBetweenDates(
+				$oToday->format('Y-m-d H:i:s'),
+				$oLimitDate->format('Y-m-d H:i:s')
+			)->toArray()
 		]);
 	}
 }

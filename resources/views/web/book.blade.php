@@ -147,6 +147,11 @@ jQuery(document).ready(function() {
 
     });
 
+    // Close appointment modal
+    jQuery('#appointmentModal').on('hide.bs.modal', function(event) {
+        jQuery('#readyAppointment').attr('disabled', true);
+    });
+
     // Replace sidebar content and close appointment modal
     jQuery('#readyAppointment').click(function() {
         var oActive = jQuery('.appointment-hour.active');
@@ -161,18 +166,18 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 var sContent = '' +
-                    '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>' +
-                    '<div>' +
-                        '<span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>' +
-                        '<span class="d-block d-md-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>' +
-                    '</div>' +
-                    '<div class="mt-1 mt-md-0">' +
-                        '<span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>' +
-                        '<span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>' +
-                    '</div>' +
-                    '<div class="mt-1 text-center">' +
-                        '<a href="{{ route('book.create') }}" role="button" class="btn btn-block btn-gold">{{ __('Confirm') }}</a>' +
-                    '</div>';
+                    '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>\n' +
+                    '<div>\n' +
+                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
+                    '   <span class="d-block d-md-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +
+                    '</div>\n' +
+                    '<div class="mt-1 mt-md-0">\n' +
+                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>\n' +
+                    '   <span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>\n' +
+                    '</div>\n' +
+                    '<div class="mt-1 text-center">\n' +
+                    '   <a href="{{ route('book.create') }}" role="button" class="btn btn-block btn-gold">{{ __('Confirm') }}</a>\n' +
+                    '</div>\n';
 
                 jQuery('.appointment-content').html(sContent);
 

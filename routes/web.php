@@ -61,3 +61,75 @@ Route::group(
 Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
 	->middleware(['auth'])
 	->name('calendar.index');
+
+Route::group(
+	[
+		'prefix' => '/admin',
+		'middleware' => [
+//			'check-admin'
+		]
+	],
+	function() {
+		Route::get('/', function() {
+			return redirect('admin/login');
+		});
+
+		Route::get('/login', 'AdminController@showLoginForm')->name('admin.login');
+
+		Route::post('/login', 'AdminController@login')->name('admin.create');
+
+		Route::post('/logout', 'AdminController@logout')->name('admin.logout');
+
+		Route::get('/appointments', 'AppointmentController@list')
+			->middleware(['check-admin'])
+			->name('appointment.list');
+
+		Route::put('/appointments/{id}/cancel', 'AppointmentController@cancel')
+			->middleware(['check-admin'])
+			->name('appointment.cancel');
+
+		Route::get('/appointments/{id}/reschedule', 'AppointmentController@reschedule')
+			->middleware(['check-admin'])
+			->name('appointment.reschedule');
+
+		Route::post('/appointments/{id}/reschedule', 'AppointmentController@update')
+			->middleware(['check-admin'])
+			->name('appointment.update');
+
+		Route::get('/system-parameters', 'SystemParameterController@edit')
+			->middleware(['check-admin'])
+			->name('system-parameters.edit');
+
+		Route::put('/system-parameters/{id}', 'SystemParameterController@update')
+			->middleware(['check-admin'])
+			->name('system-parameters.update');
+
+		Route::group(
+			[
+				'prefix' => '/exceptions',
+				'middleware' => [
+					'check-admin'
+				]
+			],
+			function() {
+				Route::get('/', 'ExceptionController@list')
+					->name('exception.list');
+
+				Route::get('/{id}/edit', 'ExceptionController@edit')
+					->name('exception.edit');
+
+				Route::put('/{id}', 'ExceptionController@update')
+					->name('exception.update');
+
+				Route::put('/{id}/delete', 'ExceptionController@delete')
+					->name('exception.delete');
+
+				Route::get('/create', 'ExceptionController@create')
+					->name('exception.create');
+
+				Route::post('/', 'ExceptionController@store')
+					->name('exception.store');
+			}
+		);
+	}
+);
