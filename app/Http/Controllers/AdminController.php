@@ -50,7 +50,7 @@ class AdminController extends Controller
 			$user = $this->guard()->getLastAttempted();
 
 			// Make sure the user has roles
-			if (in_array(current($user->getRoles()), ['admin', 'sysadmin']) && $this->attemptLogin($request)) {
+			if ($user->hasRole(['Sysadmin', 'Admin']) && $this->attemptLogin($request)) {
 				// Send the normal successful login response
 				//return $this->sendLoginResponse($request);
 				return redirect($this->redirectTo);
