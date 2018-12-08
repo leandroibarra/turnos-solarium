@@ -64,6 +64,8 @@ class Kernel extends HttpKernel
 		/*
 		 * Installed Middlewares
 		 */
+		'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+		'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
 
 		/*
 		 * Custom Middlewares

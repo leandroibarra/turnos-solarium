@@ -64,10 +64,7 @@ Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
 
 Route::group(
 	[
-		'prefix' => '/admin',
-		'middleware' => [
-//			'check-admin'
-		]
+		'prefix' => '/admin'
 	],
 	function() {
 		Route::get('/', function() {
@@ -80,54 +77,76 @@ Route::group(
 
 		Route::post('/logout', 'AdminController@logout')->name('admin.logout');
 
-		Route::get('/appointments', 'AppointmentController@list')
-			->middleware(['check-admin'])
-			->name('appointment.list');
-
-		Route::put('/appointments/{id}/cancel', 'AppointmentController@cancel')
-			->middleware(['check-admin'])
-			->name('appointment.cancel');
-
-		Route::get('/appointments/{id}/reschedule', 'AppointmentController@reschedule')
-			->middleware(['check-admin'])
-			->name('appointment.reschedule');
-
-		Route::post('/appointments/{id}/reschedule', 'AppointmentController@update')
-			->middleware(['check-admin'])
-			->name('appointment.update');
-
 		Route::get('/system-parameters', 'SystemParameterController@edit')
-			->middleware(['check-admin'])
+			->middleware([
+				'role:Sysadmin|Admin',
+				'permission:admin.system-parameters.edit'
+			])
 			->name('system-parameters.edit');
 
 		Route::put('/system-parameters/{id}', 'SystemParameterController@update')
-			->middleware(['check-admin'])
+			->middleware([
+				'role:Sysadmin|Admin',
+				'permission:admin.system-parameters.update'
+			])
 			->name('system-parameters.update');
+
+		Route::group(
+			[
+				'prefix' => '/appointments',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'AppointmentController@list')
+					->middleware(['permission:admin.appointment.list'])
+					->name('appointment.list');
+
+				Route::put('/{id}/cancel', 'AppointmentController@cancel')
+					->middleware(['permission:admin.appointment.cancel'])
+					->name('appointment.cancel');
+
+				Route::get('/{id}/reschedule', 'AppointmentController@reschedule')
+					->middleware(['permission:admin.appointment.reschedule'])
+					->name('appointment.reschedule');
+
+				Route::post('/{id}/reschedule', 'AppointmentController@update')
+					->middleware(['permission:admin.appointment.update'])
+					->name('appointment.update');
+			}
+		);
 
 		Route::group(
 			[
 				'prefix' => '/exceptions',
 				'middleware' => [
-					'check-admin'
+					'role:Sysadmin|Admin'
 				]
 			],
 			function() {
 				Route::get('/', 'ExceptionController@list')
+					->middleware(['permission:admin.exception.list'])
 					->name('exception.list');
 
 				Route::get('/{id}/edit', 'ExceptionController@edit')
+					->middleware(['permission:admin.exception.edit'])
 					->name('exception.edit');
 
 				Route::put('/{id}', 'ExceptionController@update')
+					->middleware(['permission:admin.exception.update'])
 					->name('exception.update');
 
 				Route::put('/{id}/delete', 'ExceptionController@delete')
+					->middleware(['permission:admin.exception.delete'])
 					->name('exception.delete');
 
 				Route::get('/create', 'ExceptionController@create')
+					->middleware(['permission:admin.exception.create'])
 					->name('exception.create');
 
 				Route::post('/', 'ExceptionController@store')
+					->middleware(['permission:admin.exception.store'])
 					->name('exception.store');
 			}
 		);
