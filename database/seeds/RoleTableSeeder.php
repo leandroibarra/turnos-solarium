@@ -14,14 +14,14 @@ class RoleTableSeeder extends Seeder
     {
 		Role::create([
 			'name' => 'Sysadmin',
-			'guard_name' => 'sysadmin',
+			'guard_name' => 'web',
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')
 		]);
 
         Role::create([
         	'name' => 'Admin',
-			'guard_name' => 'admin',
+			'guard_name' => 'web',
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')
 		]);

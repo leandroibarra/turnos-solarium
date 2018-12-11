@@ -12,88 +12,30 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create([
-			'name' => 'admin.system-parameters.edit',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
+    	$aPermissions = [
+			'admin.system-parameters.edit',
+			'admin.system-parameters.update',
+			'admin.appointment.list',
+			'admin.appointment.cancel',
+			'admin.appointment.reschedule',
+			'admin.appointment.update',
+			'admin.exception.list',
+			'admin.exception.edit',
+			'admin.exception.update',
+			'admin.exception.delete',
+			'admin.exception.create',
+			'admin.exception.store',
+			'admin.user.list',
+			'admin.permission.edit',
+			'admin.permission.update'
+		];
 
-		Permission::create([
-			'name' => 'admin.system-parameters.update',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.appointment.list',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.appointment.cancel',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.appointment.reschedule',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.appointment.update',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.list',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.edit',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.update',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.delete',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.create',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Permission::create([
-			'name' => 'admin.exception.store',
-			'guard_name' => 'web',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
+    	foreach ($aPermissions as $sPermission)
+			Permission::create([
+				'name' => $sPermission,
+				'guard_name' => 'web',
+				'created_at' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s')
+			]);
     }
 }
