@@ -44,6 +44,7 @@ class AppointmentConfirmed extends Mailable
 				'sName' => $this->oContent->sName,
 				'sDate' => $this->oContent->sDate,
 				'sTime' => $this->oContent->sTime,
+				'sAppName' => config('app.name')
 			]);
     }
 }
