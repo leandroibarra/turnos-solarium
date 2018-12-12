@@ -82,7 +82,7 @@ class AppointmentController extends Controller
 
 		$oException = new \App\Exception();
 
-		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))) {
+		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))->toArray()) {
 			// Clean session data to prevent errors
 			Session::forget('date');
 			Session::forget('time');
@@ -176,7 +176,7 @@ class AppointmentController extends Controller
 
 		$oException = new \App\Exception();
 
-		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))) {
+		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))->toArray()) {
 			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
 
 			return redirect('/admin/appointments');
