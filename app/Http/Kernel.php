@@ -64,8 +64,8 @@ class Kernel extends HttpKernel
 		/*
 		 * Installed Middlewares
 		 */
-		'role' => \Caffeinated\Shinobi\Middleware\UserHasRole::class,
-		'permission' => \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
+		'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+		'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
 
 		/*
 		 * Custom Middlewares

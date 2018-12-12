@@ -46,6 +46,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+		if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+			// Handle with own custom errors pages
+			if (in_array($exception->getStatusCode(), [401, 403, 404, 419, 429, 500, 503]))
+				abort($exception->getStatusCode());
+		}
+
         return parent::render($request, $exception);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Caffeinated\Shinobi\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class RoleTableSeeder extends Seeder
 {
@@ -14,13 +14,16 @@ class RoleTableSeeder extends Seeder
     {
 		Role::create([
 			'name' => 'Sysadmin',
-			'slug' => 'sysadmin',
-			'special' => 'all-access'
+			'guard_name' => 'web',
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 
         Role::create([
         	'name' => 'Admin',
-			'slug' => 'admin'
+			'guard_name' => 'web',
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
     }
 }
