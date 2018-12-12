@@ -12,10 +12,13 @@
         <div class="col-12">
             <h4 class="mb-3">
                 {{ __('Exceptions') }}
+
+                @can(['admin.exception.create', 'admin.exception.store'])
                 <a href="{{ route('exception.create') }}" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                     {{ __('Create') }}
                 </a>
+                @endcan
             </h4>
         </div>
     </div>
@@ -36,9 +39,13 @@
                                 <label class="text-muted mb-0 mr-1">{{ __('Obs.') }}:</label><span class="observations">{{ (!is_null($aException->observations)) ? $aException->observations : '-' }}</span>
                             </div>
                             <div class="col-12 col-md-2 align-self-top text-center text-md-right mt-2 mt-md-0">
+                                @can(['admin.exception.edit', 'admin.exception.update'])
                                 <a href="{{ route('exception.edit', ['id' => $aException->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Edit') }}" role="button">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
+                                @endcan
+
+                                @can('admin.exception.delete')
                                 <button class="btn btn-sm btn-danger" title="{{ __('Delete') }}"
                                     data-exception-id="{{ $aException->id }}"
                                     data-target="#deleteModal"
@@ -46,6 +53,7 @@
                                 >
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
+                                @endcan
                             </div>
                         </div>
                     </li>
