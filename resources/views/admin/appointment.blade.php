@@ -12,10 +12,10 @@
         <div class="col-12">
             <h4 class="mb-3">
                 {{ __('Appointments') }}
-                <a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
+                <!--a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                     {{ __('Create') }}
-                </a>
+                </a-->
             </h4>
         </div>
     </div>
