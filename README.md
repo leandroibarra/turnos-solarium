@@ -8,12 +8,12 @@ Además contiene un módulo de administración en el que se podrán:
 + Administrar parámetros del sitema.
 
 ## Tabla de contenidos
-- [Regla de Negocio](#Reglas de Negocio)
-- [Instalación](#Instalación)
+- [Reglas de Negocio](#reglas-de-negocio)
+- [Instalación](#instalación)
 - [Autor](#autor)
 - [Licencia](#licencia)
 
-## Reglas de Negocio:
+## Reglas de Negocio
 + Horarios de trabajo:
     + Lunes y Martes de 14 hs hasta 20 hs.
     + Miércoles, Jueves, y Viernes de 9 hs hasta 20 hs.
