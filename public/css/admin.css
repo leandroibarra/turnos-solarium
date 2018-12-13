@@ -1,0 +1,83 @@
+/*
+ * Top navigation bar
+ */
+.navbar a,
+.navbar button {
+    font-size: 1rem !important;
+}
+
+/*
+ * Container
+ */
+body > .container {
+    padding-top: 56px;
+}
+
+/*
+ * Calendar
+ */
+.calendar-container .bookable-day:hover {
+    background-color: #0293FF;
+}
+
+/*
+ * Summernote
+ */
+textarea.is-invalid + div.note-editor.note-frame {
+    border-color: #DC3545;
+    overflow: hidden;
+}
+
+/*
+ * Theme
+ */
+.loginForm .label-form {
+    font-size: 0.9rem;
+}
+.form-control:focus,
+.form-control.is-invalid:focus {
+    box-shadow: none;
+}
+textarea {
+    resize: none;
+}
+
+#appointmentModal .appointment-hour.active,
+#appointmentModal .appointment-hour:hover {
+    background-color: #0293FF;
+    border-color: #0293FF;
+}
+
+/*
+ * Spinner
+ */
+.spinner .path {
+    stroke: hsl(211, 100%, 50%);
+}
+
+/*
+ * Read more / Read less
+ */
+.hidden-content span {
+    display: none;
+}
+.more-link {
+    color: #0293FF;
+    display: inline-block !important;
+}
+.more-link:hover {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}

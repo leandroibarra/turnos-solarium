@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Jenssegers\Date\Date;
 
 class BookController extends Controller
 {
-    public function index()
-	{
+    public function index() {
+		// Clean session data to prevent errors
+		Session::forget('date');
+		Session::forget('time');
 
-$sCurrentDate = date('Y-m-d H:i:s');
-		$a = [
-			'd' => $sCurrentDate,
-			'w' => date('w'),
-			// First day of the month.
-			'f' => date('Y-m-01', strtotime($sCurrentDate)),
-			// Last day of the month.
-			'l' => date('Y-m-t', strtotime($sCurrentDate)),
-		];
-
-		return view('book');
+		return view('web.book');
 	}
 
+	public function create() {
+		return view('web.confirm')->with([
+			'date' => Session::get('date'),
+			'time' => Session::get('time'),
+			'oDateTime' => new Date(Session::get('date').' '.Session::get('time'))
+		]);
+	}
 }

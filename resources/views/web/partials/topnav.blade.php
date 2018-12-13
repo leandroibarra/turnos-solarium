@@ -6,7 +6,11 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="dropdown mt-3 mt-lg-0 ml-auto">
+            @if (Auth::user()->hasRole(['Admin', 'Sysadmin']))
+            <a class="btn btn-outline-dark mt-2 mt-lg-0" href="{{ route('admin') }}">{{ __('Administration') }}</a>
+            @endif
+
+            <div class="dropdown mt-{{ (Auth::user()->hasRole(['Admin', 'Sysadmin'])) ? 2 : 3 }} mt-lg-0 ml-auto">
                 <button class="btn btn-outline-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

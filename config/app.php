@@ -133,6 +133,51 @@ return [
 	 */
 	'non_working_days' => [0, 6],
 
+	/*
+	|--------------------------------------------------------------------------
+	| Working hours per day
+	|--------------------------------------------------------------------------
+	|
+	| Customize working hours per day.
+	| Keys 0 (for Sunday) through 6 (for Saturday). Values indicates from
+	| and until working hour, for example [9, 20] value indicate working
+	| hours are from 09:00 until 20:00.
+	|
+	|--------------------------------------------------------------------------
+	 */
+	'working_hours_per_day' => [
+		1 => [14, 20],
+		2 => [14, 20],
+		3 => [9, 20],
+		4 => [9, 20],
+		5 => [9, 20]
+	],
+
+	/*
+	'appointment_per_day_and_hour_range' => [
+		1 => [
+			0 => ['9', '13'],
+			2 => ['14', '20']
+		],
+		2 => [
+			0 => ['9', '13'],
+			2 => ['14', '20']
+		],
+		3 => [
+			1 => ['9', '13'],
+			2 => ['14', '20']
+		],
+		4 => [
+			1 => ['9', '13'],
+			2 => ['14', '20']
+		],
+		5 => [
+			1 => ['9', '13'],
+			2 => ['14', '20']
+		]
+	],
+	*/
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -190,6 +235,7 @@ return [
 		 */
 		Laracasts\Flash\FlashServiceProvider::class,
 		Jenssegers\Date\DateServiceProvider::class,
+		Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

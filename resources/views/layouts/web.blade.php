@@ -9,20 +9,17 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    {{--<link rel="dns-prefetch" href="https://fonts.gstatic.com">--}}
-    {{--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">--}}
-
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap-4.1.3.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/web.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    @include('partials.topnav')
+    @include('web.partials.topnav')
 
     @yield('content')
 
-    @include('partials.footer')
+    @include('web.partials.footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.3.1.js') }}" type="text/javascript"></script>
