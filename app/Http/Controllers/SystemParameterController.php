@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\SystemParameter;
+use App\Models\SystemParameter;
 use Illuminate\Http\Request;
 
 class SystemParameterController extends Controller

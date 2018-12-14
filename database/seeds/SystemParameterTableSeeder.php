@@ -11,7 +11,7 @@ class SystemParameterTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		\App\SystemParameter::create([
+		\App\Models\SystemParameter::create([
 			'appointment_minutes' => '10',
 			'appointment_until_days' => '60',
 			'appointment_confirmed_email_subject' => 'Turno Confirmado',
