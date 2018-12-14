@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
-use App\Mail\AppointmentConfirmed;
+use App\Mails\AppointmentConfirmed;
 use App\Models\User;
 use Illuminate\Http\Request;
 
