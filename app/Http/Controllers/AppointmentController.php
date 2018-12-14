@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Appointment;
+use App\Models\Appointment;
 use App\Mail\AppointmentConfirmed;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class AppointmentController extends Controller
 {
 	public function index($piYear, $piMonth, $piDay, Request $request) {
-		$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+		$aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
 
 		$oToday = new Date();
 
@@ -38,7 +38,7 @@ class AppointmentController extends Controller
 
 		$oAppointment = new Appointment();
 
-		$oException = new  \App\Exception();
+		$oException = new  \App\Models\Exception();
 
 		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
@@ -80,7 +80,7 @@ class AppointmentController extends Controller
 			]
 		);
 
-		$oException = new \App\Exception();
+		$oException = new \App\Models\Exception();
 
 		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))->toArray()) {
 			// Clean session data to prevent errors
@@ -174,7 +174,7 @@ class AppointmentController extends Controller
 			return redirect('/admin/appointments');
 		}
 
-		$oException = new \App\Exception();
+		$oException = new \App\Models\Exception();
 
 		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))->toArray()) {
 			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();

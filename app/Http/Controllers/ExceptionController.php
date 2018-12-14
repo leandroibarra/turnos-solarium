@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Appointment;
-use App\Exception;
+use App\Models\Appointment;
+use App\Models\Exception;
 use Illuminate\Http\Request;
 use Jenssegers\Date\Date;
 
@@ -17,7 +17,7 @@ class ExceptionController extends Controller
 
 	public function __construct()
 	{
-		$this->aSystemParameters = \App\SystemParameter::find(1)->toArray();
+		$this->aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
 
 		$this->sPregMatchFormat = str_replace(
 			['/','YYYY', 'MM', 'DD', 'HH', 'mm'],

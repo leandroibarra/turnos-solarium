@@ -30,7 +30,7 @@ class AppointmentConfirmed extends Mailable
      */
     public function build()
     {
-		$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+		$aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
 
         return $this
 			->from([

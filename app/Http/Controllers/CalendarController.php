@@ -7,7 +7,7 @@ use Jenssegers\Date\Date;
 class CalendarController extends Controller
 {
     public function index($piYear, $piMonth) {
-    	$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+    	$aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
 
 		$oToday = new Date();
 
@@ -27,7 +27,7 @@ class CalendarController extends Controller
 
 		$oHeaderDateTime = clone $oDateTime;
 
-		$oException = new  \App\Exception();
+		$oException = new  \App\Models\Exception();
 
 		return view('web.partials.calendar')->with([
 			'oToday' => $oToday,
