@@ -12,7 +12,7 @@
 </head>
 <body>
     @php
-    $sFrom = (request()->segments()[0] == 'admin') ? 'admin' : '';
+    $sLink = (request()->is('admin/*') && !in_array(current(request()->attributes)['statusCode'], [401, 403])) ? 'admin' : '';
     @endphp
     <div class="md:flex min-h-screen">
         <div class="w-full bg-white flex items-center justify-center">
@@ -21,13 +21,13 @@
                     @yield('code', __('Oh no'))
                 </div>
 
-                <div class="w-16 h-1 bg-{{ ($sFrom == 'admin') ? 'primary' : 'gold' }} my-3 md:my-6"></div>
+                <div class="w-16 h-1 bg-{{ (request()->is('admin/*')) ? 'primary' : 'gold' }} my-3 md:my-6"></div>
 
                 <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal">
                     @yield('message')
                 </p>
 
-                <a href="{{ url('/'.$sFrom) }}" class="btn btn-lg btn-{{ ($sFrom == 'admin') ? 'primary' : 'gold' }}">{{ __('Go Home') }}</a>
+                <a href="{{ url('/'.$sLink) }}" class="btn btn-lg btn-{{ (request()->is('admin/*')) ? 'primary' : 'gold' }}">{{ __('Go Home') }}</a>
             </div>
         </div>
     </div>
