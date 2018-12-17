@@ -4,20 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Exception;
-use Illuminate\Http\Request;
+use App\Models\SystemParameter;
+
 use Jenssegers\Date\Date;
+
+use Illuminate\Http\Request;
 
 class ExceptionController extends Controller
 {
+	/**
+	 * @var array
+	 */
 	private $aSystemParameters;
 
+	/**
+	 * @var string
+	 */
 	private $sPregMatchFormat;
 
+	/**
+	 * @var string
+	 */
 	private $sFromFormat;
 
 	public function __construct()
 	{
-		$this->aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
+		$this->aSystemParameters = SystemParameter::find(1)->toArray();
 
 		$this->sPregMatchFormat = str_replace(
 			['/','YYYY', 'MM', 'DD', 'HH', 'mm'],
@@ -32,7 +44,13 @@ class ExceptionController extends Controller
 		);
 	}
 
-	public function list() {
+	/**
+	 * List next enabled exceptions.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function list()
+	{
 		$oException = new Exception();
 
 		return view('admin.exception')->with([
@@ -40,7 +58,15 @@ class ExceptionController extends Controller
 		]);
 	}
 
-	public function delete(Request $request, $id) {
+	/**
+	 * Delete logically (disable) an enabled exception.
+	 *
+	 * @param Request $request
+	 * @param integer $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function delete(Request $request, $id)
+	{
 		if ($request->ajax()) {
 			$aException = Exception::find($id);
 
@@ -65,15 +91,31 @@ class ExceptionController extends Controller
 		}
 	}
 
-	public function create() {
+	/**
+	 * Show exception creation form.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function create()
+	{
 		return view('admin.exception-create')->with([
 			'iAppointmentMinutes' => $this->aSystemParameters['appointment_minutes']
 		]);
 	}
 
-	public function store(Request $request) {
+	/**
+	 * Store a new exception.
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function store(Request $request)
+	{
+		// Validate request
 		$this->validateException($request);
 
+		// Create and save exception
 		$oException = new Exception($request->all());
 		$oException->save();
 
@@ -82,15 +124,24 @@ class ExceptionController extends Controller
 		return redirect('/admin/exceptions');
 	}
 
-	public function edit($id) {
+	/**
+	 * Show exception edition form.
+	 *
+	 * @param integer $id
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+	 */
+	public function edit($id)
+	{
 		$oException = Exception::find($id);
 
+		// Validate exception status
 		if (!(bool) $oException || !(bool) $oException->enable) {
 			Flash()->error(__('The exception is not valid or has been deleted.'))->important();
 
 			return redirect('/admin/exceptions');
 		}
 
+		// Format date and time range field data
 		$oException->datetimes = implode(__(' - '), [
 			date($this->sFromFormat, strtotime($oException->datetime_from)),
 			date($this->sFromFormat, strtotime($oException->datetime_to))
@@ -102,17 +153,29 @@ class ExceptionController extends Controller
 		]);
 	}
 
-	public function update(Request $request, $id) {
+	/**
+	 * Update the give exception.
+	 *
+	 * @param Request $request
+	 * @param integer $id
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function update(Request $request, $id)
+	{
 		$oException = Exception::find($id);
 
+		// Validate exception status
 		if (!(bool) $oException || !(bool) $oException->enable) {
 			Flash()->error(__('The exception is not valid or has been deleted.'))->important();
 
 			return redirect('/admin/exceptions');
 		}
 
+		// Validate request
 		$this->validateException($request);
 
+		// Update exception
 		Exception::whereId($id)->update([
 			'datetime_from' => $request->input('datetime_from'),
 			'datetime_to' => $request->input('datetime_to'),
@@ -126,15 +189,21 @@ class ExceptionController extends Controller
 		return redirect('/admin/exceptions');
 	}
 
-	public function validateException(&$poRequest) {
+	/**
+	 * Validate request.
+	 *
+	 * @param Request $poRequest
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function validateException(&$poRequest)
+	{
 		$this->validate(
 			$poRequest,
 			[
 				'datetimes' => [
 					'required',
 					function ($attribute, $value, $fail) use ($poRequest) {
-
-
+						// Validate date and time range format
 						if (preg_match('/^'.$this->sPregMatchFormat.__(' - ').$this->sPregMatchFormat.'$/', $value) != 1) {
 							$fail(__('The :attribute field is not valid.'));
 						} else {
@@ -143,15 +212,18 @@ class ExceptionController extends Controller
 							$sDateTimeFrom = Date::createFromFormat($this->sFromFormat, $sDateTimeFrom);
 							$sDateTimeTo = Date::createFromFormat($this->sFromFormat, $sDateTimeTo);
 
+							// Validate date and time from less than date and time to
 							if ($sDateTimeFrom >= $sDateTimeTo) {
 								$fail(__('The :attribute field is not valid.'));
 							} else {
 								$oAppointment = new Appointment();
 								$iAppointment = count($oAppointment->getGrantedBetweenDates($sDateTimeFrom, $sDateTimeTo)->toArray());
 
+								// Validate fi there are any appointment into date and time range
 								if ((bool) $iAppointment) {
 									$fail(trans_choice('plurals.datetimes', $iAppointment));
 								} else {
+									// Complete rest of data
 									$poRequest->request->set('datetime_from', $sDateTimeFrom->format('Y-m-d H:i'));
 									$poRequest->request->set('datetime_to', $sDateTimeTo->format('Y-m-d H:i'));
 								}

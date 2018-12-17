@@ -1,7 +1,7 @@
 <header>
     <div class="row mx-auto p-1">
         <div class="col-2 text-center">
-            @if ($oLimitPrevNav->format('Y-m-d')<$oRequestDateTime->format('Y-m-d') && $oLimitPrevNav->format('m')+1!=$oToday->format('m'))
+            @if ($oLimitPrevNav->format('Y-m-d')<$oRequestDate->format('Y-m-d') && $oLimitPrevNav->format('m')+1!=$oToday->format('m'))
                 <h2>
                     <a data-year="{{ $oLimitPrevNav->format('Y') }}" data-month="{{  $oLimitPrevNav->format('m') }}" class="prev-month">
                         <i class="arrow left"></i>
@@ -10,7 +10,7 @@
             @endif
         </div>
         <div class="col-8">
-            <h2 class="text-center">{{ $oRequestDateTime->format('F Y') }}</h2>
+            <h2 class="text-center">{{ $oRequestDate->format('F Y') }}</h2>
         </div>
         <div class="col-2 text-center">
             @if ($oLimitNextNav->format('Y-m-d')>$oToday->format('Y-m-d') && $oLimitNextNav->format('Y-m-d')<$oLimitDate->format('Y-m-d'))
@@ -42,9 +42,9 @@
 
     @for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
         @if (
-            $oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') ||
-            $oDateTime->format('Y-m-d')>$oLimitDate->format('Y-m-d') ||
-            $oDateTime->format('Y-m')!=$oRequestDateTime->format('Y-m')
+            $oToday->format('Y-m-d')>$oDate->format('Y-m-d') ||
+            $oDate->format('Y-m-d')>$oLimitDate->format('Y-m-d') ||
+            $oDate->format('Y-m')!=$oRequestDate->format('Y-m')
         )
             @php
             $sClasses = 'd-sm-inline-block bg-light text-muted';
@@ -54,7 +54,7 @@
                 @php
                 $sClasses = 'weekend-day text-muted';
                 @endphp
-            @elseif (validateDateInExceptions($oDateTime->format('Y-m-d'), $aExceptions))
+            @elseif (validateDateInExceptions($oDate->format('Y-m-d'), $aExceptions))
                 @php
                 $sClasses = 'exception-day bg-light text-muted';
                 @endphp
@@ -66,22 +66,22 @@
         @endif
 
         @php
-        $sClasses .= ($oToday->format('Y-m-d')>$oDateTime->format('Y-m-d') && ($oDateTime->format('Y-m')!=$oToday->format('Y-m') || $oRequestDateTime->format('Y-m')==$oToday->format('Y-m'))) ? ' d-none d-md-block' : (($oToday->format('Y-m-d') == $oDateTime->format('Y-m-d')) ? ' current-day' : '');
+        $sClasses .= ($oToday->format('Y-m-d')>$oDate->format('Y-m-d') && ($oDate->format('Y-m')!=$oToday->format('Y-m') || $oRequestDate->format('Y-m')==$oToday->format('Y-m'))) ? ' d-none d-md-block' : (($oToday->format('Y-m-d') == $oDate->format('Y-m-d')) ? ' current-day' : '');
         @endphp
 
         <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate {{ $sClasses }}"
              @if (strpos($sClasses, 'bookable-day') !== false)
-                data-year="{{ $oDateTime->format('Y') }}"
-                data-month="{{ $oDateTime->format('m') }}"
-                data-day="{{ $oDateTime->format('d') }}"
-                data-month-label="{{ $oDateTime->format('F') }}"
+                data-year="{{ $oDate->format('Y') }}"
+                data-month="{{ $oDate->format('m') }}"
+                data-day="{{ $oDate->format('d') }}"
+                data-month-label="{{ $oDate->format('F') }}"
                 data-target="#appointmentModal"
                 data-toggle="modal"
             @endif
         >
             <h5 class="row align-items-center">
-                <span class="date col-1">{{ $oDateTime->format('j') }}</span>
-                <small class="col d-sm-none text-center text-muted">{{ $oDateTime->format('l') }}</small>
+                <span class="date col-1">{{ $oDate->format('j') }}</span>
+                <small class="col d-sm-none text-center text-muted">{{ $oDate->format('l') }}</small>
                 <span class="col-1"></span>
             </h5>
         </div>
@@ -91,7 +91,7 @@
         @endif
 
         @php
-        $oDateTime->modify('+1 day');
+        $oDate->modify('+1 day');
 
         $iDays++;
         @endphp

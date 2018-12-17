@@ -3,17 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\SystemParameter;
+
 use Illuminate\Http\Request;
 
 class SystemParameterController extends Controller
 {
-    public function edit() {
+	/**
+	 * Show system parameters edition form.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+    public function edit()
+	{
     	return view('admin.system-parameters')->with([
     		'aSystemParameter' => SystemParameter::find(1)->toArray()
 		]);
 	}
 
-	public function update(Request $request, $id) {
+	/**
+	 * Update system parameters.
+	 *
+	 * @param Request $request
+	 * @param integer $id
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function update(Request $request, $id)
+	{
+		// Validate request
 		$this->validate(
 			$request,
 			[
@@ -32,6 +49,7 @@ class SystemParameterController extends Controller
 			]
 		);
 
+		// Update system parameters
 		SystemParameter::whereId($id)->update([
 			'appointment_until_days' => $request->input('appointment_until_days'),
 			'appointment_confirmed_email_subject' => strip_tags($request->input('appointment_confirmed_email_subject')),

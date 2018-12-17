@@ -178,7 +178,7 @@ jQuery(document).ready(function() {
 
         if (oContent.length > iShowChar) {
             var showContent = oContent.substr(0, iShowChar);
-            var hiddenContent = oContent.substr(iShowChar-1, oContent.length - iShowChar);
+            var hiddenContent = oContent.substr(iShowChar, oContent.length - iShowChar);
 
             var sHtml = showContent + '<span class="more-ellipses">...</span><span class="hidden-content"><span>' + hiddenContent + '</span>&nbsp;<span class="more-link">{{ __('more') }}</span></span>';
 

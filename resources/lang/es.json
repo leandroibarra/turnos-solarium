@@ -112,5 +112,7 @@
   "Users": "Usuarios",
   "Permissions": "Permisos",
   "None": "Ninguno",
-  "You": "Tú"
+  "You": "Tú",
+  "Parameters are not valid": "Los parámetros no son válidos",
+  "Permissions were saved successfully": "Los permisos fueron guardados exitosamente"
 }
