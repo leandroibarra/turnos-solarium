@@ -114,5 +114,6 @@
   "None": "Ninguno",
   "You": "Tú",
   "Parameters are not valid": "Los parámetros no son válidos",
-  "Permissions were saved successfully": "Los permisos fueron guardados exitosamente"
+  "Permissions were saved successfully": "Los permisos fueron guardados exitosamente",
+  "You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888": "Debe especificar el código de área y el número de teléfono, por ejemplo: +54 011 4444-0000 ó 341 1118888"
 }
