@@ -12,7 +12,7 @@
                 $oRequestDate->hour($iHour);
                 @endphp
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
                     $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
@@ -65,7 +65,7 @@
                 $oRequestDate->hour($iHour);
                 @endphp
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
                     $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
@@ -125,7 +125,7 @@
                     @endphp
                 @endif
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
                     $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp

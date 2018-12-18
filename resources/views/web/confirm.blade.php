@@ -48,6 +48,7 @@
                     <label for="phone" class="mb-1 label-form">{{ __('Phone Number') }} <span class="text-danger font-weight-bold">*</span></label>
 
                     <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" />
+                    <small class="form-text text-muted my-0">{{ __('You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888') }}</small>
 
                     @if ($errors->has('phone'))
                     <span class="invalid-feedback" role="alert">
