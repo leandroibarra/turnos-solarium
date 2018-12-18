@@ -49,12 +49,15 @@ class AppointmentController extends Controller
 			else
 				$aNight[] = $iHour;
 
+		$aSystemParameters = SystemParameter::find(1)->toArray();
+
 		$oAppointment = new Appointment();
 
 		$oException = new Exception();
 
 		return view('web.partials.appointment')->with([
-			'iAppointmentMinutes' => SystemParameter::find(1)->toArray()['appointment_minutes'],
+			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
+			'iAppointmentsPerHour' => 60 / $aSystemParameters['appointment_minutes'],
 			'oToday' => new Date(),
 			'oRequestDate' => $oRequestDate,
 			'aAppointmentToExclude' => ((bool) $request->headers->get('appointment-id')) ? $oAppointment::find($request->headers->get('appointment-id'))->toArray() : [],
