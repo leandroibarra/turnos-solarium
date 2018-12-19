@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center container-center">
-        <div class="col-md-8">
+        <div class="col-12 col-lg-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Register') }}</h2>
 
             <form method="POST" action="{{ route('register') }}">
@@ -43,8 +43,8 @@
                     <button type="submit" class="btn btn-block btn-gold">{{ __('Register') }}</button>
                 </div>
 
-                <div class="form-group mb-0 text-center">
-                    <span>{{__('Do you already have an account?') }} </span>
+                <div class="form-group mb-0 text-center form-links">
+                    <span class="mr-0 mr-sm-1">{{__('Do you already have an account?') }}</span>
                     <a href="{{ route('login') }}">{{ __('Login') }}</a>
                 </div>
             </form>

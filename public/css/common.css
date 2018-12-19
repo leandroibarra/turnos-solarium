@@ -1,4 +1,11 @@
 /*
+ * Utilities
+ */
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/*
  * Arrows navigation
  */
 i.arrow {
@@ -29,6 +36,33 @@ i.arrow:hover {
 }
 
 /*
+ * Sticky (appointments' modal - only three stackable items)
+ */
+.sticky-wrapper .sticky-content {
+    height: 33.333333%;
+}
+.sticky-content {
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+.sticky-wrapper .sticky-content:nth-child(2) {
+    top: 33.333333%;
+}
+.sticky-wrapper .sticky-content:nth-child(3) {
+    top: 66.666666%;
+}
+.sticky-item {
+    background-color: #FFFFFF;
+    box-shadow: 0 0.125rem 0 rgba(0, 0, 0, 0.075);
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    padding: 5px;
+}
+
+/*
  * Calendar navigation
  */
 .prev-month:hover,
@@ -41,6 +75,15 @@ i.arrow:hover {
  */
 .dropdown-menu {
     min-width: 100px;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+.dropdown-menu .dropdown-item {
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+}
+.dropdown-menu .dropdown-item:hover {
+    border-radius: 0.25rem;
 }
 .dropdown-item.active,
 .dropdown-item:active,
@@ -84,17 +127,6 @@ i.arrow:hover {
     .navbar-expand-lg>.container-fluid {
         flex-wrap: nowrap;
         -ms-flex-wrap: nowrap;
-    }
-    .dropdown-menu {
-        padding-bottom: 0;
-        padding-top: 0;
-    }
-    .dropdown-menu .dropdown-item {
-        padding-bottom: 0.5rem;
-        padding-top: 0.5rem;
-    }
-    .dropdown-menu .dropdown-item:hover {
-        border-radius: 0.25rem;
     }
 }
 @media (min-width: 1200px) {
@@ -213,10 +245,33 @@ i.arrow:hover {
     }
 
     /*
+     * Book wrapper
+     */
+    .book-wrapper {
+        height: 70vh;
+    }
+    .book-wrapper .col-12:first-child {
+        max-height: 70vh;
+        overflow-y: scroll;
+    }
+    .book-wrapper .col-12:last-child {
+        max-height: 70vh;
+    }
+
+    /*
      * Calendar
      */
+    .calendar-container header {
+        background-color: #FFFFFF;
+        box-shadow: 0 0.125rem 0 rgba(0, 0, 0, 0.075);
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        z-index: 1000;
+    }
     .calendar-container h2 {
         font-size: 1.2rem;
+        white-space: nowrap;
     }
 
     /*
@@ -229,25 +284,41 @@ i.arrow:hover {
     .appointment-container .date {
         padding-left: 4px;
     }
-    .appointment-container h2,
-    .appointment-content h5 {
-        font-size: 1.2rem;
-    }
-    .appointment-content span,
-    .appointment-content button {
-        font-size: 0.9rem;
+
+    /*
+     * Form links after submit button
+     */
+    .form-links span::after {
+        clear: both;
+        content: "";
+        display: block;
     }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
+    /*
+     * Calendar
+     */
     .day {
         height: 6vw;
+    }
+
+    /*
+     * Form links after submit button
+     */
+    .form-links span::after {
+        clear: both;
+        content: "";
+        display: block;
     }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
+    /*
+     * Calendar
+     */
     .day {
         height: 6vw;
     }
@@ -255,6 +326,9 @@ i.arrow:hover {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    /*
+     * Calendar
+     */
     .day {
         height: 6vw;
     }

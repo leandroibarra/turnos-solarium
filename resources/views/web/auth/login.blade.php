@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center container-center">
-        <div class="col-md-8">
+        <div class="col-12 col-lg-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Login') }}</h2>
 
             <form method="POST" action="{{ route('login') }}">
@@ -38,8 +38,8 @@
                 </div>
 
                 @if (Route::has('register'))
-                <div class="form-group mb-0 text-center">
-                    <span>{{__("You don't have an account yet?") }} </span>
+                <div class="form-group mb-0 text-center form-links">
+                    <span class="mr-0 mr-sm-1">{{__("You don't have an account yet?") }}</span>
                     <a href="{{ route('register') }}">{{ __('Register') }}</a>
                 </div>
                 @endif

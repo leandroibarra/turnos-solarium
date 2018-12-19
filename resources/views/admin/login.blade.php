@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center container-center">
-        <div class="col-md-8">
+        <div class="col-12 col-lg-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Administration') }}</h2>
 
             @include('flash::message')
