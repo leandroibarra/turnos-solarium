@@ -17,10 +17,15 @@ class AdminController extends Controller
 	 */
 	protected $redirectTo = 'admin/appointments';
 
+	/**
+	 * Show the administration's login form.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
 	public function showLoginForm()
 	{
 		if (Auth::user())
-			return redirect('admin/appointments');
+			return redirect($this->redirectTo);
 
 		return view('admin.login');
 	}
@@ -77,9 +82,15 @@ class AdminController extends Controller
 		return $this->sendFailedLoginResponse($request);
 	}
 
-	public function logout()
+	/**
+	 * Log the user out of the application.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function logout(Request $request)
 	{
-		session()->invalidate();
+		$request->session()->invalidate();
 
 		return redirect('/admin/login');
 	}

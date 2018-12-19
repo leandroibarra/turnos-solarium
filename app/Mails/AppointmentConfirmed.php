@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mails;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AppointmentConfirmed extends Mailable
 {
@@ -30,7 +29,7 @@ class AppointmentConfirmed extends Mailable
      */
     public function build()
     {
-		$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+		$aSystemParameters = \App\Models\SystemParameter::find(1)->toArray();
 
         return $this
 			->from([

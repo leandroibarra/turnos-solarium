@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">
+            <h4 class="mb-3 overflow-hidden">
                 {{ __('Appointments') }}
                 <!--a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>

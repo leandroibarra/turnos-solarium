@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Your data') }}</h2>
-            <h5 class="mt-0 mb-3">{{ __('To complete the reservation, please complete the following data') }}:</h5>
+            <h5 class="text-center text-md-left mt-0 mb-3">{{ __('To complete the reservation, please complete the following data') }}:</h5>
         </div>
     </div>
 
@@ -13,7 +13,7 @@
         @csrf
 
         <div class="row">
-            <div class="col-8 col-md-9">
+            <div class="col-12 col-md-9">
                 <div class="row">
                     <div class="col-6 col-md-6 mb-2">
                         <a href="{{ route('book.index') }}">
@@ -21,7 +21,7 @@
                             <span>{{ __('Choose other appointment') }}</span>
                         </a>
                     </div>
-                    <div class="col-6 col-md-6 mb-1 text-left text-md-right text-muted">
+                    <div class="col-6 col-md-6 mb-1 text-right text-muted text-nowrap">
                         <span class="text-danger font-weight-bold">*</span> {{ __('Mandatory fields') }}
                     </div>
                 </div>
@@ -54,6 +54,8 @@
                         <strong>{{ $errors->first('phone') }}</strong>
                     </span>
                     @endif
+
+                    <small class="form-text text-muted my-0">{{ __('You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888') }}</small>
                 </div>
 
                 <div class="form-group mb-2">
@@ -63,16 +65,16 @@
                 </div>
             </div>
 
-            <div class="col-4 col-md-3 appointment-container">
-                <div class="border p-3 appointment-content">
+            <div class="col-12 col-md-3 appointment-container">
+                <div class="border p-3 mt-2 mt-md-0 appointment-content">
                     <h5 class="text-center">{{ __('Selected appointment') }}</h5>
                     <div>
-                        <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>
-                        <span class="d-block d-md-inline-block">{{ $oDateTime->format('d').' '.__('of').' '.$oDateTime->format('F') }}</span>
+                        <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>
+                        <span class="d-block-inline-block d-md-block d-lg-inline-block">{{ $oDateTime->format('d').' '.__('of').' '.$oDateTime->format('F') }}</span>
                     </div>
                     <div class="mt-1 mt-md-0">
-                        <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>
-                        <span class="d-block d-md-inline-block">{{ $oDateTime->format('H:ia') }}</span>
+                        <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>
+                        <span class="d-block-inline-block d-md-block d-lg-inline-block">{{ $oDateTime->format('H:ia') }}</span>
                     </div>
                     <div class="mt-1 text-center">
                         <button type="submit" class="btn btn-block btn-gold">{{ __('Book') }}</button>
@@ -87,23 +89,6 @@
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    // Sticky appointment sidebar
-    var oSidebar = jQuery('.appointment-content'),
-        oWindow = jQuery(window),
-        iOffset = oSidebar.offset(),
-        iPaddingTop = 25;
-
-    oWindow.scroll(function() {
-        if (oWindow.scrollTop() > iOffset.top)
-            oSidebar.stop().animate({
-                marginTop: oWindow.scrollTop() - iOffset.top + iPaddingTop
-            });
-        else
-            oSidebar.stop().animate({
-                marginTop: 0
-            });
-    });
-
     // Prevent multiple clicks
     jQuery('#confirmForm').submit(function() {
         jQuery('button[type=submit]', this)

@@ -27,7 +27,7 @@ class CheckAppointment
 			return redirect('/book');
 		}
 
-    	$oAppointment = \App\Appointment::where([
+    	$oAppointment = \App\Models\Appointment::where([
 			'date' => Session::get('date'),
 			'time' => Session::get('time'),
 			'status' => 'granted'
