@@ -1,6 +1,6 @@
-<div class="row">
-    <div class="col-12 col-md-4 text-center">
-        <h5 class="mb-2">{{ __('Morning') }}</h5>
+<div class="row sticky-wrapper">
+    <div class="col-12 col-md-4 text-center sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Morning') }}</h5>
 
         @if ((bool) $aMorning)
             @php
@@ -52,8 +52,8 @@
         @endif
     </div>
 
-    <div class="col-12 col-md-4 text-center mt-2 mt-md-0">
-        <h5 class="mb-2">{{ __('Afternoon') }}</h5>
+    <div class="col-12 col-md-4 text-center mt-2 mt-md-0 sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Afternoon') }}</h5>
 
         @if ((bool) $aAfternoon)
             @php
@@ -105,8 +105,8 @@
         @endif
     </div>
 
-    <div class="col-12 col-md-4 text-center mt-2 mt-md-0">
-        <h5 class="mb-2">{{ __('Night') }}</h5>
+    <div class="col-12 col-md-4 text-center mt-2 mt-md-0 sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Night') }}</h5>
 
         @if ((bool) $aNight)
             @php

@@ -10,18 +10,18 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-8 col-md-9">
+    <div class="row book-wrapper">
+        <div class="col-12 col-md-9">
             <div class="calendar-container"></div>
         </div>
 
-        <div class="col-4 col-md-3 appointment-container">
-            <header>
+        <div class="col-12 col-md-3 appointment-container">
+            <header class="d-none d-md-block">
                 <div class="p-1">
                     <h2>&nbsp;</h2>
                 </div>
             </header>
-            <div class="border p-3 appointment-content">
+            <div class="border p-3 mt-2 mt-md-0 appointment-content">
                 <div class="text-center text-md-left">{{ __('Select a day and choose the time you wish book.') }}</div>
             </div>
         </div>
@@ -66,23 +66,6 @@ jQuery(document).ready(function() {
         event.stopPropagation();
 
         drawCalendar(jQuery(this).data('year'), jQuery(this).data('month'));
-    });
-
-    // Sticky appointment sidebar
-    var oSidebar    = jQuery('.appointment-content'),
-        oWindow     = jQuery(window),
-        iOffset     = oSidebar.offset(),
-        iPaddingTop = 15;
-
-    oWindow.scroll(function() {
-        if (oWindow.scrollTop() > iOffset.top)
-            oSidebar.stop().animate({
-                marginTop: oWindow.scrollTop() - iOffset.top + iPaddingTop
-            });
-        else
-            oSidebar.stop().animate({
-                marginTop: 0
-            });
     });
 
     // Open appointment modal
@@ -168,20 +151,27 @@ jQuery(document).ready(function() {
                 var sContent = '' +
                     '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>\n' +
                     '<div>\n' +
-                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
-                    '   <span class="d-block d-md-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +
+                    '   <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
+                    '   <span class="d-block-inline-block d-md-block d-lg-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +
                     '</div>\n' +
                     '<div class="mt-1 mt-md-0">\n' +
-                    '   <span class="d-block d-md-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>\n' +
-                    '   <span class="d-block d-md-inline-block">' + oActive.data('hour') + '</span>\n' +
+                    '   <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Time') }}: </span>\n' +
+                    '   <span class="d-block-inline-block d-md-block d-lg-inline-block">' + oActive.data('hour') + '</span>\n' +
                     '</div>\n' +
                     '<div class="mt-1 text-center">\n' +
                     '   <a href="{{ route('book.create') }}" role="button" class="btn btn-block btn-gold">{{ __('Confirm') }}</a>\n' +
                     '</div>\n';
 
+                // Replace appointment sidebar content
                 jQuery('.appointment-content').html(sContent);
 
+                // Hide modal
                 jQuery('#appointmentModal').modal('hide');
+
+                // Apply scroll to appointment sidebar
+                jQuery('html').animate({
+                    scrollTop: jQuery('.appointment-content').find('a[role="button"]').offset().top
+                });
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')
@@ -219,6 +209,19 @@ function drawCalendar(piYear, piMonth) {
             setTimeout(function() {
                 jQuery('.spinner-container').addClass('d-none');
             }, iRemainig);
+
+            // Box wrapper
+            var oWrapper = jQuery('.book-wrapper .col-12:first-child');
+
+            // Apply scroll to where corresponds
+            if (jQuery('.current-day').length > 0)
+                oWrapper.animate({
+                    scrollTop: jQuery('.current-day').offset().top - oWrapper.offset().top - jQuery('.calendar-container header').height()
+                });
+            else
+                oWrapper.animate({
+                    scrollTop: 0
+                });
         }
     });
 }

@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">
+            <h4 class="mb-3 overflow-hidden">
                 {{ __('Exceptions') }}
 
                 @can(['admin.exception.create', 'admin.exception.store'])

@@ -446,7 +446,7 @@
 
 
                                     <div class="">
-                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px;"><![endif]-->
+                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 2px; padding-bottom: 2px;"><![endif]-->
                                         <div style="color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">
                                             <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 14px; line-height: 16px;"><strong>{{ $sAppName }}</strong></span></p></div>
                                         </div>
