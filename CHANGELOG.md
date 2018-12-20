@@ -1,6 +1,13 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v1.1.1](https://github.com/leandroibarra/turnos-solarium/tree/v1.1.1) (2018-12-20)
+**Cambiado**
+- Centrado de formularios de login y registro.
+
+**Corregido**
+- Obtención de código de excepción.
+
 ## [v1.1.0](https://github.com/leandroibarra/turnos-solarium/tree/v1.1.0) (2018-12-19)
 **Agregado**
 - Comentarios en código.
