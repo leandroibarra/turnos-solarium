@@ -154,6 +154,10 @@
                 overflow: hidden;
                 font-size: 0px; } }
 
+        .body-content p {
+            margin: 1.2rem;
+        }
+
     </style>
 </head>
 <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f8f8f8">
@@ -316,7 +320,7 @@
                                                 <table class="divider_content" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 0px solid transparent;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
                                                     <tbody>
                                                     <tr style="vertical-align: top">
-                                                        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;xxfont-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;xxfont-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%" class="body-content">
                                                             {!! str_replace(
                                                                 [
                                                                     '@_NAME_@',
