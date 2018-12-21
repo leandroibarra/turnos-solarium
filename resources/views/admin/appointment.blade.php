@@ -43,12 +43,23 @@
                     @endphp
                     <li class="list-group-item p-2">
                         <div class="row">
-                            <div class="col-12 col-md-8 align-self-center text-center text-md-left">
-                                <i class="far fa-clock text-muted mr-2"></i>{{ $sTimeBody }}
-                                <i class="far fa-user text-muted ml-3 mr-2"></i>{{ $aAppointment->name }}
-                                <br />
-                                <i class="far fa-envelope text-muted mr-2"></i>{{ $aAppointment->user['email'] }}
-                                <i class="fas fa-mobile-alt text-muted ml-3 mr-2"></i>{{ $aAppointment->phone }}
+                            <div class="col-12 col-md-8 align-self-center">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                        <i class="far fa-clock text-muted mr-2"></i>{{ $sTimeBody }}
+                                    </div>
+                                    <div class="col col-md-8 text-center text-sm-left">
+                                        <i class="far fa-envelope text-muted mr-2"></i>{{ $aAppointment->user['email'] }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                        <i class="far fa-user text-muted mr-2"></i>{{ $aAppointment->name }}
+                                    </div>
+                                    <div class="col col-md-8 text-center text-sm-left">
+                                        <i class="fas fa-mobile-alt text-muted mr-2"></i>{{ $aAppointment->phone }}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
                                 @can(['admin.appointment.reschedule', 'admin.appointment.update'])

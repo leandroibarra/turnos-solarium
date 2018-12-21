@@ -23,40 +23,48 @@
                 <li class="list-group-item p-2">
                     <div class="row">
                         <div class="col-12 col-md-8 align-self-center text-center text-md-left">
-                            <i class="far fa-envelope text-muted mr-2"></i>{{ $aUser->email }}
-                            @if (Auth::user()->id == $aUser->id)
-                            <span class="badge badge-success">{{ __('You') }}</span>
-                            @endif
-
-                            <i class="far fa-user text-muted ml-3 mr-2"></i>{{ (!is_null($aUser->name)) ? $aUser->name : '-' }}
-                            <i class="fas fa-mobile-alt text-muted ml-3 mr-2"></i>{{ (!is_null($aUser->phone)) ? $aUser->phone : '-' }}
-
-                            @php
-                            $aRoles = $aUser->getRoleNames();
-                            @endphp
-
-                            @if (!$aRoles->isEmpty())
-                                <div>
-                                @foreach ($aRoles as $sRole)
-                                    @php
-                                    $sClass = '';
-
-                                    switch ($sRole) {
-                                        case 'Sysadmin':
-                                            $sClass = 'danger';
-                                            break;
-                                        case 'Admin':
-                                            $sClass = 'warning';
-                                            break;
-                                        default:
-                                            $sClass = 'info';
-                                            break;
-                                    }
-                                    @endphp
-                                    <span class="badge badge-{{ $sClass }}">{{ $sRole }}</span>
-                                @endforeach
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                    <i class="far fa-user text-muted mr-2"></i>{{ (!is_null($aUser->name)) ? $aUser->name : '-' }}
                                 </div>
-                            @endif
+                                <div class="col col-md-8 text-center text-sm-left">
+                                    <i class="far fa-envelope text-muted mr-2"></i>{{ $aUser->email }}
+                                    @if (Auth::user()->id == $aUser->id)
+                                        <span class="badge badge-success">{{ __('You') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                    <i class="fas fa-mobile-alt text-muted mr-2"></i>{{ (!is_null($aUser->phone)) ? $aUser->phone : '-' }}
+                                </div>
+                                <div class="col col-md-8 text-center text-sm-left">
+                                    @php
+                                        $aRoles = $aUser->getRoleNames();
+                                    @endphp
+
+                                    @if (!$aRoles->isEmpty())
+                                        @foreach ($aRoles as $sRole)
+                                            @php
+                                                $sClass = '';
+
+                                                switch ($sRole) {
+                                                    case 'Sysadmin':
+                                                        $sClass = 'danger';
+                                                        break;
+                                                    case 'Admin':
+                                                        $sClass = 'warning';
+                                                        break;
+                                                    default:
+                                                        $sClass = 'info';
+                                                        break;
+                                                }
+                                            @endphp
+                                            <span class="badge badge-{{ $sClass }}">{{ $sRole }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
                             @can(['admin.permission.edit', 'admin.permission.update'])
