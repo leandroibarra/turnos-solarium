@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/bootstrap-4.1.3.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/bootstrap-4.1.3/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/web.css') }}" rel="stylesheet" type="text/css" />
 </head>
@@ -23,7 +23,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.3.1.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/bootstrap-4.1.3.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('plugins/bootstrap-4.1.3/bootstrap    .js') }}" type="text/javascript"></script>
 
     <!-- Page Scripts -->
     @yield('page-scripts')

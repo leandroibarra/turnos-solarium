@@ -7,7 +7,7 @@
     <title>@yield('title')</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/bootstrap-4.1.3.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/bootstrap-4.1.3/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/errors.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body>
