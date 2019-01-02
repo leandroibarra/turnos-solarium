@@ -60,7 +60,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // Initial calendar
-    drawCalendar({{date('Y')}}, {{date('m')}});
+    drawCalendar('{{date('Y')}}', '{{date('m')}}');
 
     // Next or prev month clicks
     jQuery('.calendar-container').on('click', '.prev-month, .next-month', function(event) {
