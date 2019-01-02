@@ -75,12 +75,12 @@
 @endsection
 
 @section('page-styles')
-<link href="{{ asset('css/daterangepicker-3.0.3.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-scripts')
 <script src="{{ asset('js/moment-with-locales-2.18.1.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/daterangepicker-3.0.3.js') }}" type="text/javascript"></script>
+<script src="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
