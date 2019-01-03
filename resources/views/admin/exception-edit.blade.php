@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('exception.update', ['id' => $aException['id']]) }}">
+            <form method="POST" action="{{ route('exception.update', ['id' => $aException['id']]) }}" id="exceptionEditForm">
                 @method('PUT')
 
                 @csrf
@@ -27,9 +27,9 @@
                     <input id="datetimes" type="text" class="form-control{{ $errors->has('datetimes') ? ' is-invalid' : '' }}" name="datetimes" value="{{ old('datetimes', $aException['datetimes']) }}" />
 
                     @if ($errors->has('datetimes'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('datetimes') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -53,9 +53,9 @@
                     </div>
 
                     @if ($errors->has('type'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('type') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -162,6 +162,15 @@ jQuery(document).ready(function() {
 
         return sDateTime;
     }
+
+    // Prevent multiple clicks
+    jQuery('#exceptionEditForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
 });
 </script>
 @endsection

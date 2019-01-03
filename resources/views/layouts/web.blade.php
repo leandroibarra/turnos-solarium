@@ -23,7 +23,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.3.1.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('plugins/bootstrap-4.1.3/bootstrap    .js') }}" type="text/javascript"></script>
+    <script src="{{ asset('plugins/bootstrap-4.1.3/bootstrap.js') }}" type="text/javascript"></script>
 
     <!-- Page Scripts -->
     @yield('page-scripts')

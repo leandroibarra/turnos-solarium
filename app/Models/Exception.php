@@ -22,13 +22,16 @@ class Exception extends Model
 	protected $fillable = ['datetime_from', 'datetime_to', 'type', 'observations'];
 
 	/**
-	 * Retrieve enabled exceptions for the future.
+	 * Retrieve current and future enabled exceptions.
 	 *
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getNextEnabled() {
+	public function getCurrentAndNextEnabled() {
+		$sCurrentDateTime = date('Y-m-d H:i:s');
+
 		return $this
-			->where('datetime_from', '>', date('Y-m-d H:i:s'))
+			->whereRaw('? BETWEEN datetime_from AND datetime_to', [$sCurrentDateTime])
+			->orWhere('datetime_from', '>', $sCurrentDateTime)
 			->where('enable', '=', '1')
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
@@ -44,9 +47,8 @@ class Exception extends Model
 	 */
 	public function getEnabledBetweenDates($psDateTimeFrom, $psDateTimeTo) {
 		return $this
-			->where('datetime_from', '>=', $psDateTimeFrom)
-			->where('datetime_to', '<=', $psDateTimeTo)
-			->where('enable', '=', '1')
+			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeFrom, 1])
+			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeTo, 1])
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
 			->get();

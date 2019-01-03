@@ -1,6 +1,23 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v1.1.2](https://github.com/leandroibarra/turnos-solarium/tree/v1.1.2) (2019-01-02)
+**Agregado**
+- Margen a párrafos en cuerpo de email.
+- Boton para acceder a reserva online desde la administración.
+- Estilos a contenedores de mensajes de error de formularios.
+
+**Cambiado**
+- Reestructuración de plugins css/js.
+- Template de email de confirmación de turno.
+
+**Corregido**
+- Centrado de formularios de login y registro.
+- Layouts y estilos responsive.
+- Parámetros de meses en funciones de calendario.
+- Consulta SQL en método de modelo de excepciones.
+- Anchos de columnas segun tamaños de grilla.
+
 ## [v1.1.1](https://github.com/leandroibarra/turnos-solarium/tree/v1.1.1) (2018-12-20)
 **Cambiado**
 - Centrado de formularios de login y registro.
