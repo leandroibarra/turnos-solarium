@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">
+            <h4 class="mb-3 overflow-hidden">
                 {{ __('Exceptions') }}
 
                 @can(['admin.exception.create', 'admin.exception.store'])
@@ -30,13 +30,21 @@
                 @foreach ($aEnabledExceptions as $iKey=>$aException)
                     <li class="list-group-item p-2">
                         <div class="row">
-                            <div class="col-12 col-md-4 align-self-top text-center text-md-left">
-                                <label class="text-muted mb-0 mr-1">{{ __('From') }}:</label>{{ Date::createFromFormat('Y-m-d H:i:s', $aException->datetime_from)->format(__('m/d/y H:i \\h\\s')) }}<br />
-                                <label class="text-muted mb-0 mr-1">{{ __('To') }}:</label>{{ Date::createFromFormat('Y-m-d H:i:s', $aException->datetime_to)->format(__('m/d/y H:i \\h\\s')) }}
-                            </div>
-                            <div class="col-12 col-md-6 align-self-top text-center text-md-left">
-                                <label class="text-muted mb-0 mr-1">{{ __('Type') }}:</label>{{ __(ucfirst($aException->type)) }}<br />
-                                <label class="text-muted mb-0 mr-1">{{ __('Obs.') }}:</label><span class="observations">{{ (!is_null($aException->observations)) ? $aException->observations : '-' }}</span>
+                            <div class="col-12 col-md-10 align-self-top text-center text-md-left">
+                                <div class="row">
+                                    <div class="col-12 col-md-5 text-center text-md-left order-1 order-md-1">
+                                        <label class="text-muted mb-0 mr-1">{{ __('From') }}:</label>{{ Date::createFromFormat('Y-m-d H:i:s', $aException->datetime_from)->format(__('m/d/y H:i \\h\\s')) }}
+                                    </div>
+                                    <div class="col-12 col-md-7 text-center text-md-left order-3 order-md-2">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Type') }}:</label>{{ __(ucfirst($aException->type)) }}
+                                    </div>
+                                    <div class="col-12 col-md-5 text-center text-md-left order-2 order-md-3">
+                                        <label class="text-muted mb-0 mr-1">{{ __('To') }}:</label>{{ Date::createFromFormat('Y-m-d H:i:s', $aException->datetime_to)->format(__('m/d/y H:i \\h\\s')) }}
+                                    </div>
+                                    <div class="col-12 col-md-7 text-center text-md-left order-4 order-md-4">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Obs.') }}:</label><span class="observations">{{ (!is_null($aException->observations)) ? $aException->observations : '-' }}</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-md-2 align-self-top text-center text-md-right mt-2 mt-md-0">
                                 @can(['admin.exception.edit', 'admin.exception.update'])

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center container-center">
-        <div class="col-md-8">
+        <div class="col-12 col-sm-10 col-md-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Administration') }}</h2>
 
             @include('flash::message')
@@ -17,9 +17,9 @@
                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus />
 
                     @if ($errors->has('email'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('email') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -29,9 +29,9 @@
                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" />
 
                     @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('password') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 

@@ -1,5 +1,5 @@
 <header>
-    <div class="row mx-auto p-1">
+    <div class="row mx-auto p-1 calendar-navigation">
         <div class="col-2 text-center">
             @if ($oLimitPrevNav->format('Y-m-d')<$oRequestDate->format('Y-m-d') && $oLimitPrevNav->format('m')+1!=$oToday->format('m'))
                 <h2>
@@ -24,7 +24,10 @@
     </div>
     <div class="row mx-auto d-none d-sm-flex p-1 bg-dark text-white">
         @for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
-            <h5 class="col-sm p-1 mb-0 text-center">{{ $oHeaderDateTime->format('l') }}</h5>
+            <h5 class="col-sm p-1 mb-0 text-center">
+                <span class="d-none d-lg-block">{{ $oHeaderDateTime->format('l') }}</span>
+                <span class="d-block d-lg-none">{{ $oHeaderDateTime->format('D') }}</span>
+            </h5>
 
             @php
             $oHeaderDateTime->modify('+1 day');
@@ -33,7 +36,7 @@
     </div>
 </header>
 
-<div class="row mx-auto border border-right-0 border-bottom-0">
+<div class="row mx-auto border border-right-0 border-bottom-0 calendar-content">
     @php
     $iDays = 1;
 
@@ -66,7 +69,7 @@
         @endif
 
         @php
-        $sClasses .= ($oToday->format('Y-m-d')>$oDate->format('Y-m-d') && ($oDate->format('Y-m')!=$oToday->format('Y-m') || $oRequestDate->format('Y-m')==$oToday->format('Y-m'))) ? ' d-none d-md-block' : (($oToday->format('Y-m-d') == $oDate->format('Y-m-d')) ? ' current-day' : '');
+        $sClasses .= ($oToday->format('Y-m-d') == $oDate->format('Y-m-d')) ? ' current-day' : '';
         @endphp
 
         <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate {{ $sClasses }}"

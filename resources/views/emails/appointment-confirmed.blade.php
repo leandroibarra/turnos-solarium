@@ -154,6 +154,10 @@
                 overflow: hidden;
                 font-size: 0px; } }
 
+        .body-content p {
+            margin: 1.2rem;
+        }
+
     </style>
 </head>
 <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f8f8f8">
@@ -316,7 +320,7 @@
                                                 <table class="divider_content" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 0px solid transparent;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
                                                     <tbody>
                                                     <tr style="vertical-align: top">
-                                                        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;xxfont-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;xxfont-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%" class="body-content">
                                                             {!! str_replace(
                                                                 [
                                                                     '@_NAME_@',
@@ -446,7 +450,7 @@
 
 
                                     <div class="">
-                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px;"><![endif]-->
+                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 2px; padding-bottom: 2px;"><![endif]-->
                                         <div style="color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">
                                             <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 14px; line-height: 16px;"><strong>{{ $sAppName }}</strong></span></p></div>
                                         </div>
