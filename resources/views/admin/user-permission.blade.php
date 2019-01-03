@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     @if ($errors->has('permission'))
-                    <div class="invalid-feedback aaaa" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('permission') }}</strong>
                     </div>
                     @endif

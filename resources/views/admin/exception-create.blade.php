@@ -25,9 +25,9 @@
                     <input id="datetimes" type="text" class="form-control{{ $errors->has('datetimes') ? ' is-invalid' : '' }}" name="datetimes" value="{{ old('datetimes') }}" />
 
                     @if ($errors->has('datetimes'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('datetimes') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -52,9 +52,9 @@
                     </div>
 
                     @if ($errors->has('type'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('type') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 

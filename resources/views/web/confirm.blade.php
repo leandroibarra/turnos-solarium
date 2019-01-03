@@ -38,9 +38,9 @@
                     <input id="name" type="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name', Auth::user()->name) }}" />
 
                     @if ($errors->has('name'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('name') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -50,9 +50,9 @@
                     <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" />
 
                     @if ($errors->has('phone'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('phone') }}</strong>
-                    </span>
+                    </div>
                     @endif
 
                     <small class="form-text text-muted my-0">{{ __('You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888') }}</small>
