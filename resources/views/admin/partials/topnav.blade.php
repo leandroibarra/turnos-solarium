@@ -7,10 +7,10 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             @if (Auth::user()->hasRole(['Admin', 'Sysadmin']))
-            <a class="btn btn-outline-light mt-2 mt-lg-0" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+            <a class="btn btn-outline-light mt-3 mb-1 my-lg-0" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
             @endif
 
-            <ul class="navbar-nav {{ (Auth::user()->hasRole(['Admin', 'Sysadmin'])) ? 'mx-auto' : 'mr-auto' }}">
+            <ul class="navbar-nav mx-auto">
                 @can('admin.appointment.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['appointment.list', 'appointment.reschedule'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('appointment.list') }}">{{ __('Appointments') }}</a>
@@ -36,7 +36,7 @@
                 @endcan
             </ul>
 
-            <div class="dropdown mt-2 mt-lg-0 {{ (Auth::user()->hasRole(['Admin', 'Sysadmin'])) ? '' : 'ml-auto' }}">
+            <div class="dropdown mt-2 mt-lg-0">
                 <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
