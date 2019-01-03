@@ -281,12 +281,16 @@
         </tr>
         </tbody>
     </table>
-    <table cellspacing="0" class="footer-wrap">
+    <table cellspacing="0" class="footer-wrap" bgcolor="#5A5A5A" style="
+                    color: #FFFFFF;
+                    padding: 15px 5px;
+                    width: 100%;
+                    ">
         <tbody>
         <tr>
             <td></td>
-            <td class="container" bgcolor="#5A5A5A">
-                <div class="content">
+            <td class="container" align="center" bgcolor="#5A5A5A">
+                <div class="container">
                     <table>
                         <tbody>
                         <tr>
