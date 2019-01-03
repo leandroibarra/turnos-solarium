@@ -116,6 +116,13 @@ jQuery(document).ready(function() {
     jQuery('form').on('submit', function() {
         if (jQuery(jQuery('#appointment_confirmed_email_body').summernote('code')).text().replace(/\s+/g, '').length == 0)
             jQuery('#appointment_confirmed_email_body').val('');
+
+        // Prevent multiple clicks
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
     });
 });
 </script>
