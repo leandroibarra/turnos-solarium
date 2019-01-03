@@ -44,9 +44,8 @@ class Exception extends Model
 	 */
 	public function getEnabledBetweenDates($psDateTimeFrom, $psDateTimeTo) {
 		return $this
-			->where('datetime_from', '>=', $psDateTimeFrom)
-			->where('datetime_to', '<=', $psDateTimeTo)
-			->where('enable', '=', '1')
+			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeFrom, 1])
+			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeTo, 1])
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
 			->get();
