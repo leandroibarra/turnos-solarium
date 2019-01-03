@@ -7,11 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
+	/**
+	 * Bootstrap any application services.
+	 *
+	 * @param UrlGenerator $url
+	 * @return void
+	 */
 	public function boot(UrlGenerator $url)
 	{
 		if (\App::environment() == 'production')
