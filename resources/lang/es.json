@@ -115,5 +115,10 @@
   "You": "Tú",
   "Parameters are not valid": "Los parámetros no son válidos",
   "Permissions were saved successfully": "Los permisos fueron guardados exitosamente",
-  "You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888": "Debe especificar el código de área y el número de teléfono, por ejemplo: +54 011 4444-0000 ó 341 1118888"
+  "You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888": "Debe especificar el código de área y el número de teléfono, por ejemplo: +54 011 4444-0000 ó 341 1118888",
+  "You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.": "Usted está utilizando un navegador <strong>obsoleto</strong>. Por favor, actualice su navegador para mejorar su experiencia.",
+  "Tanning": "Bronceado",
+  "About tanning": "Acerca de los bronceados",
+  "Home": "Inicio",
+  "Prices": "Precios"
 }

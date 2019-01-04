@@ -12,8 +12,7 @@
 */
 
 Route::get('/', function () {
-	return redirect('book');
-//    return view('welcome');
+	return view('index');
 });
 
 Auth::routes();

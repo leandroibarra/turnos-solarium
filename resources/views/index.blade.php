@@ -1,98 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <!-- Styles -->
+    <link href="{{ asset('plugins/bootstrap-4.1.3/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/fontawesome-5.3.1.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/my-slider/css/my-slider.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/public.css') }}" rel="stylesheet" type="text/css" />
+</head>
 
-            .full-height {
-                height: 100vh;
-            }
+<body data-spy="scroll" data-target=".navscroll">
+    <!--[if lt IE 8]>
+    <p>{{ __('You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.') }}</p>
+    <![endif]-->
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    <div class="spinner-container">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
 
-            .position-ref {
-                position: relative;
-            }
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top top-nav-menu" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNavBar" aria-controls="topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-            .content {
-                text-align: center;
-            }
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="navbar-nav ml-auto navscroll">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#my-slider">{{ __('Home') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-            .title {
-                font-size: 84px;
-            }
+    <div class="content" id="content">
+        <div id="my-slider">
+            @for ($iIndex=1; $iIndex<4; $iIndex++)
+            <div class="my-slide" data-duration="8000" data-transition="2">
+                <img class="my-slide-background" src="{{ asset('images/slide'.$iIndex.'.jpg') }}" alt="slide{{ $iIndex }}" data-size="cover">
+                <h1 class="my-slider-slide slide-title color-light text-center"
+                    style="top:300px; width:100%; text-align:center;"
+                    data-transitionin="offsety:500;duration:1800;delay:500;easing:easeInOutExpo;"
+                    data-transitionout="offsety:-500; scaley:0.1; duration:1200; delay:4000;">
+                    Texto slide {{ $iIndex }}
+                </h1>
+            </div>
+            @endfor
+        </div>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+        <section id="tanning" class="section bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <h2 class="h1">{{ __('About tanning') }}</h2>
+                            <hr class="spacer-30">
+                        </div>
+                        <div class="tanning-body-wrapper">
+                            <div class="tanning-body-content">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</div>
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
+        </section>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+        <section id="prices" class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>{{ __('Prices') }}</h1>
+                        <hr class="spacer-20">
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (
+                        [
+                            ['14', '99', 'info'],
+                            ['200', '00', 'warning'],
+                            ['599', '00', 'success'],
+                            ['1450', '50', 'danger']
+                        ]
+                        as $iKey => $aPrice
+                    )
+                    <div class="col-12 col-lg-3 col-md-6">
+                        <div class="prices">
+                            <div class="prices-header bg-{{ $aPrice[2] }}">
+                                <h4 class="title">Nombre Plan {{ $iKey + 1 }}</h4>
+                                <h2 class="price">
+                                    <sup>$</sup><strong>{{ $aPrice[0] }}</strong>@if (!is_null($aPrice[1])).<sup>{{ $aPrice[1] }}</sup>@endif
+                                </h2>
+                            </div>
+                            <hr class="spacer-10" />
+                            <div class="prices-features">Descripción plan {{ $iKey + 1 }}</div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <hr />
+
+            <div class="row">
+                <div class="col-12 col-md-8 d-none d-md-block">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="#my-slider">{{ __('Home') }}</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#tanning">{{ __('Tanning') }}</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#prices">{{ __('Prices') }}</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="col-12 col-md-4">
+                    <div class="footer-social-wrapper text-right">
+                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                            <i class="fab fa-pinterest-p"></i>
+                            <span>p</span>
+                        </a>
+                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>f</span>
+                        </a>
+                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                            <span>t</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <p class="copyright">© {{ date('Y').' '.config('app.name', 'Laravel') }}</p>
                 </div>
             </div>
         </div>
-    </body>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/jquery-3.3.1.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('plugins/bootstrap-4.1.3/bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('plugins/my-slider/js/my-slider.js') }}" type="text/javascript"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" type="text/javascript"></script>
+
+    <script src="{{ asset('js/scrolltopcontrol-1.1.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/smooth-scroll-2.2.0.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        // Show spinner
+        jQuery('.spinner-container').fadeIn('fast').delay(500).fadeOut('slow');
+
+        // Navigation to collapse the navbar on scroll
+        jQuery(window).scroll(function() {
+            if (jQuery('.navbar').offset().top > 50)
+                jQuery('.navbar.fixed-top').addClass('top-nav-collapse');
+            else
+                jQuery('.navbar.fixed-top').removeClass('top-nav-collapse');
+        });
+
+        // Initialize my slider
+        jQuery('#my-slider').mySlider({
+            width: 1200,
+            height: 674,
+            bFullSize: false,
+            bFullWidth: true,
+            bOnHoverPause: false
+        });
+
+        // Smooth scroll settings
+        jQuery('.navbar .navbar-nav a').smoothScroll({
+            speed: 800
+        });
+    });
+    </script>
+</body>
 </html>
