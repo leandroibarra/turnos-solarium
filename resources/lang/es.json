@@ -59,6 +59,7 @@
   "Appointments": "Turnos",
   "l j \\of F": "l j \\d\\e F",
   "System Parameters": "Parámetros del Sistema",
+  "Site Parameters": "Parámetros del Sitio",
   "Appointment duration": "Duración del turno",
   "Minutes of each appointment to be shown in the calendar": "Minutos de cada turno para ser mostrados en el calendario",
   "Reservation days limit": "Límite de días de reserva",
@@ -120,5 +121,13 @@
   "Tanning": "Bronceado",
   "About tanning": "Acerca de los bronceados",
   "Home": "Inicio",
-  "Prices": "Precios"
+  "Prices": "Precios",
+  "About tanning text": "Texto acerca de los bronceados",
+  "Text will be displayed in \"About tanning\" section": "Texto que se mostrará en la sección \"Acerca de los bronceados\"",
+  "Social network URLs": "URLs de redes sociales",
+  "Social network URLs used for icons link": "URLs de redes sociales usadas para links de íconos",
+  "Pinterest URL": "URL de Pinterest",
+  "Facebook URL": "URL de Facebook",
+  "Twitter URL": "URL de Twitter",
+  "Instagram URL": "URL de Instagram"
 }

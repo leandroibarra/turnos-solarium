@@ -28,7 +28,7 @@
 
     <nav class="navbar navbar-expand-md navbar-custom fixed-top top-nav-menu" role="navigation">
         <div class="container">
-            <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>
+            <a class="navbar-brand" href="{{ route('index.index') }}">{{ config('app.name', 'Laravel') }}</a>
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNavBar" aria-controls="topNavBar">
                 <span class="icon-bar"></span>
@@ -41,9 +41,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#my-slider">{{ __('Home') }}</a>
                     </li>
+                    @if ($aSiteParameter['about_tanning_text'] != '')
                     <li class="nav-item">
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
                     </li>
@@ -70,21 +72,19 @@
             @endfor
         </div>
 
+        @if ($aSiteParameter['about_tanning_text'] != '')
         <section id="tanning" class="section bg-gray">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <h2 class="h1">{{ __('About tanning') }}</h2>
-                            <hr class="spacer-30">
-                        </div>
-                        <div class="tanning-body-wrapper">
-                            <div class="tanning-body-content">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</div>
-                        </div>
+                    <div class="col-12 text-center">
+                        <h2 class="h1">{{ __('About tanning') }}</h2>
+                        <hr class="spacer-30">
+                        <div class="tanning-content">{{ $aSiteParameter['about_tanning_text'] }}</div>
                     </div>
                 </div>
             </div>
         </section>
+        @endif
 
         <section id="prices" class="section">
             <div class="container">
@@ -132,9 +132,11 @@
                         <li class="list-inline-item">
                             <a href="#my-slider">{{ __('Home') }}</a>
                         </li>
+                        @if ($aSiteParameter['about_tanning_text'] != '')
                         <li class="list-inline-item">
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
+                        @endif
                         <li class="list-inline-item">
                             <a href="#prices">{{ __('Prices') }}</a>
                         </li>
@@ -146,18 +148,30 @@
 
                 <div class="col-12 col-md-4">
                     <div class="footer-social-wrapper text-right">
-                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                        @if ($aSiteParameter['pinterest_url'] != '')
+                        <a class="social-btn" href="{{ $aSiteParameter['pinterest_url'] }}" target="_blank">
                             <i class="fab fa-pinterest-p"></i>
                             <span>p</span>
                         </a>
-                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                        @endif
+                        @if ($aSiteParameter['facebook_url'] != '')
+                        <a class="social-btn" href="{{ $aSiteParameter['facebook_url'] }}" target="_blank">
                             <i class="fab fa-facebook-f"></i>
                             <span>f</span>
                         </a>
-                        <a class="social-btn" href="javascript:void(0);" target="_blank">
+                        @endif
+                        @if ($aSiteParameter['twitter_url'] != '')
+                        <a class="social-btn" href="{{ $aSiteParameter['twitter_url'] }}" target="_blank">
                             <i class="fab fa-twitter"></i>
                             <span>t</span>
                         </a>
+                        @endif
+                        @if ($aSiteParameter['instagram_url'] != '')
+                        <a class="social-btn" href="{{ $aSiteParameter['instagram_url'] }}" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                            <span>i</span>
+                        </a>
+                        @endif
                     </div>
                 </div>
 

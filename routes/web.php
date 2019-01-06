@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-	return view('index');
-});
+Route::get('/', 'IndexController@index')->name('index.index');
 
 Auth::routes();
 
@@ -216,6 +214,24 @@ Route::group(
 						);
 					}
 				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/site-parameters',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'SiteParameterController@edit')
+					->middleware(['permission:admin.site-parameters.edit'])
+					->name('site-parameters.edit');
+
+				Route::put('/{id}', 'SiteParameterController@update')
+					->middleware(['permission:admin.site-parameters.update'])
+					->name('site-parameters.update');
 			}
 		);
 	}

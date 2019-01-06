@@ -574,14 +574,12 @@ span {
 /*
  * Tanning
  */
-.tanning-body-wrapper {
-    margin-bottom: 30px;
-}
-.tanning-body-content {
+.tanning-content {
     color: #5A6A74;
     font-family: 'Lora', Georgia, Times, serif;
     font-style: italic;
     font-weight: 400;
+    margin-bottom: 30px;
 }
 
 /*
