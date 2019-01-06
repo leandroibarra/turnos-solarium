@@ -214,10 +214,59 @@
             bOnHoverPause: false
         });
 
-        // Smooth scroll settings
-        jQuery('.navbar .navbar-nav a').smoothScroll({
-            speed: 800
-        });
+        /*
+         * BEGIN - Smooth Scroll Animation
+         */
+        // Select all links with hashes
+        jQuery('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .click(function(event) {
+                // Process links of this page only
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+                    location.hostname == this.hostname
+                ) {
+                    // Figure out element to scroll to
+                    var oTarget = jQuery(this.hash);
+
+                    oTarget = (oTarget.length) ? oTarget : jQuery('[name=' + this.hash.slice(1) + ']');
+
+                    // If target exist
+                    if (oTarget.length) {
+                        // Only cancel default event if animation is actually gonna happen
+                        event.preventDefault();
+
+                        jQuery('html, body').animate(
+                            {
+                                scrollTop: oTarget.offset().top
+                            },
+                            1000,
+                            function() {
+                                // Callback after animation
+                                var $oTarget = jQuery(oTarget);
+
+                                // Must change focus
+                                $oTarget.focus();
+
+                                if ($oTarget.is(':focus')) {
+                                    // Check if the target was focused
+                                    return false;
+                                } else {
+                                    // Adding tabindex attribute for not focusable elements
+                                    $oTarget.attr('tabindex', '-1');
+
+                                    // Set focus again
+                                    $oTarget.focus();
+                                }
+                            }
+                        );
+                    }
+                }
+            });
+        /*
+         * END - Smooth Scroll Animation
+         */
     });
     </script>
 </body>
