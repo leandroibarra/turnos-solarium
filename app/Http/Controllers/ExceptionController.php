@@ -54,7 +54,7 @@ class ExceptionController extends Controller
 		$oException = new Exception();
 
 		return view('admin.exception')->with([
-			'aEnabledExceptions' => $oException->getNextEnabled()
+			'aEnabledExceptions' => $oException->getCurrentAndNextEnabled()
 		]);
 	}
 

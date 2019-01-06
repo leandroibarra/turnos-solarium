@@ -4,6 +4,7 @@ return [
 	'module.admin.appointment' => 'Appointments',
 	'module.admin.exception' => 'Exceptions',
 	'module.admin.user' => 'Users',
+	'module.admin.site-parameters' => 'Site Parameters',
 	'permission.admin.system-parameters.edit' => 'List system parameters.',
 	'permission.admin.system-parameters.update' => 'Edit system parameters.',
 	'permission.admin.appointment.list' => 'List granted appointments.',
@@ -18,5 +19,7 @@ return [
 	'permission.admin.exception.store' => 'Save created exceptions.',
 	'permission.admin.user.list' => 'List users.',
 	'permission.admin.permission.edit' => 'List users permissions.',
-	'permission.admin.permission.update' => 'Save users permissions.'
+	'permission.admin.permission.update' => 'Save users permissions.',
+	'permission.admin.site-parameters.edit' => 'List site parameters.',
+	'permission.admin.site-parameters.update' => 'Edit site parameters.'
 ];
