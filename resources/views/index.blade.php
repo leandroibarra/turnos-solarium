@@ -190,7 +190,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" type="text/javascript"></script>
 
     <script src="{{ asset('js/scrolltopcontrol-1.1.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/smooth-scroll-2.2.0.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
     jQuery(document).ready(function() {
