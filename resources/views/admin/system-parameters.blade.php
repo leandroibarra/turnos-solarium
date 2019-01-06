@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}">
+            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}" id="systemParametersForm">
                 @method('PUT')
 
                 @csrf
@@ -113,7 +113,7 @@ jQuery(document).ready(function() {
     });
 
     // Clean on submit form
-    jQuery('form').on('submit', function() {
+    jQuery('#systemParametersForm').on('submit', function() {
         if (jQuery(jQuery('#appointment_confirmed_email_body').summernote('code')).text().replace(/\s+/g, '').length == 0)
             jQuery('#appointment_confirmed_email_body').val('');
 

@@ -4,6 +4,7 @@ return [
 	'module.admin.appointment' => 'Turnos',
 	'module.admin.exception' => 'Excepciones',
 	'module.admin.user' => 'Usuarios',
+	'module.admin.site-parameters' => 'Parámetros del Sitio',
 	'permission.admin.system-parameters.edit' => 'Listar parámetros del sistema.',
 	'permission.admin.system-parameters.update' => 'Editar parámetros del sistema.',
 	'permission.admin.appointment.list' => 'Listar turnos reservados.',
@@ -18,5 +19,7 @@ return [
 	'permission.admin.exception.store' => 'Guardar excepciones creadas.',
 	'permission.admin.user.list' => 'Listar usuarios.',
 	'permission.admin.permission.edit' => 'Listar permisos de usuarios.',
-	'permission.admin.permission.update' => 'Guardar permisos de usuarios.'
+	'permission.admin.permission.update' => 'Guardar permisos de usuarios.',
+	'permission.admin.site-parameters.edit' => 'Listar parámetros del sitio.',
+	'permission.admin.site-parameters.update' => 'Editar parámetros del sitio.'
 ];
