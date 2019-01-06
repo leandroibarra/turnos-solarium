@@ -240,7 +240,7 @@
                             {
                                 scrollTop: oTarget.offset().top
                             },
-                            1000,
+                            800,
                             function() {
                                 // Callback after animation
                                 var $oTarget = jQuery(oTarget);
