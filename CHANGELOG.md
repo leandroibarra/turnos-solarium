@@ -1,6 +1,15 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v2.0.0](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.0) (2019-01-06)
+**Agregado**
+- Sitio público con configuraciones de urls de redes sociales y texto sobre bronceado.
+- Redirección forzada a HTTPS en entorno de producción (configurable desde variable de entorno).
+- Bloqueo de múltiples clicks en botones de envío de formularios.
+
+**Corregido**
+- Consulta SQL en método de modelo de excepciones.
+
 ## [v1.1.2](https://github.com/leandroibarra/turnos-solarium/tree/v1.1.2) (2019-01-02)
 **Agregado**
 - Margen a párrafos en cuerpo de email.
