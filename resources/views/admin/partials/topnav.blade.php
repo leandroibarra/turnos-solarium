@@ -29,6 +29,12 @@
                 </li>
                 @endcan
 
+                @can(['admin.site-parameters.edit', 'admin.site-parameters.update'])
+                <li class="nav-item {{ (request()->route()->getName() == 'site-parameters.edit') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('site-parameters.edit') }}">{{ __('Site Parameters') }}</a>
+                </li>
+                @endcan
+
                 @can('admin.user.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['user.list', 'permission.edit', 'permission.update'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>

@@ -8,7 +8,7 @@
 
             @include('flash::message')
 
-            <form method="POST" action="{{ route('admin.create') }}" class="loginForm">
+            <form method="POST" action="{{ route('admin.create') }}" id="loginForm" class="loginForm">
                 @csrf
 
                 <div class="form-group mb-2">
@@ -42,4 +42,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-scripts')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // Prevent multiple clicks
+    jQuery('#loginForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
+});
+</script>
 @endsection
