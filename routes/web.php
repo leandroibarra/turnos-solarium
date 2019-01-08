@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'IndexController@index')->name('index.index');
+Route::get('/', 'IndexController@index')
+	->middleware(['check-https'])
+	->name('index.index');
 
 Auth::routes();
 
