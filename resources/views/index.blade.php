@@ -46,9 +46,11 @@
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
                     @endif
+                    @if ((bool) $aEnabledPrices)
                     <li class="nav-item">
                         <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
                     </li>
@@ -86,6 +88,7 @@
         </section>
         @endif
 
+        @if ((bool) $aEnabledPrices)
         <section id="prices" class="section">
             <div class="container">
                 <div class="row">
@@ -95,31 +98,42 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach (
-                        [
-                            ['14', '99', 'info'],
-                            ['200', '00', 'warning'],
-                            ['599', '00', 'success'],
-                            ['1450', '50', 'danger']
-                        ]
-                        as $iKey => $aPrice
-                    )
-                    <div class="col-12 col-lg-3 col-md-6">
-                        <div class="prices">
-                            <div class="prices-header bg-{{ $aPrice[2] }}">
-                                <h4 class="title">Nombre Plan {{ $iKey + 1 }}</h4>
-                                <h2 class="price">
-                                    <sup>$</sup><strong>{{ $aPrice[0] }}</strong>@if (!is_null($aPrice[1])).<sup>{{ $aPrice[1] }}</sup>@endif
-                                </h2>
+                    @foreach (array_chunk($aEnabledPrices, 4) as $aPrices)
+                        @php
+                        $sClassFirst = $sClassLast = '';
+
+                        switch (count($aPrices)) {
+                            case 1:
+                                $sClassFirst = 'mx-md-auto';
+                                break;
+                            case 2:
+                                $sClassFirst = 'offset-lg-3';
+                                break;
+                            case 3:
+                                $sClassFirst = 'offset-lg-1';
+                                $sClassLast = 'offset-md-3 offset-lg-0';
+                                break;
+                        }
+                        @endphp
+                        @foreach ($aPrices as $iKey=>$aPrice)
+                        <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 0) ? $sClassFirst : ((count($aPrices)-1 == $iKey) ? $sClassLast : '') }}">
+                            <div class="prices">
+                                <div class="prices-header bg-{{ $aPrice[2] }}">
+                                    <h4 class="title">{{ $aPrice['title'] }}</h4>
+                                    <h2 class="price">
+                                        <sup>$</sup><strong>{{ $aPrice[0] }}</strong>@if (!is_null($aPrice[1])).<sup>{{ $aPrice[1] }}</sup>@endif
+                                    </h2>
+                                </div>
+                                <hr class="spacer-10" />
+                                <div class="prices-features">{{ $aPrice['description'] }}</div>
                             </div>
-                            <hr class="spacer-10" />
-                            <div class="prices-features">Descripción plan {{ $iKey + 1 }}</div>
                         </div>
-                    </div>
+                        @endforeach
                     @endforeach
                 </div>
             </div>
         </section>
+        @endif
     </div>
 
     <footer class="footer">
@@ -137,9 +151,11 @@
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
                         @endif
+                        @if ((bool) $aEnabledPrices)
                         <li class="list-inline-item">
                             <a href="#prices">{{ __('Prices') }}</a>
                         </li>
+                        @endif
                         <li class="list-inline-item">
                             <a href="{{ route('book.index') }}">{{ __('Book online') }}</a>
                         </li>
@@ -210,7 +226,7 @@
             height: 674,
             bFullSize: false,
             bFullWidth: true,
-            bOnHoverPause: false
+            bPauseOnHover: false
         });
 
         /*

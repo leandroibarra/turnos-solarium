@@ -5,8 +5,9 @@ return [
 	'module.admin.exception' => 'Excepciones',
 	'module.admin.user' => 'Usuarios',
 	'module.admin.site-parameters' => 'Parámetros del Sitio',
+	'module.admin.price' => 'Precios',
 	'permission.admin.system-parameters.edit' => 'Listar parámetros del sistema.',
-	'permission.admin.system-parameters.update' => 'Editar parámetros del sistema.',
+	'permission.admin.system-parameters.update' => 'Guardar parámetros del sistema editados.',
 	'permission.admin.appointment.list' => 'Listar turnos reservados.',
 	'permission.admin.appointment.cancel' => 'Cancelar turnos reservados.',
 	'permission.admin.appointment.reschedule' => 'Reprogramar turnos reservados.',
@@ -21,5 +22,12 @@ return [
 	'permission.admin.permission.edit' => 'Listar permisos de usuarios.',
 	'permission.admin.permission.update' => 'Guardar permisos de usuarios.',
 	'permission.admin.site-parameters.edit' => 'Listar parámetros del sitio.',
-	'permission.admin.site-parameters.update' => 'Editar parámetros del sitio.'
+	'permission.admin.site-parameters.update' => 'Guardar parámetros del sitio editados.',
+	'permission.admin.price.list' => 'Listar precios.',
+	'permission.admin.price.create' => 'Crear precios.',
+	'permission.admin.price.store' => 'Guardar precios creados.',
+	'permission.admin.price.sort' => 'Ordenar precios creados.',
+	'permission.admin.price.edit' => 'Editar precios.',
+	'permission.admin.price.update' => 'Guardar precios editados.',
+	'permission.admin.price.delete' => 'Borrar precios.'
 ];

@@ -5,8 +5,9 @@ return [
 	'module.admin.exception' => 'Exceptions',
 	'module.admin.user' => 'Users',
 	'module.admin.site-parameters' => 'Site Parameters',
+	'module.admin.price' => 'Prices',
 	'permission.admin.system-parameters.edit' => 'List system parameters.',
-	'permission.admin.system-parameters.update' => 'Edit system parameters.',
+	'permission.admin.system-parameters.update' => 'Save edited system parameters.',
 	'permission.admin.appointment.list' => 'List granted appointments.',
 	'permission.admin.appointment.cancel' => 'Cancel granted appointments.',
 	'permission.admin.appointment.reschedule' => 'Reschedule granted appointments.',
@@ -21,5 +22,12 @@ return [
 	'permission.admin.permission.edit' => 'List users permissions.',
 	'permission.admin.permission.update' => 'Save users permissions.',
 	'permission.admin.site-parameters.edit' => 'List site parameters.',
-	'permission.admin.site-parameters.update' => 'Edit site parameters.'
+	'permission.admin.site-parameters.update' => 'Save edited site parameters.',
+	'permission.admin.price.list' => 'List prices.',
+	'permission.admin.price.create' => 'Create prices.',
+	'permission.admin.price.store' => 'Save created prices.',
+	'permission.admin.price.sort' => 'Sort created prices.',
+	'permission.admin.price.edit' => 'Edit prices.',
+	'permission.admin.price.update' => 'Save edited prices.',
+	'permission.admin.price.delete' => 'Delete prices.'
 ];

@@ -121,7 +121,10 @@
   "Tanning": "Bronceado",
   "About tanning": "Acerca de los bronceados",
   "Home": "Inicio",
+  "Price": "Precio",
   "Prices": "Precios",
+  "Price deletion": "Eliminación de precio",
+  "Are you sure you want to delete the price?": "¿Está seguro que desea eliminar el precio?",
   "About tanning text": "Texto acerca de los bronceados",
   "Text will be displayed in \"About tanning\" section": "Texto que se mostrará en la sección \"Acerca de los bronceados\"",
   "Social network URLs": "URLs de redes sociales",
@@ -129,5 +132,12 @@
   "Pinterest URL": "URL de Pinterest",
   "Facebook URL": "URL de Facebook",
   "Twitter URL": "URL de Twitter",
-  "Instagram URL": "URL de Instagram"
+  "Instagram URL": "URL de Instagram",
+  "Title": "Título",
+  "Desc.": "Desc.",
+  "Sort": "Ordenar",
+  "The prices has been ordered successfully.": "Los precios han sido ordenados exitosamente.",
+  "The prices could not be ordered. Please, try again.": "Los precios no pudieron ser ordenados. Por favor, inténtelo nuevamente.",
+  "The price has been deleted successfully.": "El precio ha sido eliminado exitosamente.",
+  "The price could not be deleted. Please, try again.": "El precio no pudo ser eliminado. Por favor, inténtelo nuevamente."
 }

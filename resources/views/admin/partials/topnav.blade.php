@@ -35,6 +35,12 @@
                 </li>
                 @endcan
 
+                @can('admin.price.list')
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['price.list', 'price.create', 'price.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('price.list') }}">{{ __('Prices') }}</a>
+                </li>
+                @endcan
+
                 @can('admin.user.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['user.list', 'permission.edit', 'permission.update'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteParameter;
+use App\Models\Price;
 
 class IndexController extends Controller
 {
@@ -13,8 +14,11 @@ class IndexController extends Controller
 	 */
 	public function index()
 	{
+		$oPrice = new Price();
+
 		return view('index')->with([
-			'aSiteParameter' => SiteParameter::find(1)->toArray()
+			'aSiteParameter' => SiteParameter::find(1)->toArray(),
+			'aEnabledPrices' => $oPrice->getEnabled()->toArray()
 		]);
 	}
 }
