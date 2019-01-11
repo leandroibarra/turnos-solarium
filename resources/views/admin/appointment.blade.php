@@ -62,13 +62,13 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
-                                @can(['admin.appointment.reschedule', 'admin.appointment.update'])
+                                @can (['admin.appointment.reschedule', 'admin.appointment.update'])
                                 <a href="{{ route('appointment.reschedule', ['id' => $aAppointment->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Reschedule') }}" role="button">
                                     <i class="far fa-calendar-alt"></i>
                                 </a>
                                 @endcan
 
-                                @can('admin.appointment.cancel')
+                                @can ('admin.appointment.cancel')
                                 <button class="btn btn-sm btn-danger" title="{{ __('Cancel') }}"
                                     data-appointment-id="{{ $aAppointment->id }}"
                                     data-date-header="{{ $sDateHeader }}"
@@ -95,6 +95,7 @@
     </svg>
 </div>
 
+@can ('admin.appointment.cancel')
 <!-- Modal -->
 <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -113,11 +114,13 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection
 
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @can ('admin.appointment.cancel')
     // Open cancel modal
     jQuery('#cancelModal').on('show.bs.modal', function(event) {
         var oTarget = jQuery(event.relatedTarget);
@@ -201,6 +204,7 @@ jQuery(document).ready(function() {
             }
         });
     });
+    @endcan
 });
 </script>
 @endsection

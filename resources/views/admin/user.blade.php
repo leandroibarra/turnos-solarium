@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
-                            @can(['admin.permission.edit', 'admin.permission.update'])
+                            @can (['admin.permission.edit', 'admin.permission.update'])
                             <a href="{{ route('permission.edit', ['id' => $aUser->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Permissions') }}" role="button">
                                 <i class="fas fa-user-check"></i>
                             </a>

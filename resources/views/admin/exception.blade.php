@@ -13,7 +13,7 @@
             <h4 class="mb-3 overflow-hidden">
                 {{ __('Exceptions') }}
 
-                @can(['admin.exception.create', 'admin.exception.store'])
+                @can (['admin.exception.create', 'admin.exception.store'])
                 <a href="{{ route('exception.create') }}" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                     {{ __('Create') }}
@@ -47,13 +47,13 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 align-self-top text-center text-md-right mt-2 mt-md-0">
-                                @can(['admin.exception.edit', 'admin.exception.update'])
+                                @can (['admin.exception.edit', 'admin.exception.update'])
                                 <a href="{{ route('exception.edit', ['id' => $aException->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Edit') }}" role="button">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 @endcan
 
-                                @can('admin.exception.delete')
+                                @can ('admin.exception.delete')
                                 <button class="btn btn-sm btn-danger" title="{{ __('Delete') }}"
                                     data-exception-id="{{ $aException->id }}"
                                     data-target="#deleteModal"
@@ -78,6 +78,7 @@
     </svg>
 </div>
 
+@can ('admin.exception.delete')
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -96,11 +97,13 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection
 
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @can ('admin.exception.delete')
     // Open delete modal
     jQuery('#deleteModal').on('show.bs.modal', function(event) {
         var oTarget = jQuery(event.relatedTarget);
@@ -178,6 +181,7 @@ jQuery(document).ready(function() {
             }
         });
     });
+    @endcan
 
     var iShowChar = 25;
 
