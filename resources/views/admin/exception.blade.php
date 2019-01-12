@@ -26,11 +26,17 @@
     <div class="row">
         <div class="col-12 exceptions-container">
             @if (!$aEnabledExceptions->isEmpty())
+                @php
+                $iColMd = 12;
+
+                if ((Auth::user()->can('admin.exception.edit') && Auth::user()->can('admin.exception.update')) || Auth::user()->can('admin.exception.delete'))
+                    $iColMd -= 2;
+                @endphp
                 <ul class="list-group">
                 @foreach ($aEnabledExceptions as $iKey=>$aException)
                     <li class="list-group-item p-2">
                         <div class="row">
-                            <div class="col-12 col-md-10 align-self-top text-center text-md-left">
+                            <div class="col-12 col-md-{{ $iColMd }} align-self-center text-center text-md-left">
                                 <div class="row">
                                     <div class="col-12 col-md-5 text-center text-md-left order-1 order-md-1">
                                         <label class="text-muted mb-0 mr-1">{{ __('From') }}:</label>{{ Date::createFromFormat('Y-m-d H:i:s', $aException->datetime_from)->format(__('m/d/y H:i \\h\\s')) }}
@@ -46,7 +52,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 align-self-top text-center text-md-right mt-2 mt-md-0">
+                            @if ((Auth::user()->can('admin.exception.edit') && Auth::user()->can('admin.exception.update')) || Auth::user()->can('admin.exception.delete'))
+                            <div class="col-12 col-md-2 align-self-center text-center text-md-right mt-2 mt-md-0">
                                 @can (['admin.exception.edit', 'admin.exception.update'])
                                 <a href="{{ route('exception.edit', ['id' => $aException->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Edit') }}" role="button">
                                     <i class="fas fa-pencil-alt"></i>
@@ -63,6 +70,7 @@
                                 </button>
                                 @endcan
                             </div>
+                            @endif
                         </div>
                     </li>
                 @endforeach

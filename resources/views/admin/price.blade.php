@@ -26,41 +26,48 @@
     <div class="row">
         <div class="col-12 prices-container">
             @if (!$aEnabledPrices->isEmpty())
+                @php
+                $iColMd = 12;
+
+                if (Auth::user()->can('admin.price.sort'))
+                    $iColMd -= 2;
+
+                if ((Auth::user()->can('admin.price.edit') && Auth::user()->can('admin.price.update')) || Auth::user()->can('admin.price.delete'))
+                    $iColMd -= 2;
+                @endphp
+
                 <ul class="list-group">
                 @foreach ($aEnabledPrices as $iKey=>$aPrice)
                     <li class="list-group-item p-2" data-index="{{ $iKey }}">
                         <div class="row">
-                            <div class="col-12 col-md-10 align-self-top text-center text-md-left">
+                            @can ('admin.price.sort')
+                            <div class="col-12 col-md-2 text-center price-order" data-index="{{ $iKey }}" data-price-id="{{ $aPrice->id }}">
+                                <a href="javascript:void(0);" class="sort-price {{ ($iKey == 0) ? 'disabled' : '' }}" data-sort-type="desc" title="{{ __('Sort') }}">
+                                    <i class="fas fa-chevron-up"></i>
+                                </a>
+                                <h4 class="my-0">{{ $aPrice->order }}</h4>
+                                <a href="javascript:void(0);" class="sort-price {{ ($iKey == count($aEnabledPrices)-1) ? 'disabled' : '' }}" data-sort-type="asc" title="{{ __('Sort') }}">
+                                    <i class="fas fa-chevron-down"></i>
+                                </a>
+                            </div>
+                            @endcan
+                            <div class="col-12 col-md-{{ $iColMd }} align-self-center text-center text-md-left">
                                 <div class="row">
-                                    @can ('admin.price.sort')
-                                    <div class="col-2 text-center price-order" data-index="{{ $iKey }}" data-price-id="{{ $aPrice->id }}">
-                                        <a href="javascript:void(0);" class="sort-price {{ ($iKey == 0) ? 'disabled' : '' }}" data-sort-type="desc" title="{{ __('Sort') }}">
-                                            <i class="fas fa-chevron-up"></i>
-                                        </a>
-                                        <h4 class="my-0">{{ $aPrice->order }}</h4>
-                                        <a href="javascript:void(0);" class="sort-price {{ ($iKey == count($aEnabledPrices)-1) ? 'disabled' : '' }}" data-sort-type="asc" title="{{ __('Sort') }}">
-                                            <i class="fas fa-chevron-down"></i>
-                                        </a>
+                                    <div class="col-12 col-md-5 text-center text-md-left">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aPrice->title }}
                                     </div>
-                                    @endcan
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col-12 col-md-5 text-center text-md-left">
-                                                <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aPrice->title }}
-                                            </div>
-                                            <div class="col-12 col-md-7 text-center text-md-left">
-                                                <label class="text-muted mb-0 mr-1">{{ __('Price') }}:</label>&dollar; {{ $aPrice->price }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 text-center text-md-left">
-                                                <label class="text-muted mb-0 mr-1">{{ __('Desc.') }}:</label><span class="description">{{ $aPrice->description }}</span>
-                                            </div>
-                                        </div>
+                                    <div class="col-12 col-md-7 text-center text-md-left">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Price') }}:</label>&dollar; {{ number_format($aPrice->price, 2, $sDecimalPointSeparator, $sThousandsSeparator) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center text-md-left">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Desc.') }}:</label><span class="description">{{ $aPrice->description }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 align-self-top text-center text-md-right mt-2 mt-md-0">
+                            @if ((Auth::user()->can('admin.price.edit') && Auth::user()->can('admin.price.update')) || Auth::user()->can('admin.price.delete'))
+                            <div class="col-12 col-md-2 align-self-center text-center text-md-right mt-2 mt-md-0">
                                 @can (['admin.price.edit', 'admin.price.update'])
                                 <a href="{{ route('price.edit', ['id' => $aPrice->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Edit') }}" role="button">
                                     <i class="fas fa-pencil-alt"></i>
@@ -77,6 +84,7 @@
                                 </button>
                                 @endcan
                             </div>
+                            @endif
                         </div>
                     </li>
                 @endforeach
@@ -318,6 +326,38 @@ jQuery(document).ready(function() {
         });
     }
     @endif
+
+    var iShowChar = 87;
+
+    jQuery('.description').each(function() {
+        var oContent = jQuery(this).html();
+
+        if (oContent.length > iShowChar) {
+            var showContent = oContent.substr(0, iShowChar);
+            var hiddenContent = oContent.substr(iShowChar, oContent.length - iShowChar);
+
+            var sHtml = showContent + '<span class="more-ellipses">...</span><span class="hidden-content"><span>' + hiddenContent + '</span>&nbsp;<span class="more-link">{{ __('more') }}</span></span>';
+
+            jQuery(this).html(sHtml);
+        }
+    });
+
+    jQuery('.more-link').click(function() {
+        if (jQuery(this).hasClass('less')) {
+            jQuery(this).removeClass('less');
+
+            jQuery(this).html('{{ __('more') }}');
+        } else {
+            jQuery(this).addClass('less');
+
+            jQuery(this).html('{{ __('less') }}');
+        }
+
+        jQuery(this).parent().prev().toggle();
+        jQuery(this).prev().toggle();
+
+        return false;
+    });
 });
 </script>
 @endsection
