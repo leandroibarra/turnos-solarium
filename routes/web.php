@@ -282,5 +282,50 @@ Route::group(
 				);
 			}
 		);
+
+		Route::group(
+			[
+				'prefix' => '/slides',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'SlideController@list')
+					->middleware(['permission:admin.slide.list'])
+					->name('slide.list');
+
+				Route::get('/create', 'SlideController@create')
+					->middleware(['permission:admin.slide.create'])
+					->name('slide.create');
+
+				Route::post('/', 'SlideController@store')
+					->middleware(['permission:admin.slide.store'])
+					->name('slide.store');
+
+				Route::put('/sort', 'SlideController@sort')
+					->middleware(['permission:admin.slide.sort'])
+					->name('slide.sort');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'SlideController@edit')
+							->middleware(['permission:admin.slide.edit'])
+							->name('slide.edit');
+
+						Route::put('', 'SlideController@update')
+							->middleware(['permission:admin.slide.update'])
+							->name('slide.update');
+
+						Route::put('/delete', 'SlideController@delete')
+							->middleware(['permission:admin.slide.delete'])
+							->name('slide.delete');
+					}
+				);
+			}
+		);
 	}
 );

@@ -41,6 +41,12 @@
                 </li>
                 @endcan
 
+                @can ('admin.slide.list')
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['slide.list', 'slide.create', 'slide.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('slide.list') }}">{{ __('Slides') }}</a>
+                </li>
+                @endcan
+
                 @can ('admin.user.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['user.list', 'permission.edit', 'permission.update'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>

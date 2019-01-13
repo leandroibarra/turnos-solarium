@@ -145,5 +145,8 @@
   "The price could not be deleted. Please, try again.": "El precio no pudo ser eliminado. Por favor, inténtelo nuevamente.",
   "The price has been created successfully.": "El precio ha sido creado exitosamente.",
   "The price is not valid or has been deleted.": "El precio no es válido o ha sido eliminado.",
-  "The price has been edited successfully.": "El precio ha sido editado exitosamente."
+  "The price has been edited successfully.": "El precio ha sido editado exitosamente.",
+  "Slides": "Slides",
+  "Slide deletion": "Eliminación de slide",
+  "Are you sure you want to delete the slide?": "¿Está seguro que desea eliminar el slide?"
 }

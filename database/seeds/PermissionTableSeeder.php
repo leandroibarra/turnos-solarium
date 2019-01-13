@@ -36,7 +36,14 @@ class PermissionTableSeeder extends Seeder
 			'admin.price.sort',
 			'admin.price.edit',
 			'admin.price.update',
-			'admin.price.delete'
+			'admin.price.delete',
+			'admin.slide.list',
+			'admin.slide.create',
+			'admin.slide.store',
+			'admin.slide.sort',
+			'admin.slide.edit',
+			'admin.slide.update',
+			'admin.slide.delete'
 		];
 
     	foreach ($aPermissions as $sPermission)

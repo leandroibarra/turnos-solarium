@@ -6,6 +6,7 @@ return [
 	'module.admin.user' => 'Usuarios',
 	'module.admin.site-parameters' => 'Parámetros del Sitio',
 	'module.admin.price' => 'Precios',
+	'module.admin.slide' => 'Slides',
 	'permission.admin.system-parameters.edit' => 'Listar parámetros del sistema.',
 	'permission.admin.system-parameters.update' => 'Guardar parámetros del sistema editados.',
 	'permission.admin.appointment.list' => 'Listar turnos reservados.',
@@ -29,5 +30,12 @@ return [
 	'permission.admin.price.sort' => 'Ordenar precios creados.',
 	'permission.admin.price.edit' => 'Editar precios.',
 	'permission.admin.price.update' => 'Guardar precios editados.',
-	'permission.admin.price.delete' => 'Borrar precios.'
+	'permission.admin.price.delete' => 'Borrar precios.',
+	'permission.admin.slide.list' => 'Listar slides.',
+	'permission.admin.slide.create' => 'Crear slides.',
+	'permission.admin.slide.store' => 'Guardar slides creados.',
+	'permission.admin.slide.sort' => 'Ordenar slides creados.',
+	'permission.admin.slide.edit' => 'Editar slides.',
+	'permission.admin.slide.update' => 'Guardar slides editados.',
+	'permission.admin.slide.delete' => 'Borrar slides.'
 ];
