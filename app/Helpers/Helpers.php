@@ -22,3 +22,61 @@ function validateGrantedAppointments($psTime, $paGrantedAppointments) {
 		($paGrantedAppointments[$iKey]['amount']<2 && $oTime->format('G')>=14)
 	);
 }
+
+/**
+ * Validates if working date is available to grant appointments.
+ *
+ * @param string $psDate
+ * @param array $paExceptions
+ * @return boolean $bInException
+ */
+function validateDateInExceptions($psDate, $paExceptions) {
+	$bInException = false;
+
+	$oDate = new \Jenssegers\Date\Date($psDate);
+
+	$oDateTimeFrom = clone $oDate;
+	$oDateTimeTo = clone $oDate;
+
+	$oDateTimeFrom->hour(config('app.working_hours_per_day')[$oDate->format('w')][0]);
+
+	$oDateTimeTo->hour(config('app.working_hours_per_day')[$oDate->format('w')][1]);
+
+	foreach ($paExceptions as $aException)
+		if (
+			$bInException = (bool) (
+				$aException['datetime_from'] <= $oDateTimeFrom->format('Y-m-d H:i:s') &&
+				$aException['datetime_to'] >= $oDateTimeTo->format('Y-m-d H:i:s')
+			)
+		)
+			break;
+
+	return $bInException;
+}
+
+/**
+ * Validates if working date and time is available to grant appointments.
+ *
+ * @param $psDateTime
+ * @param $paExceptions
+ * @return boolean $bInException
+ */
+function validateDateTimeInException($psDateTime, $paExceptions) {
+	$bInException = false;
+
+	$oDateTime = new \Jenssegers\Date\Date($psDateTime);
+
+	foreach ($paExceptions as $aException) {
+		$aException = (array) $aException;
+
+		if (
+			$bInException = (bool) (
+				$aException['datetime_from'] <= $oDateTime->format('Y-m-d H:i:s') &&
+				$aException['datetime_to'] >= $oDateTime->format('Y-m-d H:i:s')
+			)
+		)
+			break;
+	}
+
+	return $bInException;
+}

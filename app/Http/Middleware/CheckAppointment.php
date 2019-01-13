@@ -27,12 +27,13 @@ class CheckAppointment
 			return redirect('/book');
 		}
 
-    	$oAppointment = \App\Appointment::where([
+    	$oAppointment = \App\Models\Appointment::where([
 			'date' => Session::get('date'),
 			'time' => Session::get('time'),
 			'status' => 'granted'
 		])->get();
 
+    	// Already granted appointment
     	if (
     		validateGrantedAppointments(
 				Session::get('time'),
@@ -42,7 +43,7 @@ class CheckAppointment
 				]
 			)
 		) {
-			Flash()->error(__('Appointment is already granted.'))->important();
+			Flash()->error(__('Appointment selected is already granted.'))->important();
 
 			// Clean session data to prevent errors
 			Session::forget('date');

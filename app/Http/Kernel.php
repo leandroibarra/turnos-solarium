@@ -62,9 +62,17 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
 		/*
+		 * Installed Middlewares
+		 */
+		'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+		'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+
+		/*
 		 * Custom Middlewares
 		 */
 		'check-appointment' => \App\Http\Middleware\CheckAppointment::class,
+		'check-admin' => \App\Http\Middleware\CheckAdmin::class,
+		'check-https' => \App\Http\Middleware\CheckHttps::class,
     ];
 
     /**
