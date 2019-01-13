@@ -124,6 +124,8 @@
   "Price": "Precio",
   "Prices": "Precios",
   "Price deletion": "Eliminación de precio",
+  "Price creation": "Creación de precio",
+  "Price edition": "Edición de precio",
   "Are you sure you want to delete the price?": "¿Está seguro que desea eliminar el precio?",
   "About tanning text": "Texto acerca de los bronceados",
   "Text will be displayed in \"About tanning\" section": "Texto que se mostrará en la sección \"Acerca de los bronceados\"",
@@ -135,9 +137,13 @@
   "Instagram URL": "URL de Instagram",
   "Title": "Título",
   "Desc.": "Desc.",
+  "Description": "Descripción",
   "Sort": "Ordenar",
   "The prices has been ordered successfully.": "Los precios han sido ordenados exitosamente.",
   "The prices could not be ordered. Please, try again.": "Los precios no pudieron ser ordenados. Por favor, inténtelo nuevamente.",
   "The price has been deleted successfully.": "El precio ha sido eliminado exitosamente.",
-  "The price could not be deleted. Please, try again.": "El precio no pudo ser eliminado. Por favor, inténtelo nuevamente."
+  "The price could not be deleted. Please, try again.": "El precio no pudo ser eliminado. Por favor, inténtelo nuevamente.",
+  "The price has been created successfully.": "El precio ha sido creado exitosamente.",
+  "The price is not valid or has been deleted.": "El precio no es válido o ha sido eliminado.",
+  "The price has been edited successfully.": "El precio ha sido editado exitosamente."
 }

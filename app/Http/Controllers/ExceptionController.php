@@ -27,6 +27,9 @@ class ExceptionController extends Controller
 	 */
 	private $sFromFormat;
 
+	/**
+	 * ExceptionController constructor.
+	 */
 	public function __construct()
 	{
 		$this->aSystemParameters = SystemParameter::find(1)->toArray();

@@ -46,7 +46,7 @@
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
                     @endif
-                    @if ((bool) $aEnabledPrices)
+                    @if (!$aEnabledPrices->isEmpty())
                     <li class="nav-item">
                         <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
                     </li>
@@ -88,7 +88,7 @@
         </section>
         @endif
 
-        @if ((bool) $aEnabledPrices)
+        @if (!$aEnabledPrices->isEmpty())
         <section id="prices" class="section">
             <div class="container">
                 <div class="row">
@@ -98,9 +98,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach (array_chunk($aEnabledPrices, 4) as $aPrices)
+                    @foreach (array_chunk($aEnabledPrices->toArray(), 4, true) as $aPrices)
                         @php
                         $sClassFirst = $sClassLast = '';
+                        $iKey = 0;
 
                         switch (count($aPrices)) {
                             case 1:
@@ -115,13 +116,22 @@
                                 break;
                         }
                         @endphp
-                        @foreach ($aPrices as $iKey=>$aPrice)
-                        <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 0) ? $sClassFirst : ((count($aPrices)-1 == $iKey) ? $sClassLast : '') }}">
+                        @foreach ($aPrices as $iIndex=>$aPrice)
+                            @php
+                            $iKey++;
+
+                            $aBgColors = ['info', 'warning', 'success', 'danger', 'aqua', 'yellow', 'olive', 'red', 'blue', 'orange', 'green', 'maroon'];
+
+                            $sBgColor = $aBgColors[$iIndex % count($aBgColors)];
+
+                            $aPriceParts = explode($sDecimalPointSeparator, $aPrice['price']);
+                            @endphp
+                        <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 1) ? $sClassFirst : ((count($aPrices) == $iKey) ? $sClassLast : '') }} count-prices-{{count($aPrices)}}">
                             <div class="prices">
-                                <div class="prices-header bg-{{ $aPrice[2] }}">
+                                <div class="prices-header bg-{{ $sBgColor }}">
                                     <h4 class="title">{{ $aPrice['title'] }}</h4>
                                     <h2 class="price">
-                                        <sup>$</sup><strong>{{ $aPrice[0] }}</strong>@if (!is_null($aPrice[1])).<sup>{{ $aPrice[1] }}</sup>@endif
+                                        <sup>$</sup><strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<sup>{{ $aPriceParts[1] }}</sup>
                                     </h2>
                                 </div>
                                 <hr class="spacer-10" />
@@ -151,7 +161,7 @@
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
                         @endif
-                        @if ((bool) $aEnabledPrices)
+                        @if (!$aEnabledPrices->isEmpty())
                         <li class="list-inline-item">
                             <a href="#prices">{{ __('Prices') }}</a>
                         </li>

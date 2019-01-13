@@ -18,7 +18,11 @@ class IndexController extends Controller
 
 		return view('index')->with([
 			'aSiteParameter' => SiteParameter::find(1)->toArray(),
-			'aEnabledPrices' => $oPrice->getEnabled()->toArray()
+			'sDecimalPointSeparator' => config('app.decimal_point_separator'),
+			'sThousandsSeparator' => config('app.thousands_separator'),
+			'aEnabledPrices' => $oPrice->getEnabled()->each(function($poPrice) {
+				$poPrice->price = formatPrice($poPrice->price);
+			})
 		]);
 	}
 }

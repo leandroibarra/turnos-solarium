@@ -18,7 +18,7 @@ class Price extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['price', 'title', 'description'];
+	protected $fillable = ['price', 'title', 'description', 'order'];
 
 	/**
 	 * Retrieve enabled prices.
@@ -40,7 +40,6 @@ class Price extends Model
 	public function getAmountEnabled() {
 		return $this
 			->where('enable', '=', 1)
-			->orderBy('order', 'ASC')
 			->count();
 	}
 }

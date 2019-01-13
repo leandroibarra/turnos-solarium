@@ -80,3 +80,14 @@ function validateDateTimeInException($psDateTime, $paExceptions) {
 
 	return $bInException;
 }
+
+/**
+ * Format price with configured decimal point separator and thousands separator.
+ *
+ * @param string $psPrice
+ * @return string
+ */
+function formatPrice($psPrice)
+{
+	return number_format($psPrice, 2, config('app.decimal_point_separator'), config('app.thousands_separator'));
+}

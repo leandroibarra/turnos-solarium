@@ -57,7 +57,7 @@
                                         <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aPrice->title }}
                                     </div>
                                     <div class="col-12 col-md-7 text-center text-md-left">
-                                        <label class="text-muted mb-0 mr-1">{{ __('Price') }}:</label>&dollar; {{ number_format($aPrice->price, 2, $sDecimalPointSeparator, $sThousandsSeparator) }}
+                                        <label class="text-muted mb-0 mr-1">{{ __('Price') }}:</label>&dollar; {{ $aPrice->price }}
                                     </div>
                                 </div>
                                 <div class="row">
