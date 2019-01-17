@@ -11,31 +11,43 @@
             @endif
 
             <ul class="navbar-nav mx-auto">
-                @can('admin.appointment.list')
+                @can ('admin.appointment.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['appointment.list', 'appointment.reschedule'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('appointment.list') }}">{{ __('Appointments') }}</a>
                 </li>
                 @endcan
 
-                @can(['admin.system-parameters.edit', 'admin.system-parameters.update'])
+                @can (['admin.system-parameters.edit', 'admin.system-parameters.update'])
                 <li class="nav-item {{ (request()->route()->getName() == 'system-parameters.edit') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('system-parameters.edit') }}">{{ __('System Parameters') }}</a>
                 </li>
                 @endcan
 
-                @can('admin.exception.list')
+                @can ('admin.exception.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['exception.list', 'exception.create', 'exception.edit'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('exception.list') }}">{{ __('Exceptions') }}</a>
                 </li>
                 @endcan
 
-                @can(['admin.site-parameters.edit', 'admin.site-parameters.update'])
+                @can (['admin.site-parameters.edit', 'admin.site-parameters.update'])
                 <li class="nav-item {{ (request()->route()->getName() == 'site-parameters.edit') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('site-parameters.edit') }}">{{ __('Site Parameters') }}</a>
                 </li>
                 @endcan
 
-                @can('admin.user.list')
+                @can ('admin.price.list')
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['price.list', 'price.create', 'price.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('price.list') }}">{{ __('Prices') }}</a>
+                </li>
+                @endcan
+
+                @can ('admin.slide.list')
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['slide.list', 'slide.create', 'slide.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('slide.list') }}">{{ __('Slides') }}</a>
+                </li>
+                @endcan
+
+                @can ('admin.user.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['user.list', 'permission.edit', 'permission.update'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>
                 </li>

@@ -4,6 +4,13 @@
 .overflow-hidden {
     overflow: hidden;
 }
+a.disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    outline: none;
+    text-decoration: none;
+}
 
 /*
  * Arrows navigation
