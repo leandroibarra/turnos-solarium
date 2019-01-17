@@ -91,3 +91,18 @@ function formatPrice($psPrice)
 {
 	return number_format($psPrice, 2, config('app.decimal_point_separator'), config('app.thousands_separator'));
 }
+
+/**
+ * Build image full path.
+ *
+ * @param string $psResource
+ * @param string $psImageName
+ * @return string
+ */
+function imageFullPath($psResource, $psImageName) {
+	return implode('/', [
+		config('filesystems.disks')[config('filesystems.default')]['url'],
+		config('app.path_folder_by_resource')[$psResource],
+		$psImageName
+	]);
+}

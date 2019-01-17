@@ -26,7 +26,64 @@
     <div class="row">
         <div class="col-12 slides-container">
             @if (!$aEnabledSlides->isEmpty())
+                @php
+                $iColMd = 12;
 
+                if (Auth::user()->can('admin.slide.sort'))
+                    $iColMd -= 2;
+
+                if ((Auth::user()->can('admin.slide.edit') && Auth::user()->can('admin.slide.update')) || Auth::user()->can('admin.slide.delete'))
+                    $iColMd -= 2;
+                @endphp
+
+                <ul class="list-group">
+                @foreach ($aEnabledSlides as $iKey=>$aSlide)
+                    <li class="list-group-item p-2" data-index="{{ $iKey }}">
+                        <div class="row">
+                            @can ('admin.slide.sort')
+                            <div class="col-12 col-md-2 align-self-center text-center slide-order" data-index="{{ $iKey }}" data-slide-id="{{ $aSlide->id }}">
+                                <a href="javascript:void(0);" class="sort-slide {{ ($iKey == 0) ? 'disabled' : '' }}" data-sort-type="desc" title="{{ __('Sort') }}">
+                                    <i class="fas fa-chevron-up"></i>
+                                </a>
+                                <h4 class="my-0" title="{{ __('Order') }}">#{{ $aSlide->order }}</h4>
+                                <a href="javascript:void(0);" class="sort-slide {{ ($iKey == count($aEnabledSlides)-1) ? 'disabled' : '' }}" data-sort-type="asc" title="{{ __('Sort') }}">
+                                    <i class="fas fa-chevron-down"></i>
+                                </a>
+                            </div>
+                            @endcan
+                            <div class="col-12 col-md-{{ $iColMd }} align-self-center text-center text-md-left">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 text-center text-md-left mb-2 mb-md-0">
+                                        <img src="{{ $aSlide->fullPath }}" alt="{{ $aSlide->image }}" title="{{ $aSlide->image }}" border="0" class="img-fluid" />
+                                    </div>
+                                    <div class="col-12 col-md-8 text-center text-md-left">
+                                        <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aSlide->title }}
+                                    </div>
+                                </div>
+                            </div>
+                            @if ((Auth::user()->can('admin.slide.edit') && Auth::user()->can('admin.slide.update')) || Auth::user()->can('admin.slide.delete'))
+                            <div class="col-12 col-md-2 align-self-center text-center text-md-right mt-2 mt-md-0">
+                                @can (['admin.slide.edit', 'admin.slide.update'])
+                                <a href="{{ route('slide.edit', ['id' => $aSlide->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Edit') }}" role="button">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                @endcan
+
+                                @can ('admin.slide.delete')
+                                <button class="btn btn-sm btn-danger" title="{{ __('Delete') }}"
+                                    data-slide-id="{{ $aSlide->id }}"
+                                    data-target="#deleteModal"
+                                    data-toggle="modal"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                @endcan
+                            </div>
+                            @endif
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
             @endif
         </div>
     </div>
@@ -196,11 +253,7 @@ jQuery(document).ready(function() {
                     slides: aData
                 },
                 success: function(result) {
-                    var sClass = 'danger';
-
                     if (result.status == 'success') {
-                        sClass = 'success';
-
                         // Build and sort array of index
                         var aIndex = new Array(iIndex, iIndexOther).sort();
 
@@ -249,7 +302,7 @@ jQuery(document).ready(function() {
             jQuery(oSlideOrder).attr('data-index', iIndex);
 
             // Update order text
-            jQuery(oSlideOrder).find('h4').html(iIndex + 1);
+            jQuery(oSlideOrder).find('h4').html('#' + (iIndex + 1));
 
             // Enable all sort anchors temporally
             jQuery(oSlideOrder).find('a').removeClass('disabled');
@@ -264,38 +317,6 @@ jQuery(document).ready(function() {
         });
     }
     @endif
-
-    var iShowChar = 87;
-
-    jQuery('.description').each(function() {
-        var oContent = jQuery(this).html();
-
-        if (oContent.length > iShowChar) {
-            var showContent = oContent.substr(0, iShowChar);
-            var hiddenContent = oContent.substr(iShowChar, oContent.length - iShowChar);
-
-            var sHtml = showContent + '<span class="more-ellipses">...</span><span class="hidden-content"><span>' + hiddenContent + '</span>&nbsp;<span class="more-link">{{ __('more') }}</span></span>';
-
-            jQuery(this).html(sHtml);
-        }
-    });
-
-    jQuery('.more-link').click(function() {
-        if (jQuery(this).hasClass('less')) {
-            jQuery(this).removeClass('less');
-
-            jQuery(this).html('{{ __('more') }}');
-        } else {
-            jQuery(this).addClass('less');
-
-            jQuery(this).html('{{ __('less') }}');
-        }
-
-        jQuery(this).parent().prev().toggle();
-        jQuery(this).prev().toggle();
-
-        return false;
-    });
 });
 </script>
 @endsection

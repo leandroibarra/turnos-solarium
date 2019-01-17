@@ -139,6 +139,7 @@
   "Desc.": "Desc.",
   "Description": "Descripción",
   "Sort": "Ordenar",
+  "Order": "Orden",
   "The prices has been ordered successfully.": "Los precios han sido ordenados exitosamente.",
   "The prices could not be ordered. Please, try again.": "Los precios no pudieron ser ordenados. Por favor, inténtelo nuevamente.",
   "The price has been deleted successfully.": "El precio ha sido eliminado exitosamente.",
@@ -148,5 +149,17 @@
   "The price has been edited successfully.": "El precio ha sido editado exitosamente.",
   "Slides": "Slides",
   "Slide deletion": "Eliminación de slide",
-  "Are you sure you want to delete the slide?": "¿Está seguro que desea eliminar el slide?"
+  "Slide creation": "Creación de slide",
+  "Slide edition": "Edición de slide",
+  "Are you sure you want to delete the slide?": "¿Está seguro que desea eliminar el slide?",
+  "Image": "Imagen",
+  "Drag & drop the file here": "Arrastre y suelte el archivo aquí",
+  "The slides has been ordered successfully.": "Los slides han sido ordenados exitosamente.",
+  "The slides could not be ordered. Please, try again.": "Los slides no pudieron ser ordenados. Por favor, inténtelo nuevamente.",
+  "The slide has been deleted successfully.": "El slide ha sido eliminado exitosamente.",
+  "The slide could not be deleted. Please, try again.": "El slide no pudo ser eliminado. Por favor, inténtelo nuevamente.",
+  "The slide has been created successfully.": "El slide ha sido creado exitosamente.",
+  "The slide is not valid or has been deleted.": "El slide no es válido o ha sido eliminado.",
+  "The slide has been edited successfully": "El slide ha sido editado exitosamente.",
+  "Welcome to": "Bienvenido a"
 }

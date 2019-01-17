@@ -485,6 +485,13 @@ span {
     }
 }
 
+/**
+ * Welcome title
+ */
+.welcome-title {
+    font-size: 4em;
+}
+
 /*
  * My Slider customization
  */

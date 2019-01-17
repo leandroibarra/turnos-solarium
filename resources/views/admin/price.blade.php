@@ -41,11 +41,11 @@
                     <li class="list-group-item p-2" data-index="{{ $iKey }}">
                         <div class="row">
                             @can ('admin.price.sort')
-                            <div class="col-12 col-md-2 text-center price-order" data-index="{{ $iKey }}" data-price-id="{{ $aPrice->id }}">
+                            <div class="col-12 col-md-2 align-self-center text-center price-order" data-index="{{ $iKey }}" data-price-id="{{ $aPrice->id }}">
                                 <a href="javascript:void(0);" class="sort-price {{ ($iKey == 0) ? 'disabled' : '' }}" data-sort-type="desc" title="{{ __('Sort') }}">
                                     <i class="fas fa-chevron-up"></i>
                                 </a>
-                                <h4 class="my-0">{{ $aPrice->order }}</h4>
+                                <h4 class="my-0" title="{{ __('Order') }}">#{{ $aPrice->order }}</h4>
                                 <a href="javascript:void(0);" class="sort-price {{ ($iKey == count($aEnabledPrices)-1) ? 'disabled' : '' }}" data-sort-type="asc" title="{{ __('Sort') }}">
                                     <i class="fas fa-chevron-down"></i>
                                 </a>
@@ -258,11 +258,7 @@ jQuery(document).ready(function() {
                     prices: aData
                 },
                 success: function(result) {
-                    var sClass = 'danger';
-
                     if (result.status == 'success') {
-                        sClass = 'success';
-
                         // Build and sort array of index
                         var aIndex = new Array(iIndex, iIndexOther).sort();
 
@@ -311,7 +307,7 @@ jQuery(document).ready(function() {
             jQuery(oPriceOrder).attr('data-index', iIndex);
 
             // Update order text
-            jQuery(oPriceOrder).find('h4').html(iIndex + 1);
+            jQuery(oPriceOrder).find('h4').html('#' + (iIndex + 1));
 
             // Enable all sort anchors temporally
             jQuery(oPriceOrder).find('a').removeClass('disabled');

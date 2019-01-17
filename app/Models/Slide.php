@@ -31,4 +31,15 @@ class Slide extends Model
 			->orderBy('order', 'ASC')
 			->get();
 	}
+
+	/**
+	 * Retrieve amount of enabled slides.
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getAmountEnabled() {
+		return $this
+			->where('enable', '=', 1)
+			->count();
+	}
 }
