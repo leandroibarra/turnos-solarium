@@ -139,6 +139,30 @@ span {
 .bg-gray {
     background-color: #F6F6F6 !important;
 }
+.bg-aqua {
+    background-color: #00A7D0 !important;
+}
+.bg-blue {
+    background-color: #005384 !important
+}
+.bg-green {
+    background-color: #008D4C !important
+}
+.bg-olive {
+    background-color: #368763 !important
+}
+.bg-red {
+    background-color: #D33724 !important
+}
+.bg-maroon {
+    background-color: #CA195A !important
+}
+.bg-orange {
+    background-color: #FF7701 !important
+}
+.bg-yellow {
+    background-color: #DB8B0B !important
+}
 .bg-info {
     background-color: #3498DB !important;
 }
@@ -459,6 +483,13 @@ span {
     .container {
         width: 1170px
     }
+}
+
+/**
+ * Welcome title
+ */
+.welcome-title {
+    font-size: 4em;
 }
 
 /*

@@ -48,6 +48,10 @@ textarea {
     border-color: #0293FF;
 }
 
+.input-group-text.is-invalid {
+    border-color: #DC3545;
+}
+
 /*
  * Spinner
  */

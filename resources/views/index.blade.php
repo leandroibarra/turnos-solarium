@@ -26,7 +26,7 @@
         </svg>
     </div>
 
-    <nav class="navbar navbar-expand-md navbar-custom fixed-top top-nav-menu" role="navigation">
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top top-nav-menu {{ ($aEnabledSlides->isEmpty()) ? 'top-nav-collapse' : '' }}" role="navigation">
         <div class="container">
             <a class="navbar-brand" href="{{ route('index.index') }}">{{ config('app.name', 'Laravel') }}</a>
 
@@ -38,17 +38,21 @@
 
             <div class="collapse navbar-collapse" id="topNavBar">
                 <ul class="navbar-nav ml-auto navscroll">
+                    @if (!$aEnabledSlides->isEmpty())
                     <li class="nav-item">
                         <a class="nav-link" href="#my-slider">{{ __('Home') }}</a>
                     </li>
+                    @endif
                     @if ($aSiteParameter['about_tanning_text'] != '')
                     <li class="nav-item">
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
                     @endif
+                    @if (!$aEnabledPrices->isEmpty())
                     <li class="nav-item">
                         <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
                     </li>
@@ -58,68 +62,98 @@
     </nav>
 
     <div class="content" id="content">
-        <div id="my-slider">
-            @for ($iIndex=1; $iIndex<4; $iIndex++)
-            <div class="my-slide" data-duration="8000" data-transition="2">
-                <img class="my-slide-background" src="{{ asset('images/slide'.$iIndex.'.jpg') }}" alt="slide{{ $iIndex }}" data-size="cover">
-                <h1 class="my-slider-slide slide-title color-light text-center"
-                    style="top:300px; width:100%; text-align:center;"
-                    data-transitionin="offsety:500;duration:1800;delay:500;easing:easeInOutExpo;"
-                    data-transitionout="offsety:-500; scaley:0.1; duration:1200; delay:4000;">
-                    Texto slide {{ $iIndex }}
-                </h1>
+        @if ($aEnabledSlides->isEmpty() && empty($aSiteParameter['about_tanning_text']) && $aEnabledPrices->isEmpty())
+            <div class="welcome-title text-center d-flex my-5 py-4 py-md-5">
+                <div class="align-self-center mx-auto my-5 py-4 py-md-5">{{ __('Welcome to').' '.config('app.name', 'Laravel') }}</div>
             </div>
-            @endfor
-        </div>
-
-        @if ($aSiteParameter['about_tanning_text'] != '')
-        <section id="tanning" class="section bg-gray">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h2 class="h1">{{ __('About tanning') }}</h2>
-                        <hr class="spacer-30">
-                        <div class="tanning-content">{{ $aSiteParameter['about_tanning_text'] }}</div>
-                    </div>
+        @else
+            @if (!$aEnabledSlides->isEmpty())
+            <div id="my-slider">
+                @foreach ($aEnabledSlides as $aSlide)
+                <div class="my-slide" data-duration="8000" data-transition="2">
+                    <img class="my-slide-background" src="{{ $aSlide->fullPath }}" alt="{{ $aSlide->image }}" data-size="cover">
+                    <h1 class="my-slider-slide slide-title color-light text-center"
+                        style="top:300px; width:100%; text-align:center;"
+                        data-transitionin="offsety:500; duration:1800; delay:500; easing:easeInOutExpo;"
+                        data-transitionout="offsety:-500; scaley:0.1; duration:1200; delay:4000;">
+                        {{ $aSlide->title }}
+                    </h1>
                 </div>
+                @endforeach
             </div>
-        </section>
-        @endif
+            @endif
 
-        <section id="prices" class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h1>{{ __('Prices') }}</h1>
-                        <hr class="spacer-20">
-                    </div>
-                </div>
-                <div class="row">
-                    @foreach (
-                        [
-                            ['14', '99', 'info'],
-                            ['200', '00', 'warning'],
-                            ['599', '00', 'success'],
-                            ['1450', '50', 'danger']
-                        ]
-                        as $iKey => $aPrice
-                    )
-                    <div class="col-12 col-lg-3 col-md-6">
-                        <div class="prices">
-                            <div class="prices-header bg-{{ $aPrice[2] }}">
-                                <h4 class="title">Nombre Plan {{ $iKey + 1 }}</h4>
-                                <h2 class="price">
-                                    <sup>$</sup><strong>{{ $aPrice[0] }}</strong>@if (!is_null($aPrice[1])).<sup>{{ $aPrice[1] }}</sup>@endif
-                                </h2>
-                            </div>
-                            <hr class="spacer-10" />
-                            <div class="prices-features">Descripción plan {{ $iKey + 1 }}</div>
+            @if (!empty($aSiteParameter['about_tanning_text']))
+            <section id="tanning" class="section bg-gray">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="h1">{{ __('About tanning') }}</h2>
+                            <hr class="spacer-30">
+                            <div class="tanning-content">{{ $aSiteParameter['about_tanning_text'] }}</div>
                         </div>
                     </div>
-                    @endforeach
                 </div>
-            </div>
-        </section>
+            </section>
+            @endif
+
+            @if (!$aEnabledPrices->isEmpty())
+            <section id="prices" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1>{{ __('Prices') }}</h1>
+                            <hr class="spacer-20">
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (array_chunk($aEnabledPrices->toArray(), 4, true) as $aPrices)
+                            @php
+                            $sClassFirst = $sClassLast = '';
+                            $iKey = 0;
+
+                            switch (count($aPrices)) {
+                                case 1:
+                                    $sClassFirst = 'mx-md-auto';
+                                    break;
+                                case 2:
+                                    $sClassFirst = 'offset-lg-3';
+                                    break;
+                                case 3:
+                                    $sClassFirst = 'offset-lg-1';
+                                    $sClassLast = 'offset-md-3 offset-lg-0';
+                                    break;
+                            }
+                            @endphp
+                            @foreach ($aPrices as $iIndex=>$aPrice)
+                                @php
+                                $iKey++;
+
+                                $aBgColors = ['info', 'warning', 'success', 'danger', 'aqua', 'yellow', 'olive', 'red', 'blue', 'orange', 'green', 'maroon'];
+
+                                $sBgColor = $aBgColors[$iIndex % count($aBgColors)];
+
+                                $aPriceParts = explode($sDecimalPointSeparator, $aPrice['price']);
+                                @endphp
+                            <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 1) ? $sClassFirst : ((count($aPrices) == $iKey) ? $sClassLast : '') }} count-prices-{{count($aPrices)}}">
+                                <div class="prices">
+                                    <div class="prices-header bg-{{ $sBgColor }}">
+                                        <h4 class="title">{{ $aPrice['title'] }}</h4>
+                                        <h2 class="price">
+                                            <sup>$</sup><strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<sup>{{ $aPriceParts[1] }}</sup>
+                                        </h2>
+                                    </div>
+                                    <hr class="spacer-10" />
+                                    <div class="prices-features">{{ $aPrice['description'] }}</div>
+                                </div>
+                            </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+        @endif
     </div>
 
     <footer class="footer">
@@ -129,17 +163,21 @@
             <div class="row">
                 <div class="col-12 col-md-8 d-none d-md-block">
                     <ul class="list-inline">
+                        @if (!$aEnabledSlides->isEmpty())
                         <li class="list-inline-item">
                             <a href="#my-slider">{{ __('Home') }}</a>
                         </li>
-                        @if ($aSiteParameter['about_tanning_text'] != '')
+                        @endif
+                        @if (!empty($aSiteParameter['about_tanning_text']))
                         <li class="list-inline-item">
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
                         @endif
+                        @if (!$aEnabledPrices->isEmpty())
                         <li class="list-inline-item">
                             <a href="#prices">{{ __('Prices') }}</a>
                         </li>
+                        @endif
                         <li class="list-inline-item">
                             <a href="{{ route('book.index') }}">{{ __('Book online') }}</a>
                         </li>
@@ -190,13 +228,13 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" type="text/javascript"></script>
 
     <script src="{{ asset('js/scrolltopcontrol-1.1.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/smooth-scroll-2.2.0.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
     jQuery(document).ready(function() {
         // Show spinner
         jQuery('.spinner-container').fadeIn('fast').delay(500).fadeOut('slow');
 
+        @if (!$aEnabledSlides->isEmpty())
         // Navigation to collapse the navbar on scroll
         jQuery(window).scroll(function() {
             if (jQuery('.navbar').offset().top > 50)
@@ -211,13 +249,63 @@
             height: 674,
             bFullSize: false,
             bFullWidth: true,
-            bOnHoverPause: false
+            bPauseOnHover: false
         });
+        @endif
 
-        // Smooth scroll settings
-        jQuery('.navbar .navbar-nav a').smoothScroll({
-            speed: 800
-        });
+        /*
+         * BEGIN - Smooth Scroll Animation
+         */
+        // Select all links with hashes
+        jQuery('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .click(function(event) {
+                // Process links of this page only
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+                    location.hostname == this.hostname
+                ) {
+                    // Figure out element to scroll to
+                    var oTarget = jQuery(this.hash);
+
+                    oTarget = (oTarget.length) ? oTarget : jQuery('[name=' + this.hash.slice(1) + ']');
+
+                    // If target exist
+                    if (oTarget.length) {
+                        // Only cancel default event if animation is actually gonna happen
+                        event.preventDefault();
+
+                        jQuery('html, body').animate(
+                            {
+                                scrollTop: oTarget.offset().top
+                            },
+                            800,
+                            function() {
+                                // Callback after animation
+                                var $oTarget = jQuery(oTarget);
+
+                                // Must change focus
+                                $oTarget.focus();
+
+                                if ($oTarget.is(':focus')) {
+                                    // Check if the target was focused
+                                    return false;
+                                } else {
+                                    // Adding tabindex attribute for not focusable elements
+                                    $oTarget.attr('tabindex', '-1');
+
+                                    // Set focus again
+                                    $oTarget.focus();
+                                }
+                            }
+                        );
+                    }
+                }
+            });
+        /*
+         * END - Smooth Scroll Animation
+         */
     });
     </script>
 </body>
