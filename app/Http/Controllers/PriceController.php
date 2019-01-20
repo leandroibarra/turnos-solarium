@@ -289,7 +289,7 @@ class PriceController extends Controller
 				'price' => [
 					'required',
 					function ($attribute, $value, $fail) {
-						if (preg_match('/^\d{1,2}('.$this->sThousandsSeparator.'\d{3})*(\\'.$this->sDecimalPointSeparator.'\d{1,2})?$/', $value) != 1)
+						if (preg_match('/^\d+('.$this->sThousandsSeparator.'\d{3})*(\\'.$this->sDecimalPointSeparator.'\d{1,2})?$/', $value) != 1)
 							$fail(__('The :attribute field is not valid.'));
 					}
 				],
