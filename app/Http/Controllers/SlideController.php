@@ -19,7 +19,7 @@ class SlideController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->sPathFolder = config('app.path_folders')['slides'];
+		$this->sPathFolder = config('app.path_folder_by_resource')['slides'];
 	}
 
 	/**
@@ -161,7 +161,7 @@ class SlideController extends Controller
 		}
 
 		// Build full path field data
-		$oSlide->fullPath = $this->getImageFullPath($oSlide->image);
+		$oSlide->fullPath = imageFullPath('slides', $oSlide->image);
 
 		return view('admin.slide-edit')->with([
 			'aSlide' => $oSlide->toArray()
