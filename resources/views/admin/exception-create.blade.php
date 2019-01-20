@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('exception.store') }}">
+            <form method="POST" action="{{ route('exception.store') }}" id="exceptionCreateForm">
                 @csrf
 
                 <div class="form-group">
@@ -25,9 +25,9 @@
                     <input id="datetimes" type="text" class="form-control{{ $errors->has('datetimes') ? ' is-invalid' : '' }}" name="datetimes" value="{{ old('datetimes') }}" />
 
                     @if ($errors->has('datetimes'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('datetimes') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -52,9 +52,9 @@
                     </div>
 
                     @if ($errors->has('type'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('type') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -74,12 +74,12 @@
 @endsection
 
 @section('page-styles')
-<link href="{{ asset('css/daterangepicker-3.0.3.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-scripts')
 <script src="{{ asset('js/moment-with-locales-2.18.1.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/daterangepicker-3.0.3.js') }}" type="text/javascript"></script>
+<script src="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -161,6 +161,15 @@ jQuery(document).ready(function() {
 
         return sDateTime;
     }
+
+    // Prevent multiple clicks
+    jQuery('#exceptionCreateForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
 });
 </script>
 @endsection

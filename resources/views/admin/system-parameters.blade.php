@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}">
+            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}" id="systemParametersForm">
                 @method('PUT')
 
                 @csrf
@@ -24,9 +24,9 @@
                            value="{{ old('appointment_minutes', $aSystemParameter['appointment_minutes']) }}" disabled readonly />
 
                     @if ($errors->has('appointment_minutes'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('appointment_minutes') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
                 <div class="form-group">
@@ -40,9 +40,9 @@
                     </select>
 
                     @if ($errors->has('appointment_until_days'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('appointment_until_days') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
                 <div class="form-group">
@@ -54,9 +54,9 @@
                            value="{{ old('appointment_confirmed_email_subject', $aSystemParameter['appointment_confirmed_email_subject']) }}" />
 
                     @if ($errors->has('appointment_confirmed_email_subject'))
-                    <span class="invalid-feedback" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('appointment_confirmed_email_subject') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
                 <div class="form-group">
@@ -74,9 +74,9 @@
                     </textarea>
 
                     @if ($errors->has('appointment_confirmed_email_body'))
-                    <span class="invalid-feedback appointment_confirmed_email_body" role="alert">
+                    <div class="invalid-feedback appointment_confirmed_email_body d-block" role="alert">
                         <strong>{{ $errors->first('appointment_confirmed_email_body') }}</strong>
-                    </span>
+                    </div>
                     @endif
                 </div>
 
@@ -113,9 +113,16 @@ jQuery(document).ready(function() {
     });
 
     // Clean on submit form
-    jQuery('form').on('submit', function() {
+    jQuery('#systemParametersForm').on('submit', function() {
         if (jQuery(jQuery('#appointment_confirmed_email_body').summernote('code')).text().replace(/\s+/g, '').length == 0)
             jQuery('#appointment_confirmed_email_body').val('');
+
+        // Prevent multiple clicks
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
     });
 });
 </script>

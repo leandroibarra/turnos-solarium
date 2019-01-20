@@ -27,6 +27,9 @@ class ExceptionController extends Controller
 	 */
 	private $sFromFormat;
 
+	/**
+	 * ExceptionController constructor.
+	 */
 	public function __construct()
 	{
 		$this->aSystemParameters = SystemParameter::find(1)->toArray();
@@ -54,7 +57,7 @@ class ExceptionController extends Controller
 		$oException = new Exception();
 
 		return view('admin.exception')->with([
-			'aEnabledExceptions' => $oException->getNextEnabled()
+			'aEnabledExceptions' => $oException->getCurrentAndNextEnabled()
 		]);
 	}
 

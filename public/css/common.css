@@ -4,6 +4,13 @@
 .overflow-hidden {
     overflow: hidden;
 }
+a.disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    outline: none;
+    text-decoration: none;
+}
 
 /*
  * Arrows navigation
@@ -146,6 +153,7 @@ i.arrow:hover {
     position: absolute;
     right: 0;
     top: 0;
+    width: 100%;
 }
 
 /*
@@ -297,6 +305,13 @@ i.arrow:hover {
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
     /*
+     * Centered container
+     */
+    .container-center {
+        width: 70%;
+    }
+
+    /*
      * Calendar
      */
     .day {
@@ -316,6 +331,13 @@ i.arrow:hover {
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
     /*
+     * Centered container
+     */
+    .container-center {
+        width: 60%;
+    }
+
+    /*
      * Calendar
      */
     .day {
@@ -325,6 +347,13 @@ i.arrow:hover {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    /*
+     * Centered container
+     */
+    .container-center {
+        width: 50%;
+    }
+
     /*
      * Calendar
      */
