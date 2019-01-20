@@ -72,7 +72,7 @@
         $sClasses .= ($oToday->format('Y-m-d') == $oDate->format('Y-m-d')) ? ' current-day' : '';
         @endphp
 
-        <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate {{ $sClasses }}"
+        <div class="day col p-2 border border-left-0 border-top-0 text-truncate {{ $sClasses }}"
              @if (strpos($sClasses, 'bookable-day') !== false)
                 data-year="{{ $oDate->format('Y') }}"
                 data-month="{{ $oDate->format('m') }}"
@@ -84,7 +84,6 @@
         >
             <h5 class="row align-items-center">
                 <span class="date col-1">{{ $oDate->format('j') }}</span>
-                <small class="col d-sm-none text-center text-muted">{{ $oDate->format('l') }}</small>
                 <span class="col-1"></span>
             </h5>
         </div>
