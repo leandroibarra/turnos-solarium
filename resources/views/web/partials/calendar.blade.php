@@ -22,9 +22,9 @@
             @endif
         </div>
     </div>
-    <div class="row mx-auto d-none d-sm-flex p-1 bg-dark text-white">
+    <div class="row mx-auto p-1 bg-dark text-white">
         @for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
-            <h5 class="col-sm p-1 mb-0 text-center">
+            <h5 class="col p-1 mb-0 text-center">
                 <span class="d-none d-lg-block">{{ $oHeaderDateTime->format('l') }}</span>
                 <span class="d-block d-lg-none">{{ $oHeaderDateTime->format('D') }}</span>
             </h5>
