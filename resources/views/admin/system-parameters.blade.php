@@ -92,6 +92,15 @@
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @php
+    $aLang = [
+        'en' => 'en-US',
+        'es' => 'es-ES'
+    ];
+    @endphp
+
+    var sLang = '{{ $aLang[app()->getLocale()] }}';
+
     // Summernote configs
     jQuery('#appointment_confirmed_email_body').summernote({
         toolbar: [
@@ -99,7 +108,7 @@ jQuery(document).ready(function() {
             ['fontsize', ['fontsize']],
             ['para', ['paragraph']]
         ],
-        lang: 'es-ES',
+        lang: sLang,
         height: 200,
         hint: {
             words: ['@_NAME_@', '@_DATE_@', '@_TIME_@'],
