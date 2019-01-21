@@ -50,7 +50,7 @@ class SiteParameterController extends Controller
 
 		// Update site parameters
 		SiteParameter::whereId($id)->update([
-			'about_tanning_text' => strip_tags($request->input('about_tanning_text')),
+			'about_tanning_text' => htmlentities($request->input('about_tanning_text')),
 			'pinterest_url' => $request->input('pinterest_url'),
 			'facebook_url' => $request->input('facebook_url'),
 			'twitter_url' => $request->input('twitter_url'),
