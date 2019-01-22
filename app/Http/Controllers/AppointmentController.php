@@ -162,7 +162,7 @@ class AppointmentController extends Controller
 		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getNextGranted()
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted()
 		]);
 	}
 
