@@ -19,7 +19,7 @@
                     <label for="about_tanning_text" class="mb-0">{{ __('About tanning text') }}</label>
                     <small class="form-text text-muted mt-0 mb-2">{{ __('Text will be displayed in "About tanning" section') }}</small>
 
-                    <textarea id="about_tanning_text" name="about_tanning_text" class="form-control no-resize" rows="8">{{ old('about_tanning_text', $aSiteParameter['about_tanning_text']) }}</textarea>
+                    <textarea id="about_tanning_text" name="about_tanning_text" class="form-control no-resize" rows="8">{{ html_entity_decode(old('about_tanning_text', $aSiteParameter['about_tanning_text'])) }}</textarea>
                 </div>
 
                 <div class="form-group">
@@ -57,6 +57,27 @@
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @php
+    $aLang = [
+        'en' => 'en-US',
+        'es' => 'es-ES'
+    ];
+    @endphp
+
+    var sLang = '{{ $aLang[app()->getLocale()] }}';
+
+    // Summernote configs
+    jQuery('#about_tanning_text').summernote({
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline']],
+            ['fontsize', ['fontsize']],
+            ['para', ['ul', 'ol']],
+            ['insert', ['link']]
+        ],
+        lang: sLang,
+        height: 200
+    });
+
     // Prevent multiple clicks
     jQuery('#siteParametersForm').submit(function() {
         jQuery('button[type=submit]', this)
