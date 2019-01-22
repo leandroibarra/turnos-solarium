@@ -16,8 +16,8 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="about_tanning_text" class="mb-0">{{ __('About tanning text') }}</label>
-                    <small class="form-text text-muted mt-0 mb-2">{{ __('Text will be displayed in "About tanning" section') }}</small>
+                    <label for="about_tanning_text" class="mb-0">{{ __('About our tanning text') }}</label>
+                    <small class="form-text text-muted mt-0 mb-2">{{ __('Text will be displayed in "About our tanning" section') }}</small>
 
                     <textarea id="about_tanning_text" name="about_tanning_text" class="form-control no-resize" rows="8">{{ html_entity_decode(old('about_tanning_text', $aSiteParameter['about_tanning_text'])) }}</textarea>
                 </div>
