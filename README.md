@@ -4,8 +4,9 @@ Este sistema le permite administrar una web en donde los clientes de un local de
 Además contiene un módulo de administración en el que se podrán:
 + Cancelar y reprogramar turnos reservados.
 + Administrar rango de fechas/horas en el cual los clientes no podrán reservar turnos.
-+ Administrar permisos de usuarios registrados en le sistema.
++ Administrar permisos de usuarios registrados en el sistema.
 + Administrar parámetros del sitema.
++ Administrar parámetros, slides y precios para el sitio público.
 
 ## Tabla de contenidos
 - [Reglas de Negocio](#reglas-de-negocio)
@@ -14,11 +15,8 @@ Además contiene un módulo de administración en el que se podrán:
 - [Licencia](#licencia)
 
 ## Reglas de Negocio
-+ Horarios de trabajo:
-    + Lunes y Martes de 14 hs hasta 20 hs.
-    + Miércoles, Jueves, y Viernes de 9 hs hasta 20 hs.
-+ Cualquier día de 14 hs hasta 20 hs se podrá reservar un máximo de 2 turnos por cliente.
-+ Miércoles, Jueves, y Viernes de 9 hs a 14 hs se podrá reservar soloment un turno por cliente.
++ El horario de trabajo es de Lunes a Viernes de 9 hs a 20 hs.
++ Cualquier día se podrá reservar un máximo de 2 turnos por cliente.
 
 ## Instalación
 - Clonar repositorio usando `https://github.com/leandroibarra/turnos-solarium.git`.

@@ -1,6 +1,18 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v2.0.2](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.2) (2019-01-21)
+**Agregado**
+- Editor de texto enriquecido para texto acerca de los bronceados.
+
+**Cambiado**
+- Estilos responsive de calendario.
+- Horarios de trabajo por día.
+
+**Corregido**
+- Expresión regular para validar precios.
+- Constructor y método de edición de slides.
+
 ## [v2.0.1](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.1) (2019-01-18)
 **Agregado**
 - Middleware para forzar redirección a HTTPS en página de inicio.
