@@ -96,7 +96,7 @@ class PriceController extends Controller
 			} catch (\Exception $oException) {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The price could not be deleted. Please, try again.')
+					'message' => __('The price already has been deleted. Please, update your page.')
 				];
 			}
 
