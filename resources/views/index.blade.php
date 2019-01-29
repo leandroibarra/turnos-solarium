@@ -88,7 +88,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="h1 text-center">{{ __('About tanning') }}</h2>
+                            <h2 class="h1 text-center">{{ __('About our tanning') }}</h2>
                             <hr class="spacer-30">
                             <div class="tanning-content">{!! $aSiteParameter['about_tanning_text'] !!}</div>
                         </div>

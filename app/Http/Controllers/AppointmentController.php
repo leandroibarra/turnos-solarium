@@ -162,7 +162,7 @@ class AppointmentController extends Controller
 		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getNextGranted()
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted()
 		]);
 	}
 
@@ -191,7 +191,7 @@ class AppointmentController extends Controller
 			} else {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The appointment could not be cancelled. Please, try again.')
+					'message' => __('The appointment already has been cancelled or rescheduled. Please, try again.')
 				];
 			}
 

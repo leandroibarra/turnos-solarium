@@ -89,7 +89,7 @@ class SlideController extends Controller
 			} catch (\Exception $oException) {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The slide could not be deleted. Please, try again.')
+					'message' => __('The slide already has been deleted. Please, update your page.')
 				];
 			}
 

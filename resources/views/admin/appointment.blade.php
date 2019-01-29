@@ -68,23 +68,25 @@
                             </div>
                             @if ((Auth::user()->can('admin.appointment.reschedule') && Auth::user()->can('admin.appointment.update')) || Auth::user()->can('admin.appointment.cancel'))
                             <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
-                                @can (['admin.appointment.reschedule', 'admin.appointment.update'])
-                                <a href="{{ route('appointment.reschedule', ['id' => $aAppointment->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Reschedule') }}" role="button">
-                                    <i class="far fa-calendar-alt"></i>
-                                </a>
-                                @endcan
+                                @if ($aAppointment->date>date('Y-m-d') || ($aAppointment->date==date('Y-m-d') && $aAppointment->time>date('H:i:s')))
+                                    @can (['admin.appointment.reschedule', 'admin.appointment.update'])
+                                    <a href="{{ route('appointment.reschedule', ['id' => $aAppointment->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Reschedule') }}" role="button">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </a>
+                                    @endcan
 
-                                @can ('admin.appointment.cancel')
-                                <button class="btn btn-sm btn-danger" title="{{ __('Cancel') }}"
-                                    data-appointment-id="{{ $aAppointment->id }}"
-                                    data-date-header="{{ $sDateHeader }}"
-                                    data-time-body="{{ $sTimeBody }}"
-                                    data-target="#cancelModal"
-                                    data-toggle="modal"
-                                >
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                                @endcan
+                                    @can ('admin.appointment.cancel')
+                                    <button class="btn btn-sm btn-danger" title="{{ __('Cancel') }}"
+                                        data-appointment-id="{{ $aAppointment->id }}"
+                                        data-date-header="{{ $sDateHeader }}"
+                                        data-time-body="{{ $sTimeBody }}"
+                                        data-target="#cancelModal"
+                                        data-toggle="modal"
+                                    >
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                    @endcan
+                                @endif
                             </div>
                             @endif
                         </div>
