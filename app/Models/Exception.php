@@ -30,9 +30,8 @@ class Exception extends Model
 		$sCurrentDateTime = date('Y-m-d H:i:s');
 
 		return $this
-			->whereRaw('? BETWEEN datetime_from AND datetime_to', [$sCurrentDateTime])
+			->whereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$sCurrentDateTime, 1])
 			->orWhere('datetime_from', '>', $sCurrentDateTime)
-			->where('enable', '=', '1')
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
 			->get();
