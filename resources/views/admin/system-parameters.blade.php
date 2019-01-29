@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}">
+            <form method="POST" action="{{ route('system-parameters.update', ['id' => $aSystemParameter['id']]) }}" id="systemParametersForm">
                 @method('PUT')
 
                 @csrf
@@ -92,6 +92,15 @@
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @php
+    $aLang = [
+        'en' => 'en-US',
+        'es' => 'es-ES'
+    ];
+    @endphp
+
+    var sLang = '{{ $aLang[app()->getLocale()] }}';
+
     // Summernote configs
     jQuery('#appointment_confirmed_email_body').summernote({
         toolbar: [
@@ -99,7 +108,7 @@ jQuery(document).ready(function() {
             ['fontsize', ['fontsize']],
             ['para', ['paragraph']]
         ],
-        lang: 'es-ES',
+        lang: sLang,
         height: 200,
         hint: {
             words: ['@_NAME_@', '@_DATE_@', '@_TIME_@'],
@@ -113,9 +122,16 @@ jQuery(document).ready(function() {
     });
 
     // Clean on submit form
-    jQuery('form').on('submit', function() {
+    jQuery('#systemParametersForm').on('submit', function() {
         if (jQuery(jQuery('#appointment_confirmed_email_body').summernote('code')).text().replace(/\s+/g, '').length == 0)
             jQuery('#appointment_confirmed_email_body').val('');
+
+        // Prevent multiple clicks
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
     });
 });
 </script>

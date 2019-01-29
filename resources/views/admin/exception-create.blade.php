@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('exception.store') }}">
+            <form method="POST" action="{{ route('exception.store') }}" id="exceptionCreateForm">
                 @csrf
 
                 <div class="form-group">
@@ -161,6 +161,15 @@ jQuery(document).ready(function() {
 
         return sDateTime;
     }
+
+    // Prevent multiple clicks
+    jQuery('#exceptionCreateForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
 });
 </script>
 @endsection

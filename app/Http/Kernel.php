@@ -72,6 +72,7 @@ class Kernel extends HttpKernel
 		 */
 		'check-appointment' => \App\Http\Middleware\CheckAppointment::class,
 		'check-admin' => \App\Http\Middleware\CheckAdmin::class,
+		'check-https' => \App\Http\Middleware\CheckHttps::class,
     ];
 
     /**

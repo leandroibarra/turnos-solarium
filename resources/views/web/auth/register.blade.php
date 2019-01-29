@@ -6,7 +6,7 @@
         <div class="col-12 col-sm-10 col-md-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Register') }}</h2>
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" id="registerForm">
                 @csrf
 
                 <div class="form-group mb-2">
@@ -51,4 +51,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-scripts')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // Prevent multiple clicks
+    jQuery('#registerForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
+});
+</script>
 @endsection
