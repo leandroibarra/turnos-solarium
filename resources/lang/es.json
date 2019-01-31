@@ -27,7 +27,7 @@
   "Appointment": "Turno",
   "Appointment selected is already granted.": "El turno seleccionado ya está reservado.",
   "Appointment could not been granted. Please, try again.": "El turno no pudo ser reservado. Por favor, inténtelo nuevamente.",
-  "Appointment is not longer available. Please, try again with another date and time.": "El turno ya no está disponible. Por favor, inténtelo de nuevo con otra fecha y hora."
+  "Appointment is not longer available. Please, try again with another date and time.": "El turno ya no está disponible. Por favor, inténtelo de nuevo con otra fecha y hora.",
   "Your data": "Tus datos",
   "To complete the reservation, please complete the following data": "Para finalizar la reserva, por favor complete los siguientes datos",
   "Name": "Nombre",
