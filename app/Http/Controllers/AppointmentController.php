@@ -114,12 +114,12 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in appointment date and time
-		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))->toArray()) {
+		if ((bool) $oException->getEnabledByDateAndTime(Session::get('date').' '.Session::get('time'))->toArray()) {
 			// Clean session data to prevent errors
 			Session::forget('date');
 			Session::forget('time');
 
-			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
+			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
 
 			return redirect('/book');
 		}
@@ -220,8 +220,8 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in new appointment date and time
-		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))->toArray()) {
-			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
+		if ((bool) $oException->getEnabledByDateAndTime($request->input('date').' '.$request->input('time'))->toArray()) {
+			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
 
 			return redirect('/admin/appointments');
 		}
