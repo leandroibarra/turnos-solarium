@@ -1,6 +1,18 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v2.0.3](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.3) (2019-01-29)
+**Agregado**
+- Visualización de turnos del día actual y futuros en listado de administración.
+- Restricción de reprogramación y cancelación para turnos vencidos del día actual.
+
+**Cambiado**
+- Título de sección bronceados y referencias de la misma en administración.
+- Mensajes de error en validaciones de requests AJAX.
+
+**Corregido**
+- Condición WHERE en consulta SQL de modelo de excepciones.
+
 ## [v2.0.2](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.2) (2019-01-21)
 **Agregado**
 - Editor de texto enriquecido para texto acerca de los bronceados.
