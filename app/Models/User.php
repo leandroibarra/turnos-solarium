@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -42,7 +42,7 @@ class User extends Authenticatable
 	 */
 	public function appointments()
 	{
-		return $this->hasMany('App\Appointment');
+		return $this->hasMany('App\Models\Appointment');
 	}
 
 	/**
@@ -62,5 +62,16 @@ class User extends Authenticatable
 					$join->on("{$this->table}.id", '=', 'latest_appointment.user_id');
 				}
 			)->get();
+	}
+
+	/**
+	 * Send the password reset notification.
+	 *
+	 * @param  string  $token
+	 * @return void
+	 */
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new ResetPasswordNotification($token));
 	}
 }

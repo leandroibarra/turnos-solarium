@@ -2,40 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exception;
+use App\Models\SystemParameter;
+
 use Jenssegers\Date\Date;
 
 class CalendarController extends Controller
 {
-    public function index($piYear, $piMonth) {
-    	$aSystemParameters = \App\SystemParameter::find(1)->toArray();
+	/**
+	 * List available days in an specific year and month.
+	 *
+	 * @param integer $piYear
+	 * @param integer $piMonth
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+    public function index($piYear, $piMonth)
+	{
+    	$aSystemParameters = SystemParameter::find(1)->toArray();
 
 		$oToday = new Date();
 
+		// Build deadline for appointments booking
 		$oLimitDate = clone $oToday;
 		$oLimitDate->modify("+{$aSystemParameters['appointment_until_days']} days");
 
-		$oRequestDateTime = new Date("{$piYear}-{$piMonth}");
+		$oRequestDate = new Date("{$piYear}-{$piMonth}");
 
-		$oLimitPrevNav = clone $oRequestDateTime;
+		// Set previous navigation limit
+		$oLimitPrevNav = clone $oRequestDate;
 		$oLimitPrevNav->modify('first day of this month')->modify('-1 day');
 
-		$oLimitNextNav = clone $oRequestDateTime;
+		// Set next navigation limit
+		$oLimitNextNav = clone $oRequestDate;
 		$oLimitNextNav->modify('last day of this month')->modify('+1 day');
 
-		$oDateTime = clone $oRequestDateTime;
-		$oDateTime->modify('first day of this month')->modify('+1 day')->modify('last Sunday');
+		// Set first available day in calendar
+		$oDate = clone $oRequestDate;
+		$oDate->modify('first day of this month')->modify('+1 day')->modify('last Sunday');
 
-		$oHeaderDateTime = clone $oDateTime;
+		$oHeaderDateTime = clone $oDate;
 
-		$oException = new  \App\Exception();
+		$oException = new  Exception();
 
 		return view('web.partials.calendar')->with([
 			'oToday' => $oToday,
 			'oLimitDate' => $oLimitDate,
-			'oRequestDateTime' => $oRequestDateTime,
+			'oRequestDate' => $oRequestDate,
 			'oLimitPrevNav' => $oLimitPrevNav,
 			'oLimitNextNav' => $oLimitNextNav,
-			'oDateTime' => $oDateTime,
+			'oDate' => $oDate,
 			'oHeaderDateTime' => $oHeaderDateTime,
 			'aNonWorkingDays' => config('app.non_working_days'),
 			'aExceptions' => $oException->getEnabledBetweenDates(

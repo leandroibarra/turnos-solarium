@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    public function list() {
+	/**
+	 * List users with last related data.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+    public function list()
+	{
     	$oUser = new User();
-    	$aUsers = $oUser->getWithLastRelatedData();
 
     	return view('admin.user')->with([
-    		'aUsers' => User::hydrate($aUsers->toArray())
+    		'aUsers' => User::hydrate($oUser->getWithLastRelatedData()->toArray())
 		]);
 	}
 }

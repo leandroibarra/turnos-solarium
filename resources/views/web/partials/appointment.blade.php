@@ -1,6 +1,6 @@
-<div class="row">
-    <div class="col-12 col-md-4 text-center">
-        <h5 class="mb-2">{{ __('Morning') }}</h5>
+<div class="row sticky-wrapper">
+    <div class="col-12 col-md-4 text-center sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Morning') }}</h5>
 
         @if ((bool) $aMorning)
             @php
@@ -9,24 +9,24 @@
 
             @foreach ($aMorning as $iHour)
                 @php
-                $oRequestDateTime->hour($iHour);
+                $oRequestDate->hour($iHour);
                 @endphp
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
+                    $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
-                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
-                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
-                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDate->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDate->format('H:i:s'))
                         ) &&
                         (
-                            ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
-                            ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))
+                            ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
+                            ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
                         )
                     )
                         @php
@@ -34,12 +34,12 @@
                         @endphp
 
                         <div class="mb-2 p-1 appointment-hour"
-                             data-year="{{ $oRequestDateTime->format('Y') }}"
-                             data-month="{{ $oRequestDateTime->format('m') }}"
-                             data-month-label="{{ $oRequestDateTime->format('F') }}"
-                             data-day="{{ $oRequestDateTime->format('d') }}"
-                             data-hour="{{ $oRequestDateTime->format('H:i a') }}"
-                         >{{ $oRequestDateTime->format('H:i a') }}</div>
+                             data-year="{{ $oRequestDate->format('Y') }}"
+                             data-month="{{ $oRequestDate->format('m') }}"
+                             data-month-label="{{ $oRequestDate->format('F') }}"
+                             data-day="{{ $oRequestDate->format('d') }}"
+                             data-hour="{{ $oRequestDate->format('H:i a') }}"
+                         >{{ $oRequestDate->format('H:i a') }}</div>
                     @endif
                 @endfor
             @endforeach
@@ -52,8 +52,8 @@
         @endif
     </div>
 
-    <div class="col-12 col-md-4 text-center mt-2 mt-md-0">
-        <h5 class="mb-2">{{ __('Afternoon') }}</h5>
+    <div class="col-12 col-md-4 text-center mt-2 mt-md-0 sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Afternoon') }}</h5>
 
         @if ((bool) $aAfternoon)
             @php
@@ -62,24 +62,24 @@
 
             @foreach ($aAfternoon as $iHour)
                 @php
-                $oRequestDateTime->hour($iHour);
+                $oRequestDate->hour($iHour);
                 @endphp
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
+                    $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
-                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
-                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
-                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDate->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDate->format('H:i:s'))
                         ) &&
                         (
-                            ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
-                            ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))
+                            ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
+                            ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
                         )
                     )
                         @php
@@ -87,12 +87,12 @@
                         @endphp
 
                         <div class="mb-2 p-1 appointment-hour"
-                             data-year="{{ $oRequestDateTime->format('Y') }}"
-                             data-month="{{ $oRequestDateTime->format('m') }}"
-                             data-month-label="{{ $oRequestDateTime->format('F') }}"
-                             data-day="{{ $oRequestDateTime->format('d') }}"
-                             data-hour="{{ $oRequestDateTime->format('H:i a') }}"
-                        >{{ $oRequestDateTime->format('H:i a') }}</div>
+                             data-year="{{ $oRequestDate->format('Y') }}"
+                             data-month="{{ $oRequestDate->format('m') }}"
+                             data-month-label="{{ $oRequestDate->format('F') }}"
+                             data-day="{{ $oRequestDate->format('d') }}"
+                             data-hour="{{ $oRequestDate->format('H:i a') }}"
+                        >{{ $oRequestDate->format('H:i a') }}</div>
                     @endif
                 @endfor
             @endforeach
@@ -105,8 +105,8 @@
         @endif
     </div>
 
-    <div class="col-12 col-md-4 text-center mt-2 mt-md-0">
-        <h5 class="mb-2">{{ __('Night') }}</h5>
+    <div class="col-12 col-md-4 text-center mt-2 mt-md-0 sticky-content">
+        <h5 class="mb-2 sticky-item">{{ __('Night') }}</h5>
 
         @if ((bool) $aNight)
             @php
@@ -115,31 +115,31 @@
 
             @foreach ($aNight as $iHour)
                 @php
-                $oRequestDateTime->hour($iHour);
+                $oRequestDate->hour($iHour);
                 @endphp
 
                 {{--Non process last hour of working day (non inclusive)--}}
-                @if ($oRequestDateTime->format('H') == end($aNight))
+                @if ($oRequestDate->format('H') == end($aNight))
                     @php
                     continue;
                     @endphp
                 @endif
 
-                @for ($iMinute=0; $iMinute<6; $iMinute++)
+                @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
-                    $oRequestDateTime->minute($iMinute * $iAppointmentMinutes);
+                    $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDateTime->format('H:i'), $aGrantedAppointments) &&
-                        !validateDateTimeInException($oRequestDateTime->format('Y-m-d H:i:s'), $aExceptions) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
-                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDateTime->format('Y-m-d') ||
-                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDateTime->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDateTime->format('H:i:s'))
+                            !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
+                            ((bool) $aAppointmentToExclude && $aAppointmentToExclude['date']==$oRequestDate->format('Y-m-d') && $aAppointmentToExclude['time']!=$oRequestDate->format('H:i:s'))
                         ) &&
                         (
-                            ($oToday->format('Y-m-d') < $oRequestDateTime->format('Y-m-d')) ||
-                            ($oToday->format('Y-m-d')==$oRequestDateTime->format('Y-m-d') && $oToday->format('H:i')<$oRequestDateTime->format('H:i'))
+                            ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
+                            ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
                         )
                     )
                         @php
@@ -147,12 +147,12 @@
                         @endphp
 
                     <div class="mb-2 p-1 appointment-hour"
-                         data-year="{{ $oRequestDateTime->format('Y') }}"
-                         data-month="{{ $oRequestDateTime->format('m') }}"
-                         data-month-label="{{ $oRequestDateTime->format('F') }}"
-                         data-day="{{ $oRequestDateTime->format('d') }}"
-                         data-hour="{{ $oRequestDateTime->format('H:i a') }}"
-                    >{{ $oRequestDateTime->format('H:i a') }}</div>
+                         data-year="{{ $oRequestDate->format('Y') }}"
+                         data-month="{{ $oRequestDate->format('m') }}"
+                         data-month-label="{{ $oRequestDate->format('F') }}"
+                         data-day="{{ $oRequestDate->format('d') }}"
+                         data-hour="{{ $oRequestDate->format('H:i a') }}"
+                    >{{ $oRequestDate->format('H:i a') }}</div>
                     @endif
                 @endfor
             @endforeach

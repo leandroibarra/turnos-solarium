@@ -11,14 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-	return redirect('book');
-//    return view('welcome');
-});
+Route::get('/', 'IndexController@index')
+	->middleware(['check-https'])
+	->name('index.index');
 
 Auth::routes();
 
 // Define global parameter patterns
+Route::pattern('id', '^[1-9][0-9]*$');
 Route::pattern('iYear', '^(19\d|2\d\d)\d$');
 Route::pattern('iMonth', '^(0[1-9]|1[012])$');
 Route::pattern('iDay', '^(0[1-9]|[1-2][0-9]|3[0-1])$');
@@ -215,6 +215,114 @@ Route::group(
 									->name('permission.update');
 							}
 						);
+					}
+				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/site-parameters',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'SiteParameterController@edit')
+					->middleware(['permission:admin.site-parameters.edit'])
+					->name('site-parameters.edit');
+
+				Route::put('/{id}', 'SiteParameterController@update')
+					->middleware(['permission:admin.site-parameters.update'])
+					->name('site-parameters.update');
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/prices',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'PriceController@list')
+					->middleware(['permission:admin.price.list'])
+					->name('price.list');
+
+				Route::get('/create', 'PriceController@create')
+					->middleware(['permission:admin.price.create'])
+					->name('price.create');
+
+				Route::post('/', 'PriceController@store')
+					->middleware(['permission:admin.price.store'])
+					->name('price.store');
+
+				Route::put('/sort', 'PriceController@sort')
+					->middleware(['permission:admin.price.sort'])
+					->name('price.sort');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'PriceController@edit')
+							->middleware(['permission:admin.price.edit'])
+							->name('price.edit');
+
+						Route::put('', 'PriceController@update')
+							->middleware(['permission:admin.price.update'])
+							->name('price.update');
+
+						Route::put('/delete', 'PriceController@delete')
+							->middleware(['permission:admin.price.delete'])
+							->name('price.delete');
+					}
+				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/slides',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'SlideController@list')
+					->middleware(['permission:admin.slide.list'])
+					->name('slide.list');
+
+				Route::get('/create', 'SlideController@create')
+					->middleware(['permission:admin.slide.create'])
+					->name('slide.create');
+
+				Route::post('/', 'SlideController@store')
+					->middleware(['permission:admin.slide.store'])
+					->name('slide.store');
+
+				Route::put('/sort', 'SlideController@sort')
+					->middleware(['permission:admin.slide.sort'])
+					->name('slide.sort');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'SlideController@edit')
+							->middleware(['permission:admin.slide.edit'])
+							->name('slide.edit');
+
+						Route::put('', 'SlideController@update')
+							->middleware(['permission:admin.slide.update'])
+							->name('slide.update');
+
+						Route::put('/delete', 'SlideController@delete')
+							->middleware(['permission:admin.slide.delete'])
+							->name('slide.delete');
 					}
 				);
 			}

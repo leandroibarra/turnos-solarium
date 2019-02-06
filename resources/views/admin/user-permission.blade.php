@@ -18,14 +18,14 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('permission.update', ['id' => $aUser->id]) }}">
+            <form method="POST" action="{{ route('permission.update', ['id' => $aUser->id]) }}" id="userPermissionForm">
                 @method('PUT')
 
                 @csrf
 
                 <div class="form-group">
                     @if ($errors->has('permission'))
-                    <div class="invalid-feedback aaaa" role="alert">
+                    <div class="invalid-feedback d-block" role="alert">
                         <strong>{{ $errors->first('permission') }}</strong>
                     </div>
                     @endif
@@ -73,4 +73,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-scripts')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // Prevent multiple clicks
+    jQuery('#userPermissionForm').submit(function() {
+        jQuery('button[type=submit]', this)
+            .html('{{ __('Processing') }}...')
+            .attr('disabled', 'disabled');
+
+        return true;
+    });
+});
+</script>
 @endsection

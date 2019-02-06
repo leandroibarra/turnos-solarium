@@ -10,12 +10,12 @@
 
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">
+            <h4 class="mb-3 overflow-hidden">
                 {{ __('Appointments') }}
-                <a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
+                <!--a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                     {{ __('Create') }}
-                </a>
+                </a-->
             </h4>
         </div>
     </div>
@@ -26,6 +26,11 @@
                 <ul class="list-group">
                 @php
                 $sCurrentDate = '';
+
+                $iColMd = 12;
+
+                if ((Auth::user()->can('admin.appointment.reschedule') && Auth::user()->can('admin.appointment.update')) || Auth::user()->can('admin.appointment.cancel'))
+                    $iColMd -= 4;
                 @endphp
 
                 @foreach ($aGrantedAppointments as $iKey=>$aAppointment)
@@ -43,32 +48,47 @@
                     @endphp
                     <li class="list-group-item p-2">
                         <div class="row">
-                            <div class="col-12 col-md-8 align-self-center text-center text-md-left">
-                                <i class="far fa-clock text-muted mr-2"></i>{{ $sTimeBody }}
-                                <i class="far fa-user text-muted ml-3 mr-2"></i>{{ $aAppointment->name }}
-                                <br />
-                                <i class="far fa-envelope text-muted mr-2"></i>{{ $aAppointment->user['email'] }}
-                                <i class="fas fa-mobile-alt text-muted ml-3 mr-2"></i>{{ $aAppointment->phone }}
+                            <div class="col-12 col-md-{{ $iColMd }} align-self-center">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                        <i class="far fa-clock text-muted mr-2"></i>{{ $sTimeBody }}
+                                    </div>
+                                    <div class="col col-md-8 text-center text-sm-left">
+                                        <i class="far fa-envelope text-muted mr-2"></i>{{ $aAppointment->user['email'] }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center text-sm-right text-md-left">
+                                        <i class="far fa-user text-muted mr-2"></i>{{ $aAppointment->name }}
+                                    </div>
+                                    <div class="col col-md-8 text-center text-sm-left">
+                                        <i class="fas fa-mobile-alt text-muted mr-2"></i>{{ $aAppointment->phone }}
+                                    </div>
+                                </div>
                             </div>
+                            @if ((Auth::user()->can('admin.appointment.reschedule') && Auth::user()->can('admin.appointment.update')) || Auth::user()->can('admin.appointment.cancel'))
                             <div class="col-12 col-md-4 align-self-center text-center text-md-right mt-2 mt-md-0">
-                                @can(['admin.appointment.reschedule', 'admin.appointment.update'])
-                                <a href="{{ route('appointment.reschedule', ['id' => $aAppointment->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Reschedule') }}" role="button">
-                                    <i class="far fa-calendar-alt"></i>
-                                </a>
-                                @endcan
+                                @if ($aAppointment->date>date('Y-m-d') || ($aAppointment->date==date('Y-m-d') && $aAppointment->time>date('H:i:s')))
+                                    @can (['admin.appointment.reschedule', 'admin.appointment.update'])
+                                    <a href="{{ route('appointment.reschedule', ['id' => $aAppointment->id ]) }}" class="btn btn-sm btn-secondary" title="{{ __('Reschedule') }}" role="button">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </a>
+                                    @endcan
 
-                                @can('admin.appointment.cancel')
-                                <button class="btn btn-sm btn-danger" title="{{ __('Cancel') }}"
-                                    data-appointment-id="{{ $aAppointment->id }}"
-                                    data-date-header="{{ $sDateHeader }}"
-                                    data-time-body="{{ $sTimeBody }}"
-                                    data-target="#cancelModal"
-                                    data-toggle="modal"
-                                >
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                                @endcan
+                                    @can ('admin.appointment.cancel')
+                                    <button class="btn btn-sm btn-danger" title="{{ __('Cancel') }}"
+                                        data-appointment-id="{{ $aAppointment->id }}"
+                                        data-date-header="{{ $sDateHeader }}"
+                                        data-time-body="{{ $sTimeBody }}"
+                                        data-target="#cancelModal"
+                                        data-toggle="modal"
+                                    >
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                    @endcan
+                                @endif
                             </div>
+                            @endif
                         </div>
                     </li>
                 @endforeach
@@ -84,6 +104,7 @@
     </svg>
 </div>
 
+@can ('admin.appointment.cancel')
 <!-- Modal -->
 <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -102,11 +123,13 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection
 
 @section('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    @can ('admin.appointment.cancel')
     // Open cancel modal
     jQuery('#cancelModal').on('show.bs.modal', function(event) {
         var oTarget = jQuery(event.relatedTarget);
@@ -190,6 +213,7 @@ jQuery(document).ready(function() {
             }
         });
     });
+    @endcan
 });
 </script>
 @endsection

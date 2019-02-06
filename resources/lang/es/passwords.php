@@ -15,7 +15,7 @@ return [
 
     'password' => 'La clave debe tener al menos seis caracteres y coincidir con la confirmación.',
     'reset' => '¡Su clave ha sido restablecida!',
-    'sent' => '¡Recordatorio de clave enviado!',
+    'sent' => 'Le hemos enviado un enlace para restablecer su clave. Por favor revise su correo electrónico.',
     'token' => 'Este token de restablecimiento de clave es inválido.',
     'user' => 'No se ha encontrado un usuario con esa dirección de correo.',
 
