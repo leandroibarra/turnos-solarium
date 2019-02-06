@@ -162,5 +162,11 @@
   "The slide has been created successfully.": "El slide ha sido creado exitosamente.",
   "The slide is not valid or has been deleted.": "El slide no es válido o ha sido eliminado.",
   "The slide has been edited successfully": "El slide ha sido editado exitosamente.",
-  "Welcome to": "Bienvenido a"
+  "Welcome to": "Bienvenido a",
+  "Reset Password": "Restablecer clave",
+  "Send password reset link": "Enviar enlace",
+  "Forgot your password?": "¿Olvidó su clave?",
+  "Reset Password Notification": "Restablecimiento de clave",
+  "You are receiving this email because we received a password reset request for your account.": "Usted está recibiendo este correo electrónico porque recibimos una solicitud de restablecimiento de contraseña para su cuenta.",
+  "If you did not request a password reset, no further action is required.": "Si usted no solicitó un restablecimiento de contraseña, no es necesario realizar ninguna otra acción."
 }
