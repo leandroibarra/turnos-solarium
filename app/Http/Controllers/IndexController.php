@@ -18,8 +18,11 @@ class IndexController extends Controller
 		$oPrice = new Price();
 		$oSlide = new Slide();
 
+		$aSystemParameter = SiteParameter::find(1)->toArray();
+		$aSystemParameter['about_tanning_text'] = html_entity_decode($aSystemParameter['about_tanning_text']);
+
 		return view('index')->with([
-			'aSiteParameter' => SiteParameter::find(1)->toArray(),
+			'aSiteParameter' => $aSystemParameter,
 			'sDecimalPointSeparator' => config('app.decimal_point_separator'),
 			'sThousandsSeparator' => config('app.thousands_separator'),
 			'aEnabledPrices' => $oPrice->getEnabled()->each(function($poPrice) {

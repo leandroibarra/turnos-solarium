@@ -30,9 +30,7 @@ class Exception extends Model
 		$sCurrentDateTime = date('Y-m-d H:i:s');
 
 		return $this
-			->whereRaw('? BETWEEN datetime_from AND datetime_to', [$sCurrentDateTime])
-			->orWhere('datetime_from', '>', $sCurrentDateTime)
-			->where('enable', '=', '1')
+			->whereRaw('(? BETWEEN datetime_from AND datetime_to OR datetime_from>?) AND enable=?', [$sCurrentDateTime, $sCurrentDateTime, 1])
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
 			->get();
@@ -47,8 +45,23 @@ class Exception extends Model
 	 */
 	public function getEnabledBetweenDates($psDateTimeFrom, $psDateTimeTo) {
 		return $this
-			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeFrom, 1])
-			->orWhereRaw('? BETWEEN datetime_from AND datetime_to AND enable=?', [$psDateTimeTo, 1])
+			->orWhereRaw('datetime_from BETWEEN ? AND ? AND enable=?', [$psDateTimeFrom, $psDateTimeTo, 1])
+			->orWhereRaw('datetime_to BETWEEN ? AND ? AND enable=?', [$psDateTimeFrom, $psDateTimeTo, 1])
+			->orderBy('datetime_from', 'ASC')
+			->orderBy('datetime_to', 'ASC')
+			->get();
+	}
+
+	/**
+	 * Retrieve enabled exceptions by date.
+	 *
+	 * @param string $psDate
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getEnabledByDate($psDate) {
+		return $this
+			->whereRaw('? BETWEEN DATE_FORMAT(datetime_from, \'%Y-%m-%d\') AND DATE_FORMAT(datetime_to, \'%Y-%m-%d\')', [$psDate])
+			->where('enable', '=', '1')
 			->orderBy('datetime_from', 'ASC')
 			->orderBy('datetime_to', 'ASC')
 			->get();
@@ -60,8 +73,8 @@ class Exception extends Model
 	 * @param string $psDateTime
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getEnabledByDate($psDateTime) {
-		return DB::table($this->table)
+	public function getEnabledByDateAndTime($psDateTime) {
+		return $this
 			->whereRaw('? BETWEEN datetime_from AND datetime_to', [$psDateTime])
 			->where('enable', '=', '1')
 			->orderBy('datetime_from', 'ASC')

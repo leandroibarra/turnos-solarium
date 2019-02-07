@@ -86,7 +86,7 @@ class ExceptionController extends Controller
 			} else {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The exception could not be deleted. Please, try again.')
+					'message' => __('The exception already has been deleted. Please, update your page.')
 				];
 			}
 

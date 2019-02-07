@@ -114,12 +114,12 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in appointment date and time
-		if ((bool) $oException->getEnabledByDate(Session::get('date').' '.Session::get('time'))->toArray()) {
+		if ((bool) $oException->getEnabledByDateAndTime(Session::get('date').' '.Session::get('time'))->toArray()) {
 			// Clean session data to prevent errors
 			Session::forget('date');
 			Session::forget('time');
 
-			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
+			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
 
 			return redirect('/book');
 		}
@@ -162,7 +162,7 @@ class AppointmentController extends Controller
 		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getNextGranted()
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted()
 		]);
 	}
 
@@ -191,7 +191,7 @@ class AppointmentController extends Controller
 			} else {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The appointment could not be cancelled. Please, try again.')
+					'message' => __('The appointment already has been cancelled or rescheduled. Please, try again.')
 				];
 			}
 
@@ -220,8 +220,8 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in new appointment date and time
-		if ((bool) $oException->getEnabledByDate($request->input('date').' '.$request->input('time'))->toArray()) {
-			Flash()->error(__('Appointment could not been granted. Please, try again.'))->important();
+		if ((bool) $oException->getEnabledByDateAndTime($request->input('date').' '.$request->input('time'))->toArray()) {
+			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
 
 			return redirect('/admin/appointments');
 		}

@@ -60,13 +60,13 @@ class Appointment extends Model
 	}
 
 	/**
-	 * Retrieve granted appointments for the future.
+	 * Retrieve granted appointments for today and the future.
 	 *
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getNextGranted() {
+	public function getTodayAndNextGranted() {
 		return $this
-			->where('date', '>', date('Y-m-d H:i:s'))
+			->where('date', '>=', date('Y-m-d'))
 			->where('status', '=', 'granted')
 			->orderBy('date', 'ASC')
 			->orderBy('time', 'ASC')

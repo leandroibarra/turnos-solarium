@@ -269,19 +269,25 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                             <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                                {!! str_replace(
-                                     [
-                                         '@_NAME_@',
-                                         '@_DATE_@',
-                                         '@_TIME_@'
-                                     ],
-                                     [
-                                         $sName,
-                                         $sDate,
-                                         $sTime
-                                     ],
-                                     $sBody
-                                 ) !!}
+                                {{ __('You are receiving this email because we received a password reset request for your account.') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px;">
+                                <!-- Button : BEGIN -->
+                                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
+                                    <tr>
+                                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #5A5A5A;">
+                                            <a class="button-a button-a-primary" href="{{ $sUrl }}" target="_blank" style="background: #5A5A5A; border: 1px solid #5A5A5A; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">{{ __('Reset Password') }}</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- Button : END -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+                                {{ __('If you did not request a password reset, no further action is required.') }}
                             </td>
                         </tr>
                     </table>
