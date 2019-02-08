@@ -2,11 +2,11 @@
     <div class="row mx-auto p-1 calendar-navigation">
         <div class="col-2 text-center">
             @if ($oLimitPrevNav->format('Y-m-d')<$oRequestDate->format('Y-m-d') && $oLimitPrevNav->format('m')+1!=$oToday->format('m'))
-                <h2>
-                    <a data-year="{{ $oLimitPrevNav->format('Y') }}" data-month="{{  $oLimitPrevNav->format('m') }}" class="prev-month">
-                        <i class="arrow left"></i>
-                    </a>
-                </h2>
+            <h2>
+                <a data-year="{{ $oLimitPrevNav->format('Y') }}" data-month="{{  $oLimitPrevNav->format('m') }}" class="prev-month">
+                    <i class="arrow left"></i>
+                </a>
+            </h2>
             @endif
         </div>
         <div class="col-8">
@@ -14,11 +14,11 @@
         </div>
         <div class="col-2 text-center">
             @if ($oLimitNextNav->format('Y-m-d')>$oToday->format('Y-m-d') && $oLimitNextNav->format('Y-m-d')<$oLimitDate->format('Y-m-d'))
-                <h2>
-                    <a data-year="{{ $oLimitNextNav->format('Y') }}" data-month="{{ $oLimitNextNav->format('m') }}" class="next-month">
-                        <i class="arrow right"></i>
-                    </a>
-                </h2>
+            <h2>
+                <a data-year="{{ $oLimitNextNav->format('Y') }}" data-month="{{ $oLimitNextNav->format('m') }}" class="next-month">
+                    <i class="arrow right"></i>
+                </a>
+            </h2>
             @endif
         </div>
     </div>
@@ -83,7 +83,7 @@
             @endif
         >
             <h5 class="row align-items-center">
-                <span class="date col-1">{{ $oDate->format('j') }}</span>
+                <span class="date col-1 {{ (($oDate->format('j') < 10) ? 'text-truncate' : '') }}">{{ $oDate->format('j') }}</span>
                 <span class="col-1"></span>
             </h5>
         </div>

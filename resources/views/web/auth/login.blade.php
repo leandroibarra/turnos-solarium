@@ -38,11 +38,16 @@
                 </div>
 
                 @if (Route::has('register'))
-                <div class="form-group mb-0 text-center form-links">
+                <div class="form-group mb-2 text-center form-links">
                     <span class="mr-0 mr-sm-1">{{__("You don't have an account yet?") }}</span>
                     <a href="{{ route('register') }}">{{ __('Register') }}</a>
                 </div>
                 @endif
+
+                <div class="form-group mb-0 text-center form-links">
+                    <span class="mr-0 mr-sm-1">{{__('Forgot your password?') }}</span>
+                    <a href="{{ route('password.request') }}">{{ ucfirst(__('Reset Password')) }}</a>
+                </div>
             </form>
         </div>
     </div>
