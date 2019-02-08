@@ -1,16 +1,15 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
-## [v2.0.4](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.4) (2019-01-30)
+## [v2.1.0](https://github.com/leandroibarra/turnos-solarium/tree/v2.1.0) (2019-02-08)
 **Agregado**
-- Método para validar excepciones según fecha y hora.
+- Proceso para restablecer contraseña de usuario.
 
 **Cambiado**
-- Implementación de métodos de validación de excepciones.
-- Mensajes de error en validaciones de excepciones con respecto a turno seleccionado.
+- Template de email de confirmación de turno.
 
 **Corregido**
-- Consultas SQL en métodos de modelo de excepciones.
+- Desfasaje en marcado de día actual cuando el día del mes es menor a 10.
 
 ## [v2.0.3](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.3) (2019-01-29)
 **Agregado**
