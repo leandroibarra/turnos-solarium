@@ -1,6 +1,16 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v2.1.0](https://github.com/leandroibarra/turnos-solarium/tree/v2.1.0) (2019-02-08)
+**Agregado**
+- Proceso para restablecer contraseña de usuario.
+
+**Cambiado**
+- Template de email de confirmación de turno.
+
+**Corregido**
+- Desfasaje en marcado de día actual cuando el día del mes es menor a 10.
+
 ## [v2.0.3](https://github.com/leandroibarra/turnos-solarium/tree/v2.0.3) (2019-01-29)
 **Agregado**
 - Visualización de turnos del día actual y futuros en listado de administración.
