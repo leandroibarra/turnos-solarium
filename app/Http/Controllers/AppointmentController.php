@@ -114,12 +114,7 @@ class AppointmentController extends Controller
 				'name' => 'required',
 				'phone' => [
 					'required',
-					function ($attribute, $value, $fail) {
-						$number = preg_replace( '/\D+/', '', $value);
-
-						if (preg_match('/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/D', $number) != 1)
-							$fail(__('The :attribute field is not valid.'));
-					}
+					'phone:'.current($request->attributes)['oBranch']->country_code
 				]
 			],
 			[],

@@ -54,8 +54,6 @@
                         <strong>{{ $errors->first('phone') }}</strong>
                     </div>
                     @endif
-
-                    <small class="form-text text-muted my-0">{{ __('You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888') }}</small>
                 </div>
 
                 <div class="form-group mb-2">
