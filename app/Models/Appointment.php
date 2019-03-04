@@ -19,10 +19,12 @@ class Appointment extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['parent_appointment_id', 'user_id', 'date', 'time', 'name', 'phone', 'comment'];
+	protected $fillable = ['branch_id', 'parent_appointment_id', 'user_id', 'date', 'time', 'name', 'phone', 'comment'];
 
 	/**
 	 * The user that appointment belongs to.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
 	public function user()
 	{
@@ -30,14 +32,26 @@ class Appointment extends Model
 	}
 
 	/**
-	 * Retrieve granted appointments belonging to date grouped by time.
+	 * The branch that appointment belongs to.
 	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function branch()
+	{
+		return $this->hasOne('App\Models\Branch', 'id', 'branch_id');
+	}
+
+	/**
+	 * Retrieve granted appointments belonging to branch and date grouped by time.
+	 *
+	 * @param integer $piBranchId
 	 * @param string $psDate
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getGrantedByDate($psDate) {
+	public function getGrantedByDate($piBranchId, $psDate) {
 		return DB::table($this->table)
 			->selectRaw("COUNT(*) AS amount, TIME_FORMAT(time, '%H:%i') AS time")
+			->where('branch_id', '=', $piBranchId)
 			->where('date', '=', $psDate)
 			->where('status', '=', 'granted')
 			->groupBy('time')
@@ -45,14 +59,16 @@ class Appointment extends Model
 	}
 
 	/**
-	 * Retrieve granted appointments between two date and times.
+	 * Retrieve granted appointments belonging to branch between two date and times.
 	 *
+	 * @param integer $piBranchId
 	 * @param string $psDateFrom
 	 * @param string $psDateTo
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getGrantedBetweenDates($psDateFrom, $psDateTo) {
+	public function getGrantedBetweenDates($piBranchId, $psDateFrom, $psDateTo) {
 		return $this
+			->where('branch_id', '=', $piBranchId)
 			->where('date', '>=', $psDateFrom)
 			->where('date', '<=', $psDateTo)
 			->where('status', '=', 'granted')
@@ -60,12 +76,14 @@ class Appointment extends Model
 	}
 
 	/**
-	 * Retrieve granted appointments for today and the future.
+	 * Retrieve granted appointments belonging to branch for today and the future.
 	 *
+	 * @param integer $piBranchId
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getTodayAndNextGranted() {
+	public function getTodayAndNextGranted($piBranchId) {
 		return $this
+			->where('branch_id', '=', $piBranchId)
 			->where('date', '>=', date('Y-m-d'))
 			->where('status', '=', 'granted')
 			->orderBy('date', 'ASC')

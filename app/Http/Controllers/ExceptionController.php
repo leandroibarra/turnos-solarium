@@ -220,7 +220,11 @@ class ExceptionController extends Controller
 								$fail(__('The :attribute field is not valid.'));
 							} else {
 								$oAppointment = new Appointment();
-								$iAppointment = count($oAppointment->getGrantedBetweenDates($sDateTimeFrom, $sDateTimeTo)->toArray());
+								$iAppointment = count($oAppointment->getGrantedBetweenDates(
+									current($poRequest->attributes)['oBranch']->id,
+									$sDateTimeFrom,
+									$sDateTimeTo
+								)->toArray());
 
 								// Validate fi there are any appointment into date and time range
 								if ((bool) $iAppointment) {

@@ -34,9 +34,19 @@ class AppointmentController extends Controller
 		$oRequestDate = new Date($sRequestDate);
 
 		// Obtain working hours per day from app configs
-		$aWorkingHoursPerDay = config('app.working_hours_per_day')[$oRequestDate->format('w')];
+		$aWorkingHoursPerDay = array_fill(0, 2, 0);
+		foreach (current($request->attributes)['oBranch']->workingWeek as $oWeekDay)
+			if ($oRequestDate->format('w') == $oWeekDay->day_number)
+				$aWorkingHoursPerDay = [
+					$oWeekDay->from,
+					$oWeekDay->until
+				];
 
-		$aHours = range($aWorkingHoursPerDay[0], $aWorkingHoursPerDay[1], 1);
+		$aHours = range(
+			intval(explode(':', $aWorkingHoursPerDay[0])[0]),
+			intval(explode(':', $aWorkingHoursPerDay[1])[0]),
+			1
+		);
 
 		$aMorning = $aAfternoon = $aNight = [];
 
@@ -58,14 +68,22 @@ class AppointmentController extends Controller
 		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'iAppointmentsPerHour' => 60 / $aSystemParameters['appointment_minutes'],
+			'iAppointmentsByTime' => current($request->attributes)['oBranch']->amount_appointments_by_time,
 			'oToday' => new Date(),
 			'oRequestDate' => $oRequestDate,
 			'aAppointmentToExclude' => ((bool) $request->headers->get('appointment-id')) ? $oAppointment::find($request->headers->get('appointment-id'))->toArray() : [],
-			'aGrantedAppointments' => $oAppointment->getGrantedByDate($sRequestDate)->toArray(),
+			'aGrantedAppointments' => $oAppointment->getGrantedByDate(
+				current($request->attributes)['oBranch']->id,
+				$sRequestDate
+			)->toArray(),
 			'aMorning' => $aMorning,
 			'aAfternoon' => $aAfternoon,
 			'aNight' => $aNight,
-			'aExceptions' => $oException->getEnabledByDate($oRequestDate->format('Y-m-d'))->toArray()
+			'aExceptions' => $oException->getEnabledByDate(
+				current($request->attributes)['oBranch']->id,
+				$oRequestDate->format('Y-m-d')
+			)->toArray(),
+			'sUntil' => $aWorkingHoursPerDay[1]
 		]);
 	}
 
@@ -114,7 +132,10 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in appointment date and time
-		if ((bool) $oException->getEnabledByDateAndTime(Session::get('date').' '.Session::get('time'))->toArray()) {
+		if ((bool) $oException->getEnabledByDateAndTime(
+			current($request->attributes)['oBranch']->id,
+			Session::get('date').' '.Session::get('time'))->toArray()
+		) {
 			// Clean session data to prevent errors
 			Session::forget('date');
 			Session::forget('time');
@@ -126,6 +147,7 @@ class AppointmentController extends Controller
 
 		// Complete rest of data
 		$request->request->add([
+			'branch_id' => current($request->attributes)['oBranch']->id,
 			'user_id' => Auth::user()->id,
 			'date' => Session::get('date'),
 			'time' => Session::get('time')
@@ -155,14 +177,15 @@ class AppointmentController extends Controller
 	/**
 	 * List next granted appointments.
 	 *
+	 * @param Request $request
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function list()
+	public function list(Request $request)
 	{
 		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted()
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted(current($request->attributes)['oBranch']->id)
 		]);
 	}
 
@@ -220,7 +243,10 @@ class AppointmentController extends Controller
 		$oException = new Exception();
 
 		// Validate if there are any exception in new appointment date and time
-		if ((bool) $oException->getEnabledByDateAndTime($request->input('date').' '.$request->input('time'))->toArray()) {
+		if ((bool) $oException->getEnabledByDateAndTime(
+			current($request->attributes)['oBranch']->id,
+			$request->input('date').' '.$request->input('time'))->toArray()
+		) {
 			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
 
 			return redirect('/admin/appointments');
@@ -233,6 +259,7 @@ class AppointmentController extends Controller
 				[
 					'time' => $request->input('time'),
 					'amount' => Appointment::where([
+						'branch_id' => current($request->attributes)['oBranch']->id,
 						'date' => $request->input('date'),
 						'time' => $request->input('time'),
 						'status' => 'granted'
@@ -254,6 +281,7 @@ class AppointmentController extends Controller
 		// Create and save new appointment
 		$oAppointment = new Appointment([
 			'parent_appointment_id' => $aAppointment['id'],
+			'branch_id' => $aAppointment['branch_id'],
 			'user_id' => $aAppointment['user_id'],
 			'date' => $request->input('date'),
 			'time' => $request->input('time'),

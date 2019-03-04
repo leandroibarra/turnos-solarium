@@ -25,9 +25,24 @@ Route::pattern('iDay', '^(0[1-9]|[1-2][0-9]|3[0-1])$');
 
 Route::group(
 	[
-		'prefix' => '/book',
+		'prefix' => '/branch',
 		'middleware' => [
 			'auth'
+		]
+	],
+	function() {
+		Route::get('/', 'BranchController@index')->name('branch.index');
+
+		Route::post('/set', 'BranchController@set')->name('branch.set');
+	}
+);
+
+Route::group(
+	[
+		'prefix' => '/book',
+		'middleware' => [
+			'auth',
+			'check-branch'
 		]
 	],
 	function() {
@@ -43,7 +58,8 @@ Route::group(
 	[
 		'prefix' => '/appointments',
 		'middleware' => [
-			'auth'
+			'auth',
+			'check-branch'
 		]
 	],
 	function() {
@@ -59,7 +75,10 @@ Route::group(
 );
 
 Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
-	->middleware(['auth'])
+	->middleware([
+		'auth',
+		'check-branch'
+	])
 	->name('calendar.index');
 
 Route::group(
@@ -323,6 +342,47 @@ Route::group(
 						Route::put('/delete', 'SlideController@delete')
 							->middleware(['permission:admin.slide.delete'])
 							->name('slide.delete');
+					}
+				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/branches',
+				'middleware' => [
+					'role:Sysadmin'
+				]
+			],
+			function() {
+				Route::get('/', 'BranchController@list')
+					->middleware(['permission:admin.branch.list'])
+					->name('branch.list');
+
+				Route::get('/create', 'BranchController@create')
+					->middleware(['permission:admin.branch.create'])
+					->name('branch.create');
+
+				Route::post('/', 'BranchController@store')
+					->middleware(['permission:admin.branch.store'])
+					->name('branch.store');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'BranchController@edit')
+							->middleware(['permission:admin.branch.edit'])
+							->name('branch.edit');
+
+						Route::put('', 'BranchController@update')
+							->middleware(['permission:admin.branch.update'])
+							->name('branch.update');
+
+						Route::put('/delete', 'BranchController@delete')
+							->middleware(['permission:admin.branch.delete'])
+							->name('branch.delete');
 					}
 				);
 			}

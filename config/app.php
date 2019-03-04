@@ -246,6 +246,7 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Jenssegers\Date\DateServiceProvider::class,
 		Spatie\Permission\PermissionServiceProvider::class,
+		Propaganistas\LaravelPhone\PhoneServiceProvider::class,
     ],
 
     /*

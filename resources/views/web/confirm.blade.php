@@ -67,7 +67,7 @@
 
             <div class="col-12 col-md-3 appointment-container">
                 <div class="border p-3 mt-2 mt-md-0 appointment-content">
-                    <h5 class="text-center">{{ __('Selected appointment') }}</h5>
+                    <h5 class="text-center">{{ __('Selected appointment in :branchName', ['branchName' => $oBranch->name]) }}</h5>
                     <div>
                         <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>
                         <span class="d-block-inline-block d-md-block d-lg-inline-block">{{ $oDateTime->format('d').' '.__('of').' '.$oDateTime->format('F') }}</span>

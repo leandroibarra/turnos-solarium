@@ -54,7 +54,7 @@
                     </li>
                     @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Book online') }}</a>
                     </li>
                 </ul>
             </div>
@@ -179,7 +179,7 @@
                         </li>
                         @endif
                         <li class="list-inline-item">
-                            <a href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+                            <a href="{{ route('login') }}">{{ __('Book online') }}</a>
                         </li>
                     </ul>
                 </div>

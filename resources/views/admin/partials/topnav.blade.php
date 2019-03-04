@@ -47,6 +47,14 @@
                 </li>
                 @endcan
 
+                @if (Auth::user()->hasRole('Sysadmin'))
+                @can ('admin.branch.list')
+                <li class="nav-item {{ (in_array(request()->route()->getName(), ['branch.list', 'branch.create', 'branch.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('branch.list') }}">{{ __('Branches') }}</a>
+                </li>
+                @endcan
+                @endif
+
                 @can ('admin.user.list')
                 <li class="nav-item {{ (in_array(request()->route()->getName(), ['user.list', 'permission.edit', 'permission.update'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.list') }}">{{ __('Users') }}</a>

@@ -7,6 +7,7 @@ return [
 	'module.admin.site-parameters' => 'Parámetros del Sitio',
 	'module.admin.price' => 'Precios',
 	'module.admin.slide' => 'Slides',
+	'module.admin.branch' => 'Sucursales',
 	'permission.admin.system-parameters.edit' => 'Listar parámetros del sistema.',
 	'permission.admin.system-parameters.update' => 'Guardar parámetros del sistema editados.',
 	'permission.admin.appointment.list' => 'Listar turnos reservados.',
@@ -37,5 +38,11 @@ return [
 	'permission.admin.slide.sort' => 'Ordenar slides creados.',
 	'permission.admin.slide.edit' => 'Editar slides.',
 	'permission.admin.slide.update' => 'Guardar slides editados.',
-	'permission.admin.slide.delete' => 'Borrar slides.'
+	'permission.admin.slide.delete' => 'Borrar slides.',
+	'permission.admin.branch.list' => 'Listar sucursales.',
+	'permission.admin.branch.create' => 'Crear sucursales.',
+	'permission.admin.branch.store' => 'Guardar sucursales creadas.',
+	'permission.admin.branch.edit' => 'Editar sucursales.',
+	'permission.admin.branch.update' => 'Guardar sucursales editadas.',
+	'permission.admin.branch.delete' => 'Borrar sucursales.'
 ];
