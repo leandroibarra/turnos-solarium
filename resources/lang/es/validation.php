@@ -112,6 +112,7 @@ return [
     'unique'               => 'El valor del campo :attribute ya está en uso.',
     'uploaded'             => 'El campo :attribute no se pudo subir.',
     'url'                  => 'El formato del campo :attribute es inválido.',
+	'phone'				   => 'El capo :attribute contiene un número inválido.',
 
     /*
     |--------------------------------------------------------------------------
