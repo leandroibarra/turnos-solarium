@@ -42,7 +42,8 @@ class AppointmentConfirmed extends Mailable
 				'sBody' => html_entity_decode($aSystemParameters['appointment_confirmed_email_body']),
 				'sName' => $this->oContent->sName,
 				'sDate' => $this->oContent->sDate,
-				'sTime' => $this->oContent->sTime
+				'sTime' => $this->oContent->sTime,
+				'sAddress' => $this->oContent->sAddress
 			]);
     }
 }

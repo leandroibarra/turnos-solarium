@@ -273,12 +273,14 @@
                                      [
                                          '@_NAME_@',
                                          '@_DATE_@',
-                                         '@_TIME_@'
+                                         '@_TIME_@',
+                                         '@_ADDRESS_@'
                                      ],
                                      [
                                          $sName,
                                          $sDate,
-                                         $sTime
+                                         $sTime,
+                                         $sAddress
                                      ],
                                      $sBody
                                  ) !!}

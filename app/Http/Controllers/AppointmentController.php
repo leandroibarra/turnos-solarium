@@ -157,7 +157,8 @@ class AppointmentController extends Controller
 			Auth::user()->email,
 			$request->input('name'),
 			Session::get('date'),
-			Session::get('time')
+			Session::get('time'),
+			current($request->attributes)['oBranch']->address
 		);
 
 		// Clean session data to prevent errors
@@ -293,7 +294,8 @@ class AppointmentController extends Controller
 			User::find($aAppointment['user_id'])->email,
 			$aAppointment['name'],
 			$request->input('date'),
-			$request->input('time')
+			$request->input('time'),
+			current($request->attributes)['oBranch']->address
 		);
 
 		Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
@@ -344,8 +346,9 @@ class AppointmentController extends Controller
 	 * @param string $psName
 	 * @param string $psDate
 	 * @param string $psTime
+	 * @param string $psAddress
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime)
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psAddress)
 	{
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
@@ -354,6 +357,7 @@ class AppointmentController extends Controller
 		$oContent->sName = $psName;
 		$oContent->sDate = $oDateTime->format('j').' '.__('of').' '.$oDateTime->format('F');
 		$oContent->sTime = $oDateTime->format('H:i a');
+		$oContent->sAddress = $psAddress;
 
 		// Send confirmation email
 		Mail::to($psTo)->send(new AppointmentConfirmed($oContent));
