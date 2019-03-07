@@ -1,11 +1,9 @@
-@extends('layouts.web')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12">
-            <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Branches') }}</h2>
-
             @include('flash::message')
         </div>
     </div>
@@ -36,7 +34,7 @@
             <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 1) ? $sClassFirst : ((count($aBranches) == $iKey) ? $sClassLast : '') }} mb-3 mb-lg-0 h-100">
                 <div class="card text-center">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('branch.set') }}" class="branchForm">
+                        <form method="POST" action="{{ route('admin.branch.select') }}" class="branchForm">
                             @csrf
 
                             <h5 class="card-title">{{ $aBranch['name'] }}</h5>
@@ -47,7 +45,7 @@
 
                             <input type="hidden" name="branch_id" value="{{ $aBranch['id'] }}" />
 
-                            <button type="submit" class="btn btn-gold mt-3" data-branch-id="{{ $aBranch['id'] }}">{{ __('Select') }}</button>
+                            <button type="submit" class="btn btn-primary mt-3" data-branch-id="{{ $aBranch['id'] }}">{{ __('Select') }}</button>
                         </form>
                     </div>
                 </div>
@@ -58,7 +56,7 @@
 </div>
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // Prevent multiple clicks
@@ -71,4 +69,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

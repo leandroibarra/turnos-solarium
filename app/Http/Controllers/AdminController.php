@@ -15,7 +15,7 @@ class AdminController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = 'admin/appointments';
+	protected $redirectTo = 'admin/select-branch';
 
 	/**
 	 * Show the administration's login form.
@@ -25,7 +25,7 @@ class AdminController extends Controller
 	public function showLoginForm()
 	{
 		if (Auth::user())
-			return redirect($this->redirectTo);
+			return redirect('admin/appointments');
 
 		return view('admin.login');
 	}

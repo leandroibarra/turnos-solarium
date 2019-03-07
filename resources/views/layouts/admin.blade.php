@@ -32,6 +32,6 @@
 <script src="{{ asset('plugins/summernote-0.8.11/summernote-bs4.js') }}" type="text/javascript"></script>
 
 <!-- Page Scripts -->
-@yield('page-scripts')
+@stack('page-scripts')
 </body>
 </html>

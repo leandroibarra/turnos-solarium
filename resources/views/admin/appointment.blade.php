@@ -126,7 +126,7 @@
 @endcan
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     @can ('admin.appointment.cancel')
@@ -216,4 +216,4 @@ jQuery(document).ready(function() {
     @endcan
 });
 </script>
-@endsection
+@endpush

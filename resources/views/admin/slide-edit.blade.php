@@ -58,7 +58,7 @@
 <link href="{{ asset('plugins/fileinput-4.5.2/css/fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script src="{{ asset('plugins/fileinput-4.5.2/js/fileinput.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -94,4 +94,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

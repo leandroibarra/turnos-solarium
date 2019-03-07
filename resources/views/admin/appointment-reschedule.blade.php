@@ -56,7 +56,7 @@
 </div>
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // Initial calendar
@@ -228,4 +228,4 @@ function drawCalendar(piYear, piMonth) {
     });
 }
 </script>
-@endsection
+@endpush

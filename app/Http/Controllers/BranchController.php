@@ -29,6 +29,25 @@ class BranchController extends Controller
 	}
 
 	/**
+	 * Check if there is a branch in request attributes and redirects to corresponds pages.
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+	 */
+	public function showSelectBranch(Request $request)
+	{
+		if (!(bool) current($request->attributes)) {
+			$oBranch = new Branch();
+
+			return view('admin.branch-select')->with([
+				'aEnabledBranches' => $oBranch->getEnabled()
+			]);
+		} else {
+			return redirect('/admin/appointments');
+		}
+	}
+
+	/**
 	 * Put branch id request variable into branch id session variable.
 	 *
 	 * @param Request $request
@@ -39,6 +58,19 @@ class BranchController extends Controller
 		Session::put('branch_id', $request->input('branch_id'));
 
 		return redirect('/book');
+	}
+
+	/**
+	 * Put branch id request variable into branch id session variable.
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function select(Request $request)
+	{
+		Session::put('branch_id', $request->input('branch_id'));
+
+		return redirect('/admin/appointments');
 	}
 
 	/**

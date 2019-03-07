@@ -126,7 +126,8 @@ Route::group(
 			[
 				'prefix' => '/appointments',
 				'middleware' => [
-					'role:Sysadmin|Admin'
+					'role:Sysadmin|Admin',
+					'check-branch'
 				]
 			],
 			function() {
@@ -166,7 +167,8 @@ Route::group(
 			[
 				'prefix' => '/exceptions',
 				'middleware' => [
-					'role:Sysadmin|Admin'
+					'role:Sysadmin|Admin',
+					'check-branch'
 				]
 			],
 			function() {
@@ -191,7 +193,7 @@ Route::group(
 							->middleware(['permission:admin.exception.edit'])
 							->name('exception.edit');
 
-						Route::put('', 'ExceptionController@update')
+						Route::put('/', 'ExceptionController@update')
 							->middleware(['permission:admin.exception.update'])
 							->name('exception.update');
 
@@ -290,7 +292,7 @@ Route::group(
 							->middleware(['permission:admin.price.edit'])
 							->name('price.edit');
 
-						Route::put('', 'PriceController@update')
+						Route::put('/', 'PriceController@update')
 							->middleware(['permission:admin.price.update'])
 							->name('price.update');
 
@@ -335,7 +337,7 @@ Route::group(
 							->middleware(['permission:admin.slide.edit'])
 							->name('slide.edit');
 
-						Route::put('', 'SlideController@update')
+						Route::put('/', 'SlideController@update')
 							->middleware(['permission:admin.slide.update'])
 							->name('slide.update');
 
@@ -376,7 +378,7 @@ Route::group(
 							->middleware(['permission:admin.branch.edit'])
 							->name('branch.edit');
 
-						Route::put('', 'BranchController@update')
+						Route::put('/', 'BranchController@update')
 							->middleware(['permission:admin.branch.update'])
 							->name('branch.update');
 
@@ -385,6 +387,20 @@ Route::group(
 							->name('branch.delete');
 					}
 				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/select-branch',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'BranchController@showSelectBranch')->name('admin.branch.select.branch');
+
+				Route::post('/', 'BranchController@select')->name('admin.branch.select');
 			}
 		);
 	}
