@@ -6,8 +6,8 @@ $sRouteName = request()->route()->getName();
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue py-0">
     <div class="container">
         <div class="collapse navbar-collapse navMenu">
-            @if (Auth::user()->hasRole(['Admin', 'Sysadmin']))
-            <a class="btn btn-outline-light mb-2 mt-3 my-md-2" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
+            @if (Auth::user()->hasRole(['Admin', 'Sysadmin', 'Employee']))
+            <a class="btn btn-outline-light mb-2 mt-3 my-lg-2" href="{{ route('book.index') }}">{{ __('Book online') }}</a>
             @endif
 
             <ul class="navbar-nav mx-auto">
@@ -50,7 +50,7 @@ $sRouteName = request()->route()->getName();
                 @endcan
             </ul>
 
-            <div class="dropdown mb-3 mb-md-0">
+            <div class="dropdown mb-3 mb-lg-0">
                 <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
@@ -71,7 +71,7 @@ $sRouteName = request()->route()->getName();
         <div class="collapse navbar-collapse navMenu">
             @if (isset(current(request()->attributes)['oBranch']))
                 @if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list']))
-                <div class="dropdown mb-3 mb-md-0">
+                <div class="dropdown mt-3 mb-2 my-lg-0">
                     <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ current(request()->attributes)['oBranch']->name }}</button>
                     <div class="dropdown-menu change-branch-menu">
                         @php
@@ -86,7 +86,7 @@ $sRouteName = request()->route()->getName();
                     </div>
                 </div>
                 @else
-                <button class="btn btn-sm btn-outline-light current-branch" type="button">{{ current(request()->attributes)['oBranch']->name }}</button>
+                <button class="btn btn-sm btn-outline-light mt-3 mb-2 my-lg-0 current-branch" type="button">{{ current(request()->attributes)['oBranch']->name }}</button>
                 @endif
             @endif
 

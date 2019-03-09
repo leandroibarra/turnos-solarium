@@ -27,7 +27,8 @@ Route::group(
 	[
 		'prefix' => '/branch',
 		'middleware' => [
-			'auth'
+			'auth',
+			'check-branch-select'
 		]
 	],
 	function() {
@@ -126,7 +127,7 @@ Route::group(
 			[
 				'prefix' => '/appointments',
 				'middleware' => [
-					'role:Sysadmin|Admin',
+					'role:Sysadmin|Admin|Employee',
 					'check-branch'
 				]
 			],
@@ -167,7 +168,7 @@ Route::group(
 			[
 				'prefix' => '/exceptions',
 				'middleware' => [
-					'role:Sysadmin|Admin',
+					'role:Sysadmin|Admin|Employee',
 					'check-branch'
 				]
 			],
