@@ -48,11 +48,11 @@
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
                     @endif
-                    @if (!$aEnabledPrices->isEmpty())
+                    {{--@if (!$aEnabledPrices->isEmpty())
                     <li class="nav-item">
                         <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
                     </li>
-                    @endif
+                    @endif--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Book online') }}</a>
                     </li>
@@ -62,7 +62,7 @@
     </nav>
 
     <div class="content" id="content">
-        @if ($aEnabledSlides->isEmpty() && empty($aSiteParameter['about_tanning_text']) && $aEnabledPrices->isEmpty())
+        @if ($aEnabledSlides->isEmpty() && empty($aSiteParameter['about_tanning_text']) /*&& $aEnabledPrices->isEmpty()*/)
             <div class="welcome-title text-center d-flex my-5 py-4 py-md-5">
                 <div class="align-self-center mx-auto my-5 py-4 py-md-5">{{ __('Welcome to').' '.config('app.name', 'Laravel') }}</div>
             </div>
@@ -97,7 +97,7 @@
             </section>
             @endif
 
-            @if (!$aEnabledPrices->isEmpty())
+            {{--@if (!$aEnabledPrices->isEmpty())
             <section id="prices" class="section">
                 <div class="container">
                     <div class="row">
@@ -152,7 +152,7 @@
                     </div>
                 </div>
             </section>
-            @endif
+            @endif--}}
         @endif
     </div>
 
@@ -173,11 +173,11 @@
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
                         @endif
-                        @if (!$aEnabledPrices->isEmpty())
+                        {{--@if (!$aEnabledPrices->isEmpty())
                         <li class="list-inline-item">
                             <a href="#prices">{{ __('Prices') }}</a>
                         </li>
-                        @endif
+                        @endif--}}
                         <li class="list-inline-item">
                             <a href="{{ route('login') }}">{{ __('Book online') }}</a>
                         </li>
