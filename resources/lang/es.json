@@ -72,6 +72,7 @@
   "Name of the user who booked the appointment": "Nombre del usuario que reservó el turno",
   "Date of the appointment booked (For example: 21 of January)": "Fecha del turno reservado (Por ejemplo: 21 de Enero)",
   "Time of the appointment booked (For example: 16:30 pm)": "Hora del turno reservado (Por ejemplo: 16:30 pm)",
+  "City of the branch": "Ciudad de la sucursal",
   "Address of the branch": "Dirección de la sucursal",
   "Parameters were saved successfully": "Los parámetros fueron guardados exitosamente",
   "Save": "Guardar",

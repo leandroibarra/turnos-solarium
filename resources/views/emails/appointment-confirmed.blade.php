@@ -274,12 +274,14 @@
                                          '@_NAME_@',
                                          '@_DATE_@',
                                          '@_TIME_@',
+                                         '@_CITY_@',
                                          '@_ADDRESS_@'
                                      ],
                                      [
                                          $sName,
                                          $sDate,
                                          $sTime,
+                                         $sCity,
                                          $sAddress
                                      ],
                                      $sBody

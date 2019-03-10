@@ -152,6 +152,7 @@ class AppointmentController extends Controller
 				$request->input('name'),
 				Session::get('date'),
 				Session::get('time'),
+				current($request->attributes)['oBranch']->city,
 				current($request->attributes)['oBranch']->address
 			);
 
@@ -286,6 +287,7 @@ class AppointmentController extends Controller
 				$aAppointment['name'],
 				$request->input('date'),
 				$request->input('time'),
+				current($request->attributes)['oBranch']->city,
 				current($request->attributes)['oBranch']->address
 			);
 
@@ -353,9 +355,10 @@ class AppointmentController extends Controller
 	 * @param string $psName
 	 * @param string $psDate
 	 * @param string $psTime
+	 * @param string $psCity
 	 * @param string $psAddress
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psAddress)
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress)
 	{
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
@@ -364,6 +367,7 @@ class AppointmentController extends Controller
 		$oContent->sName = $psName;
 		$oContent->sDate = $oDateTime->format('j').' '.__('of').' '.$oDateTime->format('F');
 		$oContent->sTime = $oDateTime->format('H:i a');
+		$oContent->sCity = $psCity;
 		$oContent->sAddress = $psAddress;
 
 		// Send confirmation email
