@@ -40,7 +40,7 @@
                             <h5 class="card-title">{{ $aBranch['name'] }}</h5>
 
                             @if ($aBranch['city'] || $aBranch['country'])
-                            <p class="my-0">{{ implode(', ', [$aBranch['city'], $aBranch['country']]) }}</p>
+                            <p class="my-0 text-nowrap">{{ implode(', ', [$aBranch['city'], $aBranch['country']]) }}</p>
                             @endif
 
                             <input type="hidden" name="branch_id" value="{{ $aBranch['id'] }}" />
