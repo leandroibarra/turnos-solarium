@@ -54,6 +54,20 @@
                         <strong>{{ $errors->first('phone') }}</strong>
                     </div>
                     @endif
+
+                    @php
+                    $oPhoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+
+                    $oPhoneFixed = $oPhoneNumberUtil->getExampleNumberForType($oBranch->country_code, 0);
+                    $oPhoneMobile = $oPhoneNumberUtil->getExampleNumberForType($oBranch->country_code, 1);
+                    @endphp
+                    <small class="form-text text-muted my-0">{{ __(
+                        'You need to specify the area code and phone number, for example: :phoneFixed or :phoneMobile',
+                        [
+                            'phoneFixed' => implode(' ', [$oPhoneFixed->getCountryCode(), $oPhoneFixed->getNationalNumber()]),
+                            'phoneMobile' => implode(' ', [$oPhoneMobile->getCountryCode(), $oPhoneMobile->getNationalNumber()])
+                        ]
+                    ) }}</small>
                 </div>
 
                 <div class="form-group mb-2">
