@@ -10,20 +10,22 @@
 
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">{{ __('Branch creation') }}</h4>
+            <h4 class="mb-3">{{ __('Branch edition') }}</h4>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('branch.store') }}" id="branchCreateForm" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('branch.update', ['id' => $oBranch->id]) }}" id="branchEditForm" enctype="multipart/form-data">
+                @method('PUT')
+
                 @csrf
 
                 <div class="form-row mb-3">
                     <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="name" class="mb-1">{{ __('Name') }}</label>
 
-                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" />
+                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name', $oBranch->name) }}" />
 
                         @if ($errors->has('name'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -35,7 +37,7 @@
                     <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="address" class="mb-1">{{ __('Address') }}</label>
 
-                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" />
+                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address', $oBranch->address) }}" />
 
                         @if ($errors->has('address'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -47,7 +49,7 @@
                     <div class="col">
                         <label for="amount_appointments_by_time" class="mb-1">{{ __('Appointments by Time') }}</label>
 
-                        <input id="amount_appointments_by_time" type="number" class="form-control{{ $errors->has('amount_appointments_by_time') ? ' is-invalid' : '' }}" name="amount_appointments_by_time" value="{{ old('amount_appointments_by_time') }}" min="1" />
+                        <input id="amount_appointments_by_time" type="number" class="form-control{{ $errors->has('amount_appointments_by_time') ? ' is-invalid' : '' }}" name="amount_appointments_by_time" value="{{ old('amount_appointments_by_time', $oBranch->amount_appointments_by_time) }}" min="1" />
 
                         @if ($errors->has('amount_appointments_by_time'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -61,7 +63,7 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <label for="city" class="mb-1">{{ __('City') }}</label>
 
-                        <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" />
+                        <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city', $oBranch->city) }}" />
 
                         @if ($errors->has('city'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -73,7 +75,7 @@
                     <div class="col">
                         <label for="province" class="mb-1">{{ __('Province') }}</label>
 
-                        <input id="province" type="text" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" />
+                        <input id="province" type="text" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province', $oBranch->province) }}" />
 
                         @if ($errors->has('province'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -87,7 +89,7 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <label for="country" class="mb-1">{{ __('Country') }}</label>
 
-                        <input id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country') }}" />
+                        <input id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country', $oBranch->country) }}" />
 
                         @if ($errors->has('country'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -99,7 +101,7 @@
                     <div class="col">
                         <label for="country_code" class="mb-1">{{ __('Country Code') }}</label>
 
-                        <input id="country_code" type="text" class="form-control{{ $errors->has('country_code') ? ' is-invalid' : '' }}" name="country_code" value="{{ old('country_code') }}" />
+                        <input id="country_code" type="text" class="form-control{{ $errors->has('country_code') ? ' is-invalid' : '' }}" name="country_code" value="{{ old('country_code', $oBranch->country_code) }}" />
 
                         @if ($errors->has('country_code'))
                         <div class="invalid-feedback d-block" role="alert">
@@ -126,6 +128,9 @@
                     </div>
 
                     @for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
+                        @php
+                        $oWorkingDay = $oBranch->workingWeek->get($iWeekDay);
+                        @endphp
                         <div class="list-group-item p-2">
                             <div class="form-row">
                                 <div class="col-12 col-md-4 align-self-center">
@@ -134,7 +139,7 @@
                                         <div class="form-group my-auto">
                                             <input id="is_working_day.{{ $iWeekDay }}" type="checkbox" class="form-check-input"
                                                    name="is_working_day[{{ $iWeekDay }}]" data-day-number="{{ $iWeekDay }}"
-                                                   {{ (old("is_working_day.{$iWeekDay}")==1) ? 'checked="checked"' : '' }}
+                                                   {{ (old("is_working_day.{$iWeekDay}", $oWorkingDay->is_working_day)==1) ? 'checked="checked"' : '' }}
                                                    value="1" />
                                             <label class="mb-0 my-md-0 font-weight-bold text-muted">{{ $oDate->format('l') }}</label>
                                         </div>
@@ -145,8 +150,8 @@
                                     <div class="input-group date" id="from{{ $iWeekDay }}" data-target-input="nearest">
                                         <input id="from.{{ $iWeekDay }}" type="text" class="form-control{{ $errors->has("from.{$iWeekDay}") ? ' is-invalid' : '' }} datetimepicker-input"
                                                data-target="#from{{ $iWeekDay }}" name="from[{{ $iWeekDay }}]"
-                                               readonly="readonly" {{ (old("is_working_day.{$iWeekDay}")==1) ? '' : 'disabled' }}
-                                               value="{{ old("from.{$iWeekDay}") }}" />
+                                               readonly="readonly" {{ (old("is_working_day.{$iWeekDay}", $oWorkingDay->is_working_day)==1) ? '' : 'disabled' }}
+                                               value="{{ old("from.{$iWeekDay}", $oWorkingDay->from) }}" />
                                         <div class="input-group-append" data-target="#from{{ $iWeekDay }}" data-toggle="datetimepicker">
                                             <div class="input-group-text{{ $errors->has("from.{$iWeekDay}") ? ' border-danger' : '' }}">
                                                 <i class="far fa-clock"></i>
@@ -164,8 +169,8 @@
                                     <div class="input-group date" id="until{{ $iWeekDay }}" data-target-input="nearest">
                                         <input id="until.{{ $iWeekDay }}" type="text" class="form-control{{ $errors->has("until.{$iWeekDay}") ? ' is-invalid' : '' }} datetimepicker-input"
                                                data-target="#until{{ $iWeekDay }}" name="until[{{ $iWeekDay }}]"
-                                               readonly="readonly" {{ (old("is_working_day.{$iWeekDay}")==1) ? '' : 'disabled' }}
-                                               value="{{ old("until.{$iWeekDay}") }}" />
+                                               readonly="readonly" {{ (old("is_working_day.{$iWeekDay}", $oWorkingDay->is_working_day)==1) ? '' : 'disabled' }}
+                                               value="{{ old("until.{$iWeekDay}", $oWorkingDay->until) }}" />
                                         <div class="input-group-append" data-target="#until{{ $iWeekDay }}" data-toggle="datetimepicker">
                                             <div class="input-group-text{{ $errors->has("until.{$iWeekDay}") ? ' border-danger' : '' }}">
                                                 <i class="far fa-clock"></i>
@@ -188,7 +193,7 @@
                 </div>
 
                 <div class="form-group my-3 text-center">
-                    <button type="submit" class="btn btn-block btn-primary shadow-none">{{ __('Create') }}</button>
+                    <button type="submit" class="btn btn-block btn-primary shadow-none">{{ __('Edit') }}</button>
                 </div>
             </form>
         </div>
@@ -236,7 +241,7 @@ jQuery(document).ready(function() {
     });
 
     // Prevent multiple clicks
-    jQuery('#branchCreateForm').submit(function() {
+    jQuery('#branchEditForm').submit(function() {
         jQuery('button[type=submit]', this)
             .html('{{ __('Processing') }}...')
             .attr('disabled', 'disabled');

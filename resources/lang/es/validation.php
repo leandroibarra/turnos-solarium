@@ -112,7 +112,7 @@ return [
     'unique'               => 'El valor del campo :attribute ya está en uso.',
     'uploaded'             => 'El campo :attribute no se pudo subir.',
     'url'                  => 'El formato del campo :attribute es inválido.',
-	'phone'				   => 'El capo :attribute contiene un número inválido.',
+	'phone'				   => 'El campo :attribute contiene un número inválido.',
 
     /*
     |--------------------------------------------------------------------------
@@ -129,6 +129,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+		'from.*' => [
+			'required_with' => 'El campo :attribute es obligatorio cuando es un día laborable.',
+			'before' => 'El campo :attribute debe ser menor al campo :date.'
+		],
+		'until.*' => [
+			'required_with' => 'El campo :attribute es obligatorio cuando es un día laborable.',
+			'after' => 'El campo :attribute debe ser mayor al campo :date.'
+		],
     ],
 
     /*

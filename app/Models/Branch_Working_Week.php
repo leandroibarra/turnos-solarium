@@ -18,7 +18,7 @@ class Branch_Working_Week extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['branch_id', 'day_number', 'is_working_day', 'is_working_day', 'until'];
+	protected $fillable = ['branch_id', 'day_number', 'is_working_day', 'from', 'until'];
 
 	/**
 	 * The branch that working week (day) belongs to.

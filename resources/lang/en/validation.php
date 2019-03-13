@@ -130,6 +130,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+		'from.*' => [
+			'required_with' => 'The :attribute field is required when is a working day.',
+			'before' => 'The :attribute field must be less than :date field.'
+		],
+		'until.*' => [
+			'required_with' => 'The :attribute field is required when is a working day.',
+			'after' => 'The :attribute field must be greater than :date field.'
+		],
     ],
 
     /*
