@@ -1,6 +1,19 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v3.0.0](https://github.com/leandroibarra/turnos-solarium/tree/v3.0.0) (2019-03-14)
+**Agregado**
+- Sección para administrar sucursales.
+- Etiquetas para ciudad y dirección de sucursal en email de confirmación de turno.
+
+**Cambiado**
+- Inclusión de scripts javascript en páginas de módulo de administración.
+- Ocultado de sección de precios en sitio público.
+- Eliminación de configuraciones de aplicación obsoletas.
+
+**Corregido**
+- Mensajes de error en campos de formularios de login.
+
 ## [v2.1.0](https://github.com/leandroibarra/turnos-solarium/tree/v2.1.0) (2019-02-08)
 **Agregado**
 - Proceso para restablecer contraseña de usuario.
