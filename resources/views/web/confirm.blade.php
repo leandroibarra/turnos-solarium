@@ -55,7 +55,19 @@
                     </div>
                     @endif
 
-                    <small class="form-text text-muted my-0">{{ __('You need to specify the area code and phone number, for example: +54 011 4444-0000 or 341 1118888') }}</small>
+                    @php
+                    $oPhoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+
+                    $oPhoneFixed = $oPhoneNumberUtil->getExampleNumberForType($oBranch->country_code, 0);
+                    $oPhoneMobile = $oPhoneNumberUtil->getExampleNumberForType($oBranch->country_code, 1);
+                    @endphp
+                    <small class="form-text text-muted my-0">{{ __(
+                        'You need to specify the area code and phone number, for example: :phoneFixed or :phoneMobile',
+                        [
+                            'phoneFixed' => implode(' ', [$oPhoneFixed->getCountryCode(), $oPhoneFixed->getNationalNumber()]),
+                            'phoneMobile' => implode(' ', [$oPhoneMobile->getCountryCode(), $oPhoneMobile->getNationalNumber()])
+                        ]
+                    ) }}</small>
                 </div>
 
                 <div class="form-group mb-2">
@@ -67,7 +79,7 @@
 
             <div class="col-12 col-md-3 appointment-container">
                 <div class="border p-3 mt-2 mt-md-0 appointment-content">
-                    <h5 class="text-center">{{ __('Selected appointment') }}</h5>
+                    <h5 class="text-center">{{ __('Selected appointment in :branchName', ['branchName' => $oBranch->name]) }}</h5>
                     <div>
                         <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>
                         <span class="d-block-inline-block d-md-block d-lg-inline-block">{{ $oDateTime->format('d').' '.__('of').' '.$oDateTime->format('F') }}</span>

@@ -71,7 +71,7 @@
 </div>
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script src="{{ asset('js/jquery.mask-1.14.15.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -94,4 +94,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

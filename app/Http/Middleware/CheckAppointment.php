@@ -28,6 +28,7 @@ class CheckAppointment
 		}
 
     	$oAppointment = \App\Models\Appointment::where([
+    		'branch_id' => current($request->attributes)['oBranch']->id,
 			'date' => Session::get('date'),
 			'time' => Session::get('time'),
 			'status' => 'granted'
@@ -40,7 +41,8 @@ class CheckAppointment
 				[
 					'time' => Session::get('time'),
 					'amount' => $oAppointment->count()
-				]
+				],
+				current($request->attributes)['oBranch']->amount_appointments_by_time
 			)
 		) {
 			Flash()->error(__('Appointment selected is already granted.'))->important();

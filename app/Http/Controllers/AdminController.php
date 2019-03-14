@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AdminController extends Controller
@@ -15,7 +16,7 @@ class AdminController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = 'admin/appointments';
+	protected $redirectTo = 'admin/select-branch';
 
 	/**
 	 * Show the administration's login form.
@@ -25,7 +26,7 @@ class AdminController extends Controller
 	public function showLoginForm()
 	{
 		if (Auth::user())
-			return redirect($this->redirectTo);
+			return redirect('admin/appointments');
 
 		return view('admin.login');
 	}
@@ -55,9 +56,15 @@ class AdminController extends Controller
 			$user = $this->guard()->getLastAttempted();
 
 			// Make sure the user has roles
-			if ($user->hasRole(['Sysadmin', 'Admin']) && $this->attemptLogin($request)) {
+			if (($user->hasRole(['Sysadmin', 'Admin']) || ($user->hasRole('Employee') && $user->branch_id > 0)) && $this->attemptLogin($request)) {
+				// Auto assign branch id session variable and change redirection page when user is Employee
+				if ($user->hasRole('Employee') && $user->branch_id > 0) {
+					Session::put('branch_id', $user->branch_id);
+
+					$this->redirectTo = 'admin/appointments';
+				}
+
 				// Send the normal successful login response
-				//return $this->sendLoginResponse($request);
 				return redirect($this->redirectTo);
 			} else {
 				// Increment the failed login attempts and redirect back to the
@@ -80,6 +87,29 @@ class AdminController extends Controller
 		$this->incrementLoginAttempts($request);
 
 		return $this->sendFailedLoginResponse($request);
+	}
+
+	/**
+	 * Validate the user login request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return void
+	 *
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	protected function validateLogin(Request $request)
+	{
+		$request->validate(
+			[
+				$this->username() => 'required|string',
+				'password' => 'required|string',
+			],
+			[],
+			[
+				$this->username() => strtolower(__($this->username())),
+				'password' => strtolower(__('Password')),
+			]
+		);
 	}
 
 	/**

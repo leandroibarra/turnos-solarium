@@ -122,7 +122,7 @@
 @endcan
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     @can ('admin.price.delete')
@@ -356,4 +356,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

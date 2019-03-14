@@ -77,7 +77,7 @@
 <link href="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script src="{{ asset('js/moment-with-locales-2.18.1.js') }}" type="text/javascript"></script>
 <script src="{{ asset('plugins/daterangepicker-3.0.3/daterangepicker.js') }}" type="text/javascript"></script>
 
@@ -172,4 +172,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

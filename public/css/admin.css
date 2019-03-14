@@ -1,16 +1,30 @@
 /*
+ * Define common styles
+ */
+.bg-blue {
+    background-color: #00466F !important;
+}
+
+/*
  * Top navigation bar
  */
 .navbar a,
 .navbar button {
     font-size: 1rem !important;
 }
+.current-branch:hover {
+    background-color: transparent;
+    color: #F8F9FA;
+}
+.current-branch:not(:disabled):not(.disabled) {
+    cursor: default;
+}
 
 /*
  * Container
  */
 body > .container {
-    padding-top: 56px;
+    padding-top: 16px;
 }
 
 /*

@@ -22,6 +22,7 @@
                 </div>
             </header>
             <div class="border p-3 mt-2 mt-md-0 appointment-content">
+                <div class="text-center text-md-left mb-2 font-weight-bold">{{ $oBranch->name }}</div>
                 <div class="text-center text-md-left">{{ __('Select a day and choose the time you wish book.') }}</div>
             </div>
         </div>
@@ -149,7 +150,7 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 var sContent = '' +
-                    '<h5 class="text-center">'+'{{ __('Selected appointment') }}</h5>\n' +
+                    '<h5 class="text-center">'+'{{ __('Selected appointment in :branchName', ['branchName' => $oBranch->name]) }}</h5>\n' +
                     '<div>\n' +
                     '   <span class="d-block-inline-block d-md-block d-lg-inline-block mr-0 mr-md-1 font-weight-bold">{{ __('Date') }}:</span>\n' +
                     '   <span class="d-block-inline-block d-md-block d-lg-inline-block">' + oActive.data('day').toString().replace(/^0+/ig, '') + ' {{ __('of') }} ' + oActive.data('month-label') + '</span>\n' +

@@ -123,38 +123,6 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Non working days
-	|--------------------------------------------------------------------------
-	|
-	| Customize non working days like week end days.
-	| 0 (for Sunday) through 6 (for Saturday)
-	|
-	|--------------------------------------------------------------------------
-	 */
-	'non_working_days' => [0, 6],
-
-	/*
-	|--------------------------------------------------------------------------
-	| Working hours per day
-	|--------------------------------------------------------------------------
-	|
-	| Customize working hours per day.
-	| Keys 0 (for Sunday) through 6 (for Saturday). Values indicates from
-	| and until working hour, for example [9, 20] value indicate working
-	| hours are from 09:00 until 20:00.
-	|
-	|--------------------------------------------------------------------------
-	 */
-	'working_hours_per_day' => [
-		1 => [9, 20],
-		2 => [9, 20],
-		3 => [9, 20],
-		4 => [9, 20],
-		5 => [9, 20]
-	],
-
-	/*
-	|--------------------------------------------------------------------------
 	| Path folder by resource
 	|--------------------------------------------------------------------------
 	|
@@ -246,6 +214,7 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Jenssegers\Date\DateServiceProvider::class,
 		Spatie\Permission\PermissionServiceProvider::class,
+		Propaganistas\LaravelPhone\PhoneServiceProvider::class,
     ],
 
     /*

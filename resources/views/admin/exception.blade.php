@@ -108,7 +108,7 @@
 @endcan
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     @can ('admin.exception.delete')
@@ -224,4 +224,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

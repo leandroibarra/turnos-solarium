@@ -117,7 +117,7 @@
 @endcan
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     @can ('admin.slide.delete')
@@ -319,4 +319,4 @@ jQuery(document).ready(function() {
     @endif
 });
 </script>
-@endsection
+@endpush

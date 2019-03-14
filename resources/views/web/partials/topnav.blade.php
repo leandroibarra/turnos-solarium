@@ -6,7 +6,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            @if (Auth::user()->hasRole(['Admin', 'Sysadmin']))
+            @if (Auth::user()->hasRole(['Admin', 'Sysadmin', 'Employee']))
             <a class="btn btn-outline-dark mt-2 mt-lg-0" href="{{ route('admin') }}">{{ __('Administration') }}</a>
             @endif
 
