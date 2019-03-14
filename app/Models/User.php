@@ -46,6 +46,16 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * The branch that user belongs to.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function branch()
+	{
+		return $this->hasOne('App\Models\Branch', 'id', 'branch_id');
+	}
+
+	/**
 	 * Retrieve users with related data from last appointment.
 	 *
 	 * @return \Illuminate\Support\Collection

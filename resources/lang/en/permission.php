@@ -7,6 +7,7 @@ return [
 	'module.admin.site-parameters' => 'Site Parameters',
 	'module.admin.price' => 'Prices',
 	'module.admin.slide' => 'Slides',
+	'module.admin.branch' => 'Branches',
 	'permission.admin.system-parameters.edit' => 'List system parameters.',
 	'permission.admin.system-parameters.update' => 'Save edited system parameters.',
 	'permission.admin.appointment.list' => 'List granted appointments.',
@@ -37,5 +38,11 @@ return [
 	'permission.admin.slide.sort' => 'Sort created slides.',
 	'permission.admin.slide.edit' => 'Edit slides.',
 	'permission.admin.slide.update' => 'Save edited slides.',
-	'permission.admin.slide.delete' => 'Delete slides.'
+	'permission.admin.slide.delete' => 'Delete slides.',
+	'permission.admin.branch.list' => 'List branches.',
+	'permission.admin.branch.create' => 'Create branches.',
+	'permission.admin.branch.store' => 'Save created branches.',
+	'permission.admin.branch.edit' => 'Edit branches.',
+	'permission.admin.branch.update' => 'Save edited branches.',
+	'permission.admin.branch.delete' => 'Delete branches.'
 ];

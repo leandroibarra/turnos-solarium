@@ -50,14 +50,15 @@ class ExceptionController extends Controller
 	/**
 	 * List next enabled exceptions.
 	 *
+	 * @param Request $request
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function list()
+	public function list(Request $request)
 	{
 		$oException = new Exception();
 
 		return view('admin.exception')->with([
-			'aEnabledExceptions' => $oException->getCurrentAndNextEnabled()
+			'aEnabledExceptions' => $oException->getCurrentAndNextEnabled(current($request->attributes)['oBranch']->id)
 		]);
 	}
 
@@ -71,9 +72,10 @@ class ExceptionController extends Controller
 	public function delete(Request $request, $id)
 	{
 		if ($request->ajax()) {
-			$aException = Exception::find($id);
+			try {
+				// Validate if exception is valid and is enable
+				$this->validateExceptionIdAndEnable(current($request->attributes)['oBranch']->id, $id, true);
 
-			if ((bool) $aException->enable) {
 				Exception::whereId($id)->update([
 					'enable' => 0,
 					'updated_at' => date('Y-m-d H:i:s')
@@ -83,10 +85,10 @@ class ExceptionController extends Controller
 					'status' => 'success',
 					'message' => __('The exception has been deleted successfully.')
 				];
-			} else {
+			} catch (\Exception $oException) {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The exception already has been deleted. Please, update your page.')
+					'message' => $oException->getMessage()
 				];
 			}
 
@@ -118,6 +120,9 @@ class ExceptionController extends Controller
 		// Validate request
 		$this->validateException($request);
 
+		// Complete rest of data
+		$request->request->add(['branch_id' => current($request->attributes)['oBranch']->id]);
+
 		// Create and save exception
 		$oException = new Exception($request->all());
 		$oException->save();
@@ -130,30 +135,31 @@ class ExceptionController extends Controller
 	/**
 	 * Show exception edition form.
 	 *
+	 * @param Request $request
 	 * @param integer $id
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
 	 */
-	public function edit($id)
+	public function edit(Request $request, $id)
 	{
-		$oException = Exception::find($id);
+		try {
+			// Validate if exception is valid and is enable
+			$aException = $this->validateExceptionIdAndEnable(current($request->attributes)['oBranch']->id, $id);
 
-		// Validate exception status
-		if (!(bool) $oException || !(bool) $oException->enable) {
-			Flash()->error(__('The exception is not valid or has been deleted.'))->important();
+			// Format date and time range field data
+			$aException['datetimes'] = implode(__(' - '), [
+				date($this->sFromFormat, strtotime($aException['datetime_from'])),
+				date($this->sFromFormat, strtotime($aException['datetime_to']))
+			]);
+
+			return view('admin.exception-edit')->with([
+				'iAppointmentMinutes' => $this->aSystemParameters['appointment_minutes'],
+				'aException' => $aException
+			]);
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 
 			return redirect('/admin/exceptions');
 		}
-
-		// Format date and time range field data
-		$oException->datetimes = implode(__(' - '), [
-			date($this->sFromFormat, strtotime($oException->datetime_from)),
-			date($this->sFromFormat, strtotime($oException->datetime_to))
-		]);
-
-		return view('admin.exception-edit')->with([
-			'iAppointmentMinutes' => $this->aSystemParameters['appointment_minutes'],
-			'aException' => $oException->toArray()
-		]);
 	}
 
 	/**
@@ -166,28 +172,29 @@ class ExceptionController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$oException = Exception::find($id);
+		try {
+			// Validate if exception is valid and is enable
+			$this->validateExceptionIdAndEnable(current($request->attributes)['oBranch']->id, $id);
 
-		// Validate exception status
-		if (!(bool) $oException || !(bool) $oException->enable) {
-			Flash()->error(__('The exception is not valid or has been deleted.'))->important();
+			// Validate request
+			$this->validateException($request);
 
-			return redirect('/admin/exceptions');
+			// Update exception
+			Exception::whereId($id)->update([
+				'datetime_from' => $request->input('datetime_from'),
+				'datetime_to' => $request->input('datetime_to'),
+				'type' => $request->input('type'),
+				'observations' => $request->input('observations'),
+				'updated_at' => date('Y-m-d H:i:s')
+			]);
+
+			Flash()->success(__('The exception has been edited successfully.'))->important();
+		} catch (\Illuminate\Validation\ValidationException $oException) {
+			// Throw exception from request validation
+			throw $oException;
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 		}
-
-		// Validate request
-		$this->validateException($request);
-
-		// Update exception
-		Exception::whereId($id)->update([
-			'datetime_from' => $request->input('datetime_from'),
-			'datetime_to' => $request->input('datetime_to'),
-			'type' => $request->input('type'),
-			'observations' => $request->input('observations'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Flash()->success(__('The exception has been edited successfully.'))->important();
 
 		return redirect('/admin/exceptions');
 	}
@@ -220,7 +227,12 @@ class ExceptionController extends Controller
 								$fail(__('The :attribute field is not valid.'));
 							} else {
 								$oAppointment = new Appointment();
-								$iAppointment = count($oAppointment->getGrantedBetweenDates($sDateTimeFrom, $sDateTimeTo)->toArray());
+
+								$iAppointment = count($oAppointment->getGrantedBetweenDates(
+									current($poRequest->attributes)['oBranch']->id,
+									$sDateTimeFrom,
+									$sDateTimeTo
+								)->toArray());
 
 								// Validate fi there are any appointment into date and time range
 								if ((bool) $iAppointment) {
@@ -248,5 +260,30 @@ class ExceptionController extends Controller
 				'type' => strtolower(__('Type'))
 			]
 		);
+	}
+
+	/**
+	 * Validate if exception is valid and is enable.
+	 *
+	 * @param integer $piBranchId
+	 * @param integer $piExceptionId
+	 * @param boolean $pbIsAjax OPTIONAL
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function validateExceptionIdAndEnable($piBranchId, $piExceptionId, $pbIsAjax=false)
+	{
+		$oException = Exception::where([
+			'branch_id' => $piBranchId,
+			'id' => $piExceptionId
+		])->first();
+
+		if (!(bool) $oException)
+			throw new \Exception(__('Parameters are not valid'));
+
+		if (!(bool) $oException->enable)
+			throw new \Exception(__(($pbIsAjax) ? 'The exception already has been deleted. Please, update your page.' : 'This exception already has been deleted.'));
+
+		return $oException->toArray();
 	}
 }

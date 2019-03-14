@@ -57,7 +57,7 @@
                 @php
                 $sClasses = 'weekend-day text-muted';
                 @endphp
-            @elseif (validateDateInExceptions($oDate->format('Y-m-d'), $aExceptions))
+            @elseif (validateDateInExceptions($aWorkingHoursPerDay, $oDate->format('Y-m-d'), $aExceptions))
                 @php
                 $sClasses = 'exception-day bg-light text-muted';
                 @endphp

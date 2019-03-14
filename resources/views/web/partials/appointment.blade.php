@@ -18,7 +18,7 @@
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments, $iAppointmentsByTime) &&
                         !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
@@ -71,7 +71,7 @@
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments, $iAppointmentsByTime) &&
                         !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
@@ -118,20 +118,13 @@
                 $oRequestDate->hour($iHour);
                 @endphp
 
-                {{--Non process last hour of working day (non inclusive)--}}
-                @if ($oRequestDate->format('H') == end($aNight))
-                    @php
-                    continue;
-                    @endphp
-                @endif
-
                 @for ($iMinute=0; $iMinute<$iAppointmentsPerHour; $iMinute++)
                     @php
                     $oRequestDate->minute($iMinute * $iAppointmentMinutes);
                     @endphp
 
                     @if (
-                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments) &&
+                        !validateGrantedAppointments($oRequestDate->format('H:i'), $aGrantedAppointments, $iAppointmentsByTime) &&
                         !validateDateTimeInException($oRequestDate->format('Y-m-d H:i:s'), $aExceptions) &&
                         (
                             !(bool) $aAppointmentToExclude || $aAppointmentToExclude['date']!=$oRequestDate->format('Y-m-d') ||
@@ -140,7 +133,8 @@
                         (
                             ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
-                        )
+                        ) &&
+                        $oRequestDate->format('H:i:s') <= $sUntil
                     )
                         @php
                         $iCount++;

@@ -34,9 +34,19 @@ class AppointmentController extends Controller
 		$oRequestDate = new Date($sRequestDate);
 
 		// Obtain working hours per day from app configs
-		$aWorkingHoursPerDay = config('app.working_hours_per_day')[$oRequestDate->format('w')];
+		$aWorkingHoursPerDay = array_fill(0, 2, 0);
+		foreach (current($request->attributes)['oBranch']->workingWeek as $oWeekDay)
+			if ($oRequestDate->format('w') == $oWeekDay->day_number)
+				$aWorkingHoursPerDay = [
+					$oWeekDay->from,
+					$oWeekDay->until
+				];
 
-		$aHours = range($aWorkingHoursPerDay[0], $aWorkingHoursPerDay[1], 1);
+		$aHours = range(
+			intval(explode(':', $aWorkingHoursPerDay[0])[0]),
+			intval(explode(':', $aWorkingHoursPerDay[1])[0]),
+			1
+		);
 
 		$aMorning = $aAfternoon = $aNight = [];
 
@@ -58,14 +68,22 @@ class AppointmentController extends Controller
 		return view('web.partials.appointment')->with([
 			'iAppointmentMinutes' => $aSystemParameters['appointment_minutes'],
 			'iAppointmentsPerHour' => 60 / $aSystemParameters['appointment_minutes'],
+			'iAppointmentsByTime' => current($request->attributes)['oBranch']->amount_appointments_by_time,
 			'oToday' => new Date(),
 			'oRequestDate' => $oRequestDate,
 			'aAppointmentToExclude' => ((bool) $request->headers->get('appointment-id')) ? $oAppointment::find($request->headers->get('appointment-id'))->toArray() : [],
-			'aGrantedAppointments' => $oAppointment->getGrantedByDate($sRequestDate)->toArray(),
+			'aGrantedAppointments' => $oAppointment->getGrantedByDate(
+				current($request->attributes)['oBranch']->id,
+				$sRequestDate
+			)->toArray(),
 			'aMorning' => $aMorning,
 			'aAfternoon' => $aAfternoon,
 			'aNight' => $aNight,
-			'aExceptions' => $oException->getEnabledByDate($oRequestDate->format('Y-m-d'))->toArray()
+			'aExceptions' => $oException->getEnabledByDate(
+				current($request->attributes)['oBranch']->id,
+				$oRequestDate->format('Y-m-d')
+			)->toArray(),
+			'sUntil' => $aWorkingHoursPerDay[1]
 		]);
 	}
 
@@ -89,65 +107,66 @@ class AppointmentController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		// Validate request
-		$this->validate(
-			$request,
-			[
-				'name' => 'required',
-				'phone' => [
-					'required',
-					function ($attribute, $value, $fail) {
-						$number = preg_replace( '/\D+/', '', $value);
-
-						if (preg_match('/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/D', $number) != 1)
-							$fail(__('The :attribute field is not valid.'));
-					}
+		try {
+			// Validate request
+			$this->validate(
+				$request,
+				[
+					'name' => 'required',
+					'phone' => [
+						'required',
+						'phone:' . current($request->attributes)['oBranch']->country_code
+					]
+				],
+				[],
+				[
+					'name' => strtolower(__('Name')),
+					'phone' => strtolower(__('Phone Number'))
 				]
-			],
-			[],
-			[
-				'name' => strtolower(__('Name')),
-				'phone' => strtolower(__('Phone Number'))
-			]
-		);
+			);
 
-		$oException = new Exception();
+			$oException = new Exception();
 
-		// Validate if there are any exception in appointment date and time
-		if ((bool) $oException->getEnabledByDateAndTime(Session::get('date').' '.Session::get('time'))->toArray()) {
-			// Clean session data to prevent errors
-			Session::forget('date');
-			Session::forget('time');
+			// Validate if there are any exception in appointment date and time
+			if ((bool) $oException->getEnabledByDateAndTime(
+				current($request->attributes)['oBranch']->id,
+				Session::get('date') . ' ' . Session::get('time'))->toArray()
+			)
+				throw new \Exception(__('Appointment is not longer available. Please, try again with another date and time.'));
 
-			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
+			// Complete rest of data
+			$request->request->add([
+				'branch_id' => current($request->attributes)['oBranch']->id,
+				'user_id' => Auth::user()->id,
+				'date' => Session::get('date'),
+				'time' => Session::get('time')
+			]);
 
-			return redirect('/book');
+			// Create and save appointment
+			$oAppointment = new Appointment($request->all());
+			$oAppointment->save();
+
+			// Send confirmation email to the user
+			$this->sendConfirmationEmail(
+				Auth::user()->email,
+				$request->input('name'),
+				Session::get('date'),
+				Session::get('time'),
+				current($request->attributes)['oBranch']->city,
+				current($request->attributes)['oBranch']->address
+			);
+
+			Flash()->success(__('Appointment has been granted successfully. We sent you an email with appointment data.'))->important();
+		} catch (\Illuminate\Validation\ValidationException $oException) {
+			// Throw exception from request validation
+			throw $oException;
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 		}
-
-		// Complete rest of data
-		$request->request->add([
-			'user_id' => Auth::user()->id,
-			'date' => Session::get('date'),
-			'time' => Session::get('time')
-		]);
-
-		// Create and save appointment
-		$oAppointment = new Appointment($request->all());
-		$oAppointment->save();
-
-		// Send confirmation email to the user
-		$this->sendConfirmationEmail(
-			Auth::user()->email,
-			$request->input('name'),
-			Session::get('date'),
-			Session::get('time')
-		);
 
 		// Clean session data to prevent errors
 		Session::forget('date');
 		Session::forget('time');
-
-		Flash()->success(__('Appointment has been granted successfully. We sent you an email with appointment data.'))->important();
 
 		return redirect('/book');
 	}
@@ -155,14 +174,15 @@ class AppointmentController extends Controller
 	/**
 	 * List next granted appointments.
 	 *
+	 * @param Request $request
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function list()
+	public function list(Request $request)
 	{
 		$oAppointment = new Appointment();
 
 		return view('admin.appointment')->with([
-			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted()
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGranted(current($request->attributes)['oBranch']->id)
 		]);
 	}
 
@@ -176,9 +196,10 @@ class AppointmentController extends Controller
 	public function cancel(Request $request, $id)
 	{
 		if ($request->ajax()) {
-			$aAppointment = Appointment::find($id);
+			try {
+				// Validate if appointment is valid and has still granted status
+				$this->validateAppointmentIdAndStatus(current($request->attributes)['oBranch']->id, $id, 'granted', true);
 
-			if ($aAppointment->status == 'granted') {
 				Appointment::whereId($id)->update([
 					'status' => 'cancelled',
 					'updated_at' => date('Y-m-d H:i:s')
@@ -188,10 +209,10 @@ class AppointmentController extends Controller
 					'status' => 'success',
 					'message' => __('The appointment has been cancelled successfully.')
 				];
-			} else {
+			} catch (\Exception $oException) {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The appointment already has been cancelled or rescheduled. Please, try again.')
+					'message' => $oException->getMessage()
 				];
 			}
 
@@ -208,72 +229,72 @@ class AppointmentController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		// Validate if appointment has still granted status
-		$aAppointment = $this->validateStatus($id, 'granted');
+		try {
+			// Validate if appointment is valid and has still granted status
+			$aAppointment = $this->validateAppointmentIdAndStatus(current($request->attributes)['oBranch']->id, $id, 'granted');
 
-		if (!(bool) $aAppointment) {
-			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
+			$oException = new Exception();
 
-			return redirect('/admin/appointments');
-		}
-
-		$oException = new Exception();
-
-		// Validate if there are any exception in new appointment date and time
-		if ((bool) $oException->getEnabledByDateAndTime($request->input('date').' '.$request->input('time'))->toArray()) {
-			Flash()->error(__('Appointment is not longer available. Please, try again with another date and time.'))->important();
-
-			return redirect('/admin/appointments');
-		}
-
-		// Validate if there are any granted appointment in new appointment date and time
-		if (
-			validateGrantedAppointments(
-				$request->input('time'),
-				[
-					'time' => $request->input('time'),
-					'amount' => Appointment::where([
-						'date' => $request->input('date'),
-						'time' => $request->input('time'),
-						'status' => 'granted'
-					])->get()->count()
-				]
+			// Validate if there are any exception in new appointment date and time
+			if ((bool) $oException->getEnabledByDateAndTime(
+				current($request->attributes)['oBranch']->id,
+				$request->input('date').' '.$request->input('time'))->toArray()
 			)
-		) {
-			Flash()->error(__('Appointment selected is already granted.'))->important();
+				throw new \Exception(__('Appointment is not longer available. Please, try again with another date and time.'));
 
-			return redirect('/admin/appointments');
+			// Validate if there are any granted appointment in new appointment date and time
+			if (
+				validateGrantedAppointments(
+					$request->input('time'),
+					[
+						'time' => $request->input('time'),
+						'amount' => Appointment::where([
+							'branch_id' => current($request->attributes)['oBranch']->id,
+							'date' => $request->input('date'),
+							'time' => $request->input('time'),
+							'status' => 'granted'
+						])->get()->count()
+					],
+					current($request->attributes)['oBranch']->amount_appointments_by_time
+				)
+			)
+				throw new \Exception(__('Appointment selected is already granted.'));
+
+			// Update granted appointment with rescheduled status
+			Appointment::whereId($aAppointment['id'])->update([
+				'status' => 'rescheduled',
+				'updated_at' => date('Y-m-d H:i:s')
+			]);
+
+			// Create and save new appointment
+			$oAppointment = new Appointment([
+				'parent_appointment_id' => $aAppointment['id'],
+				'branch_id' => $aAppointment['branch_id'],
+				'user_id' => $aAppointment['user_id'],
+				'date' => $request->input('date'),
+				'time' => $request->input('time'),
+				'name' => $aAppointment['name'],
+				'phone' => $aAppointment['phone'],
+				'comment' => $aAppointment['comment'],
+				'status' => 'granted',
+				'created_at' => date('Y-m-d H:i:s')
+			]);
+			$oAppointment->save();
+
+			// Send confirmation email to the user
+			$this->sendConfirmationEmail(
+				User::find($aAppointment['user_id'])->email,
+				$aAppointment['name'],
+				$request->input('date'),
+				$request->input('time'),
+				current($request->attributes)['oBranch']->city,
+				current($request->attributes)['oBranch']->address
+			);
+
+			Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 		}
-
-		// Update granted appointment with rescheduled status
-		Appointment::whereId($aAppointment['id'])->update([
-			'status' => 'rescheduled',
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		// Create and save new appointment
-		$oAppointment = new Appointment([
-			'parent_appointment_id' => $aAppointment['id'],
-			'user_id' => $aAppointment['user_id'],
-			'date' => $request->input('date'),
-			'time' => $request->input('time'),
-			'name' => $aAppointment['name'],
-			'phone' => $aAppointment['phone'],
-			'comment' => $aAppointment['comment'],
-			'status' => 'granted',
-			'created_at' => date('Y-m-d H:i:s')
-		]);
-		$oAppointment->save();
-
-		// Send confirmation email to the user
-		$this->sendConfirmationEmail(
-			User::find($aAppointment['user_id'])->email,
-			$aAppointment['name'],
-			$request->input('date'),
-			$request->input('time')
-		);
-
-		Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
 
 		return redirect('/admin/appointments');
 	}
@@ -281,37 +302,50 @@ class AppointmentController extends Controller
 	/**
 	 * Validate and present form to reschedule an appointment.
 	 *
+	 * @param Request $request
 	 * @param integer $id
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
 	 */
-	public function reschedule($id)
+	public function reschedule(Request $request, $id)
 	{
-		// Validate if appointment has still granted status
-		$aAppointment = $this->validateStatus($id, 'granted');
+		try {
+			// Validate if appointment is valid and has still granted status
+			$aAppointment = $this->validateAppointmentIdAndStatus(current($request->attributes)['oBranch']->id, $id, 'granted');
 
-		if (!(bool) $aAppointment) {
-			Flash()->error(__('This appointment already has been cancelled or rescheduled.'))->important();
+			return view('admin.appointment-reschedule')->with([
+				'aAppointment' => $aAppointment
+			]);
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 
 			return redirect('/admin/appointments');
 		}
-
-		return view('admin.appointment-reschedule')->with([
-			'aAppointment' => $aAppointment
-		]);
 	}
 
 	/**
-	 * Validate if appointment has given status.
+	 * Validate if appointment is valid and has given status.
 	 *
+	 * @param integer $piBranchId
 	 * @param integer $piAppointmentId
 	 * @param string $psStatus OPTIONAL
+	 * @param boolean $pbIsAjax OPTIONAL
 	 * @return array
+	 * @throws \Exception
 	 */
-	public function validateStatus($piAppointmentId, $psStatus='granted')
+	public function validateAppointmentIdAndStatus($piBranchId, $piAppointmentId, $psStatus='granted', $pbIsAjax=false)
 	{
-		$oAppointment = Appointment::find($piAppointmentId);
+		$oAppointment = Appointment::where([
+			'branch_id' => $piBranchId,
+			'id' => $piAppointmentId
+		])->first();
 
-		return ($oAppointment->status == $psStatus) ? $oAppointment->toArray() : [];
+		if (!(bool) $oAppointment)
+			throw new \Exception(__('Parameters are not valid'));
+
+		if ($oAppointment->status != $psStatus)
+			throw new \Exception(__(($pbIsAjax) ? 'The appointment already has been cancelled or rescheduled. Please, update your page.' : 'This appointment already has been cancelled or rescheduled.'));
+
+		return $oAppointment->toArray();
 	}
 
 	/**
@@ -321,8 +355,10 @@ class AppointmentController extends Controller
 	 * @param string $psName
 	 * @param string $psDate
 	 * @param string $psTime
+	 * @param string $psCity
+	 * @param string $psAddress
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime)
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress)
 	{
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
@@ -331,6 +367,8 @@ class AppointmentController extends Controller
 		$oContent->sName = $psName;
 		$oContent->sDate = $oDateTime->format('j').' '.__('of').' '.$oDateTime->format('F');
 		$oContent->sTime = $oDateTime->format('H:i a');
+		$oContent->sCity = $psCity;
+		$oContent->sAddress = $psAddress;
 
 		// Send confirmation email
 		Mail::to($psTo)->send(new AppointmentConfirmed($oContent));

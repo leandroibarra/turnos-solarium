@@ -25,9 +25,25 @@ Route::pattern('iDay', '^(0[1-9]|[1-2][0-9]|3[0-1])$');
 
 Route::group(
 	[
+		'prefix' => '/branch',
+		'middleware' => [
+			'auth',
+			'check-branch-select'
+		]
+	],
+	function() {
+		Route::get('/', 'BranchController@index')->name('branch.index');
+
+		Route::post('/set', 'BranchController@set')->name('branch.set');
+	}
+);
+
+Route::group(
+	[
 		'prefix' => '/book',
 		'middleware' => [
-			'auth'
+			'auth',
+			'check-branch'
 		]
 	],
 	function() {
@@ -43,7 +59,8 @@ Route::group(
 	[
 		'prefix' => '/appointments',
 		'middleware' => [
-			'auth'
+			'auth',
+			'check-branch'
 		]
 	],
 	function() {
@@ -59,7 +76,10 @@ Route::group(
 );
 
 Route::get('/calendars/{iYear}/{iMonth}', 'CalendarController@index')
-	->middleware(['auth'])
+	->middleware([
+		'auth',
+		'check-branch'
+	])
 	->name('calendar.index');
 
 Route::group(
@@ -107,7 +127,8 @@ Route::group(
 			[
 				'prefix' => '/appointments',
 				'middleware' => [
-					'role:Sysadmin|Admin'
+					'role:Sysadmin|Admin|Employee',
+					'check-branch'
 				]
 			],
 			function() {
@@ -147,7 +168,8 @@ Route::group(
 			[
 				'prefix' => '/exceptions',
 				'middleware' => [
-					'role:Sysadmin|Admin'
+					'role:Sysadmin|Admin|Employee',
+					'check-branch'
 				]
 			],
 			function() {
@@ -172,7 +194,7 @@ Route::group(
 							->middleware(['permission:admin.exception.edit'])
 							->name('exception.edit');
 
-						Route::put('', 'ExceptionController@update')
+						Route::put('/', 'ExceptionController@update')
 							->middleware(['permission:admin.exception.update'])
 							->name('exception.update');
 
@@ -271,7 +293,7 @@ Route::group(
 							->middleware(['permission:admin.price.edit'])
 							->name('price.edit');
 
-						Route::put('', 'PriceController@update')
+						Route::put('/', 'PriceController@update')
 							->middleware(['permission:admin.price.update'])
 							->name('price.update');
 
@@ -316,7 +338,7 @@ Route::group(
 							->middleware(['permission:admin.slide.edit'])
 							->name('slide.edit');
 
-						Route::put('', 'SlideController@update')
+						Route::put('/', 'SlideController@update')
 							->middleware(['permission:admin.slide.update'])
 							->name('slide.update');
 
@@ -325,6 +347,61 @@ Route::group(
 							->name('slide.delete');
 					}
 				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/branches',
+				'middleware' => [
+					'role:Sysadmin'
+				]
+			],
+			function() {
+				Route::get('/', 'BranchController@list')
+					->middleware(['permission:admin.branch.list'])
+					->name('branch.list');
+
+				Route::get('/create', 'BranchController@create')
+					->middleware(['permission:admin.branch.create'])
+					->name('branch.create');
+
+				Route::post('/', 'BranchController@store')
+					->middleware(['permission:admin.branch.store'])
+					->name('branch.store');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'BranchController@edit')
+							->middleware(['permission:admin.branch.edit'])
+							->name('branch.edit');
+
+						Route::put('/', 'BranchController@update')
+							->middleware(['permission:admin.branch.update'])
+							->name('branch.update');
+
+						Route::put('/delete', 'BranchController@delete')
+							->middleware(['permission:admin.branch.delete'])
+							->name('branch.delete');
+					}
+				);
+			}
+		);
+
+		Route::group(
+			[
+				'prefix' => '/select-branch',
+				'middleware' => [
+					'role:Sysadmin|Admin'
+				]
+			],
+			function() {
+				Route::get('/', 'BranchController@showSelectBranch')->name('admin.branch.select.branch');
+
+				Route::post('/', 'BranchController@select')->name('admin.branch.select');
 			}
 		);
 	}

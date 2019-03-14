@@ -75,7 +75,7 @@
 </div>
 @endsection
 
-@section('page-scripts')
+@push('page-scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // Prevent multiple clicks
@@ -88,4 +88,4 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endpush

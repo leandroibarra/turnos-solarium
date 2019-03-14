@@ -4,9 +4,10 @@
  *
  * @param string $psTime
  * @param array $paGrantedAppointments
+ * @param integer $piAppointmentsByTime
  * @return boolean
  */
-function validateGrantedAppointments($psTime, $paGrantedAppointments) {
+function validateGrantedAppointments($psTime, $paGrantedAppointments, $piAppointmentsByTime) {
 	$iKey = array_search($psTime, array_column($paGrantedAppointments, 'time'));
 
 	if ($iKey === false)
@@ -15,22 +16,18 @@ function validateGrantedAppointments($psTime, $paGrantedAppointments) {
 	// Cast stdClass Object to array to prevent errors
 	$paGrantedAppointments[$iKey] = (array) $paGrantedAppointments[$iKey];
 
-	$oTime = new \Jenssegers\Date\Date($psTime);
-
-	return !(bool) (
-		($paGrantedAppointments[$iKey]['amount']<1 && $oTime->format('G')<14) ||
-		($paGrantedAppointments[$iKey]['amount']<2 && $oTime->format('G')>=14)
-	);
+	return !(bool) ($paGrantedAppointments[$iKey]['amount'] < $piAppointmentsByTime);
 }
 
 /**
  * Validates if working date is available to grant appointments.
  *
+ * @param array $aWorkingHoursPerDay
  * @param string $psDate
  * @param array $paExceptions
  * @return boolean $bInException
  */
-function validateDateInExceptions($psDate, $paExceptions) {
+function validateDateInExceptions($aWorkingHoursPerDay, $psDate, $paExceptions) {
 	$bInException = false;
 
 	$oDate = new \Jenssegers\Date\Date($psDate);
@@ -38,10 +35,16 @@ function validateDateInExceptions($psDate, $paExceptions) {
 	$oDateTimeFrom = clone $oDate;
 	$oDateTimeTo = clone $oDate;
 
-	$oDateTimeFrom->hour(config('app.working_hours_per_day')[$oDate->format('w')][0]);
+	// Set hours, minutes, and seconds to date time form and date time to
+	foreach ([$oDateTimeFrom, $oDateTimeTo] as $iKey=>$oDateTime) {
+		list($iHour, $iMinute, $iSecond) = explode(':', $aWorkingHoursPerDay[$oDate->format('w')][$iKey]);
 
-	$oDateTimeTo->hour(config('app.working_hours_per_day')[$oDate->format('w')][1]);
+		$oDateTime->hour($iHour);
+		$oDateTime->minute($iMinute);
+		$oDateTime->second($iSecond);
+	}
 
+	// Find if there are any exception between day working hours
 	foreach ($paExceptions as $aException)
 		if (
 			$bInException = (bool) (
