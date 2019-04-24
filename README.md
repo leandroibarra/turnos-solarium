@@ -5,7 +5,8 @@ Además contiene un módulo de administración en el que se podrán:
 + Cancelar y reprogramar turnos reservados.
 + Administrar rango de fechas/horas en el cual los clientes no podrán reservar turnos.
 + Administrar permisos de usuarios registrados en el sistema.
-+ Administrar sucursales con los días laborables en la semana y sus rangos de horario de trabajo, y la cantidad de turnos que se otorgan en cada horario.
++ Administrar datos de sucursales con los días laborables en la semana y sus rangos de horario de trabajo, y la cantidad de turnos que se otorgan en cada horario.
++ Administrar listados de precios.
 + Administrar parámetros del sitema.
 + Administrar parámetros, slides y precios para el sitio público.
 
