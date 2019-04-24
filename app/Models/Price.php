@@ -18,27 +18,41 @@ class Price extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['price', 'title', 'description', 'order'];
+	protected $fillable = ['branch_id', 'price', 'title', 'description', 'order'];
 
 	/**
-	 * Retrieve enabled prices.
+	 * The branch that price belongs to.
 	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function branch()
+	{
+		return $this->hasOne('App\Models\Branch', 'id', 'branch_id');
+	}
+
+	/**
+	 * Retrieve enabled prices belonging to a branch.
+	 *
+	 * @param integer $piBranchId
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getEnabled() {
+	public function getEnabled($piBranchId) {
 		return $this
+			->where('branch_id', '=', $piBranchId)
 			->where('enable', '=', 1)
 			->orderBy('order', 'ASC')
 			->get();
 	}
 
 	/**
-	 * Retrieve amount of enabled prices.
+	 * Retrieve amount of enabled prices belonging to a branch.
 	 *
+	 * @param integer $piBranchId
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getAmountEnabled() {
+	public function getAmountEnabled($piBranchId) {
 		return $this
+			->where('branch_id', '=', $piBranchId)
 			->where('enable', '=', 1)
 			->count();
 	}

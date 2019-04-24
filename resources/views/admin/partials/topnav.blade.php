@@ -23,12 +23,6 @@ $sRouteName = request()->route()->getName();
                 </li>
                 @endcan
 
-                @can ('admin.price.list')
-                <li class="nav-item {{ (in_array($sRouteName, ['price.list', 'price.create', 'price.edit'])) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('price.list') }}">{{ __('Prices') }}</a>
-                </li>
-                @endcan
-
                 @can ('admin.slide.list')
                 <li class="nav-item {{ (in_array($sRouteName, ['slide.list', 'slide.create', 'slide.edit'])) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('slide.list') }}">{{ __('Slides') }}</a>
@@ -70,7 +64,7 @@ $sRouteName = request()->route()->getName();
 
         <div class="collapse navbar-collapse navMenu">
             @if (isset(current(request()->attributes)['oBranch']))
-                @if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list']))
+                @if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list']))
                 <div class="dropdown mt-3 mb-2 my-lg-0">
                     <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ current(request()->attributes)['oBranch']->name }}</button>
                     <div class="dropdown-menu change-branch-menu">
@@ -102,12 +96,18 @@ $sRouteName = request()->route()->getName();
                     <a class="nav-link" href="{{ route('exception.list') }}">{{ __('Exceptions') }}</a>
                 </li>
                 @endcan
+
+                @can ('admin.price.list')
+                <li class="nav-item {{ (in_array($sRouteName, ['price.list', 'price.create', 'price.edit'])) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('price.list') }}">{{ __('Prices') }}</a>
+                </li>
+                @endcan
             </ul>
         </div>
     </div>
 </nav>
 
-@if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list']))
+@if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list']))
     @push('page-scripts')
     <script type="text/javascript">
         // Prevent multiple clicks

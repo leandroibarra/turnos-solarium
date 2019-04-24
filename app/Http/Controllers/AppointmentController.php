@@ -153,7 +153,8 @@ class AppointmentController extends Controller
 				Session::get('date'),
 				Session::get('time'),
 				current($request->attributes)['oBranch']->city,
-				current($request->attributes)['oBranch']->address
+				current($request->attributes)['oBranch']->address,
+				current($request->attributes)['oBranch']->prices->where('enable', 1)
 			);
 
 			Flash()->success(__('Appointment has been granted successfully. We sent you an email with appointment data.'))->important();
@@ -288,7 +289,8 @@ class AppointmentController extends Controller
 				$request->input('date'),
 				$request->input('time'),
 				current($request->attributes)['oBranch']->city,
-				current($request->attributes)['oBranch']->address
+				current($request->attributes)['oBranch']->address,
+				current($request->attributes)['oBranch']->prices->where('enable', 1)
 			);
 
 			Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
@@ -357,8 +359,9 @@ class AppointmentController extends Controller
 	 * @param string $psTime
 	 * @param string $psCity
 	 * @param string $psAddress
+	 * @param array $paPrices OPTIONAL
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress)
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress, $paPrices=[])
 	{
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
@@ -369,8 +372,32 @@ class AppointmentController extends Controller
 		$oContent->sTime = $oDateTime->format('H:i a');
 		$oContent->sCity = $psCity;
 		$oContent->sAddress = $psAddress;
+		$oContent->sPrices = $this->formatPricesToSendEmail($paPrices);
 
 		// Send confirmation email
 		Mail::to($psTo)->send(new AppointmentConfirmed($oContent));
+	}
+
+	/**
+	 * Format price list to send by email.
+	 *
+	 * @param array $paPrices OPTIONAL
+	 * @return string $sPrices
+	 */
+	public function formatPricesToSendEmail($paPrices=[]) {
+		$sPrices = '';
+
+		// Build email price list
+		if (count($paPrices)) {
+			$sPrices .= '<ul>';
+
+			// Format price list
+			foreach ($paPrices as $aPrice)
+				$sPrices .= "<li>{$aPrice['title']}: $ ".formatPrice($aPrice['price'])."</li>";
+
+			$sPrices .= '</ul>';
+		}
+
+		return $sPrices;
 	}
 }

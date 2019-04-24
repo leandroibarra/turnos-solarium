@@ -32,14 +32,15 @@ class PriceController extends Controller
 	/**
 	 * List next enabled prices.
 	 *
+	 * @param Request $request
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function list()
+	public function list(Request $request)
 	{
 		$oPrice = new Price();
 
 		return view('admin.price')->with([
-			'aEnabledPrices' => $oPrice->getEnabled()->each(function($poPrice) {
+			'aEnabledPrices' => $oPrice->getEnabled(current($request->attributes)['oBranch']->id)->each(function($poPrice) {
 				$poPrice->price = formatPrice($poPrice->price);
 			})
 		]);
@@ -56,47 +57,44 @@ class PriceController extends Controller
 	{
 		if ($request->ajax()) {
 			try {
-				$oPrice = Price::find($id);
+				// Validate if price is valid and is enable
+				$this->validatePriceIdAndEnable(current($request->attributes)['oBranch']->id, $id, true);
 
-				if ((bool) $oPrice->enable) {
-					try {
-						// Update prices by transaction
-						DB::beginTransaction();
+				try {
+					// Update prices by transaction
+					DB::beginTransaction();
 
-						// Delete logically (disable) price
-						Price::whereId($id)->update([
-							'order' => null,
-							'enable' => 0,
+					// Delete logically (disable) price
+					Price::whereId($id)->update([
+						'order' => null,
+						'enable' => 0,
+						'updated_at' => date('Y-m-d H:i:s')
+					]);
+
+					// Update rest of prices order
+					$oPrice = new Price();
+
+					foreach ($oPrice->getEnabled(current($request->attributes)['oBranch']->id) as $iKey=>$aPrice)
+						Price::whereId($aPrice->id)->update([
+							'order' => $iKey + 1,
 							'updated_at' => date('Y-m-d H:i:s')
 						]);
 
-						// Update rest of prices order
-						$oPrice = new Price();
+					DB::commit();
 
-						foreach ($oPrice->getEnabled() as $iKey=>$aPrice)
-							Price::whereId($aPrice->id)->update([
-								'order' => $iKey + 1,
-								'updated_at' => date('Y-m-d H:i:s')
-							]);
+					$aResponse = [
+						'status' => 'success',
+						'message' => __('The price has been deleted successfully.')
+					];
+				} catch (\Exception $oException) {
+					DB::rollBack();
 
-						DB::commit();
-
-						$aResponse = [
-							'status' => 'success',
-							'message' => __('The price has been deleted successfully.')
-						];
-					} catch (\Exception $oException) {
-						DB::rollBack();
-
-						throw new \Exception();
-					}
-				} else {
 					throw new \Exception();
 				}
 			} catch (\Exception $oException) {
 				$aResponse = [
 					'status' => 'error',
-					'message' => __('The price already has been deleted. Please, update your page.')
+					'message' => $oException->getMessage()
 				];
 			}
 
@@ -133,10 +131,11 @@ class PriceController extends Controller
 
 		// Build new price data
 		$aData = [
+			'branch_id' => current($request->attributes)['oBranch']->id,
 			'title' => $request->input('title'),
 			'description' => $request->input('description'),
 			'price' => $this->formatPriceToSave($request->input('price')),
-			'order' => $oPrice->getAmountEnabled() + 1
+			'order' => $oPrice->getAmountEnabled(current($request->attributes)['oBranch']->id) + 1
 		];
 
 		// Create and save price
@@ -151,28 +150,29 @@ class PriceController extends Controller
 	/**
 	 * Show price edition form.
 	 *
+	 * @param Request $request
 	 * @param integer $id
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
 	 */
-	public function edit($id)
+	public function edit(Request $request, $id)
 	{
-		$oPrice = Price::find($id);
+		try {
+			// Validate if price is valid and is enable
+			$aPrice = $this->validatePriceIdAndEnable(current($request->attributes)['oBranch']->id, $id);
 
-		// Validate price status
-		if (!(bool) $oPrice || !(bool) $oPrice->enable) {
-			Flash()->error(__('The price is not valid or has been deleted.'))->important();
+			// Format price field data
+			$aPrice['price'] = formatPrice($aPrice['price']);
+
+			return view('admin.price-edit')->with([
+				'sDecimalPointSeparator' => $this->sDecimalPointSeparator,
+				'sThousandsSeparator' => $this->sThousandsSeparator,
+				'aPrice' => $aPrice
+			]);
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 
 			return redirect('/admin/prices');
 		}
-
-		// Format price field data
-		$oPrice->price = formatPrice($oPrice->price);
-
-		return view('admin.price-edit')->with([
-			'sDecimalPointSeparator' => $this->sDecimalPointSeparator,
-			'sThousandsSeparator' => $this->sThousandsSeparator,
-			'aPrice' => $oPrice->toArray()
-		]);
 	}
 
 	/**
@@ -185,27 +185,28 @@ class PriceController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$oPrice = Price::find($id);
+		try {
+			// Validate if price is valid and is enable
+			$this->validatePriceIdAndEnable(current($request->attributes)['oBranch']->id, $id);
 
-		// Validate price status
-		if (!(bool) $oPrice || !(bool) $oPrice->enable) {
-			Flash()->error(__('The price is not valid or has been deleted.'))->important();
+			// Validate request
+			$this->validatePrice($request);
 
-			return redirect('/admin/prices');
+			// Update price
+			Price::whereId($id)->update([
+				'title' => $request->input('title'),
+				'description' => $request->input('description'),
+				'price' => $this->formatPriceToSave($request->input('price')),
+				'updated_at' => date('Y-m-d H:i:s')
+			]);
+
+			Flash()->success(__('The price has been edited successfully.'))->important();
+		} catch (\Illuminate\Validation\ValidationException $oException) {
+			// Throw exception from request validation
+			throw $oException;
+		} catch (\Exception $oException) {
+			Flash()->error($oException->getMessage())->important();
 		}
-
-		// Validate request
-		$this->validatePrice($request);
-
-		// Update price
-		Price::whereId($id)->update([
-			'title' => $request->input('title'),
-			'description' => $request->input('description'),
-			'price' => $this->formatPriceToSave($request->input('price')),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
-
-		Flash()->success(__('The price has been edited successfully.'))->important();
 
 		return redirect('/admin/prices');
 	}
@@ -227,11 +228,14 @@ class PriceController extends Controller
 				$oPrice = new Price();
 
 				// Obtain amount of enabled prices
-				$iEnabledPrices = $oPrice->getAmountEnabled();
+				$iEnabledPrices = $oPrice->getAmountEnabled(current($request->attributes)['oBranch']->id);
 
 				foreach ($request->input('prices') as $aPrice) {
 					// Obtain price by id
-					$oPrice = Price::find($aPrice['id']);
+					$oPrice = Price::where([
+						'branch_id' => current($request->attributes)['oBranch']->id,
+						'id' => $aPrice['id']
+					])->first();
 
 					// Validate if price exists
 					if (!$oPrice || !(bool) $oPrice->enable)
@@ -302,6 +306,31 @@ class PriceController extends Controller
 				'description' => strtolower(__('Description'))
 			]
 		);
+	}
+
+	/**
+	 * Validate if price is valid and is enable.
+	 *
+	 * @param integer $piBranchId
+	 * @param integer $piPriceId
+	 * @param boolean $pbIsAjax OPTIONAL
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function validatePriceIdAndEnable($piBranchId, $piPriceId, $pbIsAjax=false)
+	{
+		$oPrice = Price::where([
+			'branch_id' => $piBranchId,
+			'id' => $piPriceId
+		])->first();
+
+		if (!(bool) $oPrice)
+			throw new \Exception(__('Parameters are not valid'));
+
+		if (!(bool) $oPrice->enable)
+			throw new \Exception(__(($pbIsAjax) ? 'The price already has been deleted. Please, update your page.' : 'This price already has been deleted.'));
+
+		return $oPrice->toArray();
 	}
 
 	/**

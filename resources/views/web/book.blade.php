@@ -10,6 +10,30 @@
         </div>
     </div>
 
+    @if (!$aEnabledPrices->isEmpty())
+    <div class="row">
+        @foreach ($aEnabledPrices as $iKey=>$aPrice)
+        <div class="col-12 col-lg-3 col-md-6 {{ ($iKey==0) ? 'offset-lg-1' : (($iKey==count($aEnabledPrices)-1) ? 'offset-md-3 offset-lg-0' : '') }}">
+            <div class="card-deck">
+                <div class="card mt-3 mb-4 box-shadow text-center">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ $aPrice->title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">
+                            @php
+                            $aPriceParts = explode($sDecimalPointSeparator, $aPrice->price);
+                            @endphp
+                            $ <strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<small>{{ $aPriceParts[1] }}</small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
+
     <div class="row book-wrapper">
         <div class="col-12 col-md-9">
             <div class="calendar-container"></div>

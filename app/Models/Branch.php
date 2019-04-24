@@ -51,6 +51,16 @@ class Branch extends Model
 	}
 
 	/**
+	 * The prices records belonging to the branch.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function prices()
+	{
+		return $this->hasMany('App\Models\Price');
+	}
+
+	/**
 	 * Retrieve enabled branches.
 	 *
 	 * @return \Illuminate\Support\Collection

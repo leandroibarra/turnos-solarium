@@ -48,11 +48,6 @@
                         <a class="nav-link" href="#tanning">{{ __('Tanning') }}</a>
                     </li>
                     @endif
-                    {{--@if (!$aEnabledPrices->isEmpty())
-                    <li class="nav-item">
-                        <a class="nav-link" href="#prices">{{ __('Prices') }}</a>
-                    </li>
-                    @endif--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Book online') }}</a>
                     </li>
@@ -62,7 +57,7 @@
     </nav>
 
     <div class="content" id="content">
-        @if ($aEnabledSlides->isEmpty() && empty($aSiteParameter['about_tanning_text']) /*&& $aEnabledPrices->isEmpty()*/)
+        @if ($aEnabledSlides->isEmpty() && empty($aSiteParameter['about_tanning_text']))
             <div class="welcome-title text-center d-flex my-5 py-4 py-md-5">
                 <div class="align-self-center mx-auto my-5 py-4 py-md-5">{{ __('Welcome to').' '.config('app.name', 'Laravel') }}</div>
             </div>
@@ -96,63 +91,6 @@
                 </div>
             </section>
             @endif
-
-            {{--@if (!$aEnabledPrices->isEmpty())
-            <section id="prices" class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h1>{{ __('Prices') }}</h1>
-                            <hr class="spacer-20">
-                        </div>
-                    </div>
-                    <div class="row">
-                        @foreach (array_chunk($aEnabledPrices->toArray(), 4, true) as $aPrices)
-                            @php
-                            $sClassFirst = $sClassLast = '';
-                            $iKey = 0;
-
-                            switch (count($aPrices)) {
-                                case 1:
-                                    $sClassFirst = 'mx-md-auto';
-                                    break;
-                                case 2:
-                                    $sClassFirst = 'offset-lg-3';
-                                    break;
-                                case 3:
-                                    $sClassFirst = 'offset-lg-1';
-                                    $sClassLast = 'offset-md-3 offset-lg-0';
-                                    break;
-                            }
-                            @endphp
-                            @foreach ($aPrices as $iIndex=>$aPrice)
-                                @php
-                                $iKey++;
-
-                                $aBgColors = ['info', 'warning', 'success', 'danger', 'aqua', 'yellow', 'olive', 'red', 'blue', 'orange', 'green', 'maroon'];
-
-                                $sBgColor = $aBgColors[$iIndex % count($aBgColors)];
-
-                                $aPriceParts = explode($sDecimalPointSeparator, $aPrice['price']);
-                                @endphp
-                            <div class="col-12 col-lg-3 col-md-6 {{ ($iKey == 1) ? $sClassFirst : ((count($aPrices) == $iKey) ? $sClassLast : '') }} count-prices-{{count($aPrices)}}">
-                                <div class="prices">
-                                    <div class="prices-header bg-{{ $sBgColor }}">
-                                        <h4 class="title">{{ $aPrice['title'] }}</h4>
-                                        <h2 class="price">
-                                            <sup>$</sup><strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<sup>{{ $aPriceParts[1] }}</sup>
-                                        </h2>
-                                    </div>
-                                    <hr class="spacer-10" />
-                                    <div class="prices-features">{{ $aPrice['description'] }}</div>
-                                </div>
-                            </div>
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-            @endif--}}
         @endif
     </div>
 
@@ -173,11 +111,6 @@
                             <a href="#tanning">{{ __('Tanning') }}</a>
                         </li>
                         @endif
-                        {{--@if (!$aEnabledPrices->isEmpty())
-                        <li class="list-inline-item">
-                            <a href="#prices">{{ __('Prices') }}</a>
-                        </li>
-                        @endif--}}
                         <li class="list-inline-item">
                             <a href="{{ route('login') }}">{{ __('Book online') }}</a>
                         </li>
