@@ -1,6 +1,17 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v4.0.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.0.0) (2019-04-24)
+**Agregado**
+- Etiqueta para listado de precios en email de confirmación de turno.
+- Listado de precios pertenecientes a la sucursal seleccionada por encima del calendario.
+
+**Cambiado**
+- Sección para administrar precios de sucursales.
+
+**Corregido**
+- Eliminación de código comentado en sitio público.
+
 ## [v3.0.0](https://github.com/leandroibarra/turnos-solarium/tree/v3.0.0) (2019-03-14)
 **Agregado**
 - Sección para administrar sucursales.

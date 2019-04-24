@@ -208,6 +208,52 @@ Route::group(
 
 		Route::group(
 			[
+				'prefix' => '/prices',
+				'middleware' => [
+					'role:Sysadmin|Admin|Employee',
+					'check-branch'
+				]
+			],
+			function() {
+				Route::get('/', 'PriceController@list')
+					->middleware(['permission:admin.price.list'])
+					->name('price.list');
+
+				Route::get('/create', 'PriceController@create')
+					->middleware(['permission:admin.price.create'])
+					->name('price.create');
+
+				Route::post('/', 'PriceController@store')
+					->middleware(['permission:admin.price.store'])
+					->name('price.store');
+
+				Route::put('/sort', 'PriceController@sort')
+					->middleware(['permission:admin.price.sort'])
+					->name('price.sort');
+
+				Route::group(
+					[
+						'prefix' => '/{id}'
+					],
+					function() {
+						Route::get('/edit', 'PriceController@edit')
+							->middleware(['permission:admin.price.edit'])
+							->name('price.edit');
+
+						Route::put('/', 'PriceController@update')
+							->middleware(['permission:admin.price.update'])
+							->name('price.update');
+
+						Route::put('/delete', 'PriceController@delete')
+							->middleware(['permission:admin.price.delete'])
+							->name('price.delete');
+					}
+				);
+			}
+		);
+
+		Route::group(
+			[
 				'prefix' => '/users',
 				'middleware' => [
 					'role:Sysadmin'
@@ -257,51 +303,6 @@ Route::group(
 				Route::put('/{id}', 'SiteParameterController@update')
 					->middleware(['permission:admin.site-parameters.update'])
 					->name('site-parameters.update');
-			}
-		);
-
-		Route::group(
-			[
-				'prefix' => '/prices',
-				'middleware' => [
-					'role:Sysadmin|Admin'
-				]
-			],
-			function() {
-				Route::get('/', 'PriceController@list')
-					->middleware(['permission:admin.price.list'])
-					->name('price.list');
-
-				Route::get('/create', 'PriceController@create')
-					->middleware(['permission:admin.price.create'])
-					->name('price.create');
-
-				Route::post('/', 'PriceController@store')
-					->middleware(['permission:admin.price.store'])
-					->name('price.store');
-
-				Route::put('/sort', 'PriceController@sort')
-					->middleware(['permission:admin.price.sort'])
-					->name('price.sort');
-
-				Route::group(
-					[
-						'prefix' => '/{id}'
-					],
-					function() {
-						Route::get('/edit', 'PriceController@edit')
-							->middleware(['permission:admin.price.edit'])
-							->name('price.edit');
-
-						Route::put('/', 'PriceController@update')
-							->middleware(['permission:admin.price.update'])
-							->name('price.update');
-
-						Route::put('/delete', 'PriceController@delete')
-							->middleware(['permission:admin.price.delete'])
-							->name('price.delete');
-					}
-				);
 			}
 		);
 

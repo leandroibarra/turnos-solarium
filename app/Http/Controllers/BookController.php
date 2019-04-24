@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
+
 use Jenssegers\Date\Date;
 
 use Illuminate\Http\Request;
@@ -21,8 +23,14 @@ class BookController extends Controller
 		Session::forget('date');
 		Session::forget('time');
 
+		$oPrice = new Price();
+
 		return view('web.book')->with([
-			'oBranch' => current($request->attributes)['oBranch']
+			'sDecimalPointSeparator' => config('app.decimal_point_separator'),
+			'oBranch' => current($request->attributes)['oBranch'],
+			'aEnabledPrices' => $oPrice->getEnabled(current($request->attributes)['oBranch']->id)->each(function($poPrice) {
+				$poPrice->price = formatPrice($poPrice->price);
+			})
 		]);
 	}
 
