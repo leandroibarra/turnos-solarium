@@ -275,14 +275,16 @@
                                          '@_DATE_@',
                                          '@_TIME_@',
                                          '@_CITY_@',
-                                         '@_ADDRESS_@'
+                                         '@_ADDRESS_@',
+                                         '@_PRICES_@'
                                      ],
                                      [
                                          $sName,
                                          $sDate,
                                          $sTime,
                                          $sCity,
-                                         $sAddress
+                                         $sAddress,
+                                         $sPrices
                                      ],
                                      $sBody
                                  ) !!}

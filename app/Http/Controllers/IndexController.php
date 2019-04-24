@@ -25,9 +25,6 @@ class IndexController extends Controller
 			'aSiteParameter' => $aSystemParameter,
 			'sDecimalPointSeparator' => config('app.decimal_point_separator'),
 			'sThousandsSeparator' => config('app.thousands_separator'),
-			'aEnabledPrices' => $oPrice->getEnabled()->each(function($poPrice) {
-				$poPrice->price = formatPrice($poPrice->price);
-			}),
 			'aEnabledSlides' => $oSlide->getEnabled()->each(function($poSlide) {
 				$poSlide->fullPath = imageFullPath('slides', $poSlide->image);
 			})

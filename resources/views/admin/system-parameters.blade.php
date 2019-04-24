@@ -65,9 +65,10 @@
                     <small class="form-text text-muted mt-0 mb-2">
                         <span class="font-weight-bold mr-1">@_NAME_@</span>{{ __('Name of the user who booked the appointment') }}<br />
                         <span class="font-weight-bold mr-1">@_DATE_@</span>{{ __('Date of the appointment booked (For example: 21 of January)') }}<br />
-                        <span class="font-weight-bold mr-1">@_TIME_@</span>{{ __('Time of the appointment booked (For example: 16:30 pm)')  }}<br />
-                        <span class="font-weight-bold mr-1">@_CITY_@</span>{{ __('City of the branch')  }}
-                        <span class="font-weight-bold mr-1">@_ADDRESS_@</span>{{ __('Address of the branch')  }}
+                        <span class="font-weight-bold mr-1">@_TIME_@</span>{{ __('Time of the appointment booked (For example: 16:30 pm)') }}<br />
+                        <span class="font-weight-bold mr-1">@_CITY_@</span>{{ __('City of the branch (For example: Buenos Aires)') }}<br />
+                        <span class="font-weight-bold mr-1">@_ADDRESS_@</span>{{ __('Address of the branch (For example: 9 de Julio 1200)') }}<br />
+                        <span class="font-weight-bold mr-1">@_PRICES_@</span>{{ __('Price list belonging to the branch') }}
                     </small>
 
                     <textarea id="appointment_confirmed_email_body" name="appointment_confirmed_email_body"
@@ -113,7 +114,7 @@ jQuery(document).ready(function() {
         lang: sLang,
         height: 200,
         hint: {
-            words: ['@_NAME_@', '@_DATE_@', '@_TIME_@', '@_CITY_@', '@_ADDRESS_@'],
+            words: ['@_NAME_@', '@_DATE_@', '@_TIME_@', '@_CITY_@', '@_ADDRESS_@', '@_PRICES_@'],
             match: /\B(\@\_\w{1,})$/,
             search: function (keyword, callback) {
                 callback($.grep(this.words, function (item) {
