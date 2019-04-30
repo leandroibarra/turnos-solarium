@@ -12,24 +12,42 @@
 
     @if (!$aEnabledPrices->isEmpty())
     <div class="row">
-        @foreach ($aEnabledPrices as $iKey=>$aPrice)
-        <div class="col-12 col-lg-3 col-md-6 {{ ($iKey==0) ? 'offset-lg-1' : (($iKey==count($aEnabledPrices)-1) ? 'offset-md-3 offset-lg-0' : '') }}">
-            <div class="card-deck">
-                <div class="card mt-3 mb-4 box-shadow text-center">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">{{ $aPrice->title }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">
-                            @php
-                            $aPriceParts = explode($sDecimalPointSeparator, $aPrice->price);
-                            @endphp
-                            $ <strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<small>{{ $aPriceParts[1] }}</small>
-                        </h1>
+        @foreach (array_chunk($aEnabledPrices->toArray(), 4) as $aPrices)
+            @php
+            $sClassFirst = $sClassLast = '';
+
+            switch (count($aPrices)) {
+                case 1:
+                    $sClassFirst = 'mx-md-auto';
+                    break;
+                case 2:
+                    $sClassFirst = 'offset-lg-3';
+                    break;
+                case 3:
+                    $sClassFirst = 'offset-lg-1';
+                    $sClassLast = 'offset-md-3 offset-lg-0';
+                    break;
+            }
+            @endphp
+            @foreach ($aPrices as $iKey=>$aPrice)
+            <div class="col-12 col-lg-3 col-md-6 {{ ($iKey==0) ? $sClassFirst : (($iKey==count($aPrices)-1) ? $sClassLast : '') }}">
+                <div class="card-deck">
+                    <div class="card mt-3 mb-4 box-shadow text-center">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">{{ $aPrice['title'] }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                                @php
+                                $aPriceParts = explode($sDecimalPointSeparator, $aPrice['price']);
+                                @endphp
+                                $ <strong>{{ $aPriceParts[0] }}</strong>{{ $sDecimalPointSeparator }}<small>{{ $aPriceParts[1] }}</small>
+                            </h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            @endforeach
         @endforeach
     </div>
     @endif
