@@ -18,7 +18,7 @@ class Branch extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'address', 'city', 'province', 'country', 'country_code', 'amount_appointments_by_time'];
+	protected $fillable = ['name', 'address', 'city', 'province', 'country', 'country_code', 'phone', 'email', 'amount_appointments_by_time'];
 
 	/**
 	 * The working week belonging to the branch.

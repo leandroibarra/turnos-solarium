@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="form-row mb-3">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="city" class="mb-1">{{ __('City') }}</label>
 
                         <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city', $oBranch->city) }}" />
@@ -72,7 +72,7 @@
                         @endif
                     </div>
 
-                    <div class="col">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="province" class="mb-1">{{ __('Province') }}</label>
 
                         <input id="province" type="text" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province', $oBranch->province) }}" />
@@ -83,10 +83,8 @@
                         </div>
                         @endif
                     </div>
-                </div>
 
-                <div class="form-row mb-3">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                    <div class="col">
                         <label for="country" class="mb-1">{{ __('Country') }}</label>
 
                         <input id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country', $oBranch->country) }}" />
@@ -97,8 +95,10 @@
                         </div>
                         @endif
                     </div>
+                </div>
 
-                    <div class="col">
+                <div class="form-row mb-3">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="country_code" class="mb-1">{{ __('Country Code') }}</label>
 
                         <input id="country_code" type="text" class="form-control{{ $errors->has('country_code') ? ' is-invalid' : '' }}" name="country_code" value="{{ old('country_code', $oBranch->country_code) }}" />
@@ -106,6 +106,30 @@
                         @if ($errors->has('country_code'))
                         <div class="invalid-feedback d-block" role="alert">
                             <strong>{{ $errors->first('country_code') }}</strong>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
+                        <label for="phone" class="mb-1">{{ __('Phone') }}</label>
+
+                        <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone', $oBranch->phone) }}" />
+
+                        @if ($errors->has('phone'))
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $errors->first('phone') }}</strong>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="col">
+                        <label for="email" class="mb-1">{{ __('E-Mail Address') }}</label>
+
+                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email', $oBranch->email) }}" />
+
+                        @if ($errors->has('email'))
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
                         </div>
                         @endif
                     </div>

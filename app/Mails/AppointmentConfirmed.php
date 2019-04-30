@@ -44,6 +44,8 @@ class AppointmentConfirmed extends Mailable
 				'sDate' => $this->oContent->sDate,
 				'sTime' => $this->oContent->sTime,
 				'sCity' => $this->oContent->sCity,
+				'sPhone' => $this->oContent->sPhone,
+				'sEmail' => $this->oContent->sEmail,
 				'sAddress' => $this->oContent->sAddress,
 				'sPrices' => $this->oContent->sPrices
 			]);
