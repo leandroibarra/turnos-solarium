@@ -20,6 +20,8 @@ class DefaultBranchSeeder extends Seeder
 			'province' => 'Buenos Aires',
 			'country' => 'Argentina',
 			'country_code' => 'AR',
+			'phone' => '54 1123456789',
+			'email' => 'buenosaires@example.com',
 			'amount_appointments_by_time' => 2,
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')

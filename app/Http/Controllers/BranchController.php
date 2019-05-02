@@ -180,6 +180,8 @@ class BranchController extends Controller
 				'province' => $request->input('province'),
 				'country' => $request->input('country'),
 				'country_code' => $request->input('country_code'),
+				'phone' => $request->input('phone'),
+				'email' => $request->input('email'),
 				'amount_appointments_by_time' => $request->input('amount_appointments_by_time')
 			]);
 
@@ -267,6 +269,8 @@ class BranchController extends Controller
 				'province' => $request->input('province'),
 				'country' => $request->input('country'),
 				'country_code' => $request->input('country_code'),
+				'phone' => $request->input('phone'),
+				'email' => $request->input('email'),
 				'amount_appointments_by_time' => $request->input('amount_appointments_by_time'),
 				'updated_at' => date('Y-m-d H:i:s')
 			]);
@@ -319,11 +323,18 @@ class BranchController extends Controller
 				'country' => 'required',
 				'country_code' => [
 					'required',
-					function ($attribute, $value, $fail) {
+					function ($attribute, $value, $fail) use ($poRequest) {
 						if (strtoupper($value) !== $value)
 							$fail(__('The :attribute field must be uppercase.'));
+						else
+							$poRequest->request->country_code = strtoupper($value);
 					}
 				],
+				'phone' => [
+					'required',
+					'phone:' . $poRequest->input('country_code')
+				],
+				'email' => 'required|email',
 				'from.*' => 'nullable|required_with:is_working_day.*,1|date_format:H:i|before:until.*',
 				'until.*' => 'nullable|required_with:is_working_day.*,1|date_format:H:i|after:from.*'
 			],
@@ -336,6 +347,8 @@ class BranchController extends Controller
 				'province' => strtolower(__('Province')),
 				'country' => strtolower(__('Country')),
 				'country_code' => strtolower(__('Country Code')),
+				'phone' => strtolower(__('Phone Number')),
+				'email' => strtolower(__('E-Mail Address')),
 				'from.*' => strtolower(__('From')),
 				'until.*' => strtolower(__('Until')),
 			]

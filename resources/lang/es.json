@@ -76,6 +76,8 @@
   "City of the branch (For example: Buenos Aires)": "Ciudad de la sucursal (Por ejemplo: Buenos Aires)",
   "Address of the branch (For example: 9 de Julio 1200)": "Dirección de la sucursal (Por ejemplo: 9 de Julio 1200)",
   "Price list belonging to the branch": "Listado de precios pertenecientes a la sucursal",
+  "Phone number of the branch": "Número de teléfono de la sucursal",
+  "E-mail address of the branch": "Email de la sucursal",
   "Parameters were saved successfully": "Los parámetros fueron guardados exitosamente",
   "Save": "Guardar",
   "Reschedule": "Reprogramar",
@@ -198,5 +200,6 @@
   "Working week": "Semana laborable",
   "Please select a branch and try again": "Por favor, seleccione una sucursal y vuelva a intentarlo",
   "Branch is not valid, please select a branch and try again": "La sucursal no es válida. Por favor, seleccione una sucursal y vuelva a intentarlo",
-  "Select": "Seleccionar"
+  "Select": "Seleccionar",
+  "Your appointments": "Tus turnos"
 }

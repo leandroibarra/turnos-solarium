@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Price;
+use App\Models\Appointment;
 
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Date\Date;
 
 use Illuminate\Http\Request;
@@ -25,12 +27,18 @@ class BookController extends Controller
 
 		$oPrice = new Price();
 
+		$oAppointment = new Appointment();
+
 		return view('web.book')->with([
 			'sDecimalPointSeparator' => config('app.decimal_point_separator'),
 			'oBranch' => current($request->attributes)['oBranch'],
 			'aEnabledPrices' => $oPrice->getEnabled(current($request->attributes)['oBranch']->id)->each(function($poPrice) {
 				$poPrice->price = formatPrice($poPrice->price);
-			})
+			}),
+			'aGrantedAppointments' => $oAppointment->getTodayAndNextGrantedByUser(
+				current($request->attributes)['oBranch']->id,
+				Auth::user()->id
+			)
 		]);
 	}
 

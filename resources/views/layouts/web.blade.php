@@ -11,6 +11,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('plugins/bootstrap-4.1.3/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/fontawesome-5.3.1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/web.css') }}" rel="stylesheet" type="text/css" />
 </head>

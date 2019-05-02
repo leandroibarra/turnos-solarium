@@ -68,7 +68,9 @@
                         <span class="font-weight-bold mr-1">@_TIME_@</span>{{ __('Time of the appointment booked (For example: 16:30 pm)') }}<br />
                         <span class="font-weight-bold mr-1">@_CITY_@</span>{{ __('City of the branch (For example: Buenos Aires)') }}<br />
                         <span class="font-weight-bold mr-1">@_ADDRESS_@</span>{{ __('Address of the branch (For example: 9 de Julio 1200)') }}<br />
-                        <span class="font-weight-bold mr-1">@_PRICES_@</span>{{ __('Price list belonging to the branch') }}
+                        <span class="font-weight-bold mr-1">@_PRICES_@</span>{{ __('Price list belonging to the branch') }}<br />
+                        <span class="font-weight-bold mr-1">@_PHONE_@</span>{{ __('Phone number of the branch') }}<br />
+                        <span class="font-weight-bold mr-1">@_EMAIL_@</span>{{ __('E-mail address of the branch') }}
                     </small>
 
                     <textarea id="appointment_confirmed_email_body" name="appointment_confirmed_email_body"
@@ -114,7 +116,7 @@ jQuery(document).ready(function() {
         lang: sLang,
         height: 200,
         hint: {
-            words: ['@_NAME_@', '@_DATE_@', '@_TIME_@', '@_CITY_@', '@_ADDRESS_@', '@_PRICES_@'],
+            words: ['@_NAME_@', '@_DATE_@', '@_TIME_@', '@_CITY_@', '@_ADDRESS_@', '@_PRICES_@', '@_PHONE_@', '@_EMAIL_@'],
             match: /\B(\@\_\w{1,})$/,
             search: function (keyword, callback) {
                 callback($.grep(this.words, function (item) {

@@ -276,6 +276,8 @@
                                          '@_TIME_@',
                                          '@_CITY_@',
                                          '@_ADDRESS_@',
+                                         '@_PHONE_@',
+                                         '@_EMAIL_@',
                                          '@_PRICES_@'
                                      ],
                                      [
@@ -284,6 +286,8 @@
                                          $sTime,
                                          $sCity,
                                          $sAddress,
+                                         $sPhone,
+                                         $sEmail,
                                          $sPrices
                                      ],
                                      $sBody

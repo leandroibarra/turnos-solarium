@@ -154,6 +154,8 @@ class AppointmentController extends Controller
 				Session::get('time'),
 				current($request->attributes)['oBranch']->city,
 				current($request->attributes)['oBranch']->address,
+				current($request->attributes)['oBranch']->phone,
+				current($request->attributes)['oBranch']->email,
 				current($request->attributes)['oBranch']->prices->where('enable', 1)
 			);
 
@@ -203,6 +205,7 @@ class AppointmentController extends Controller
 
 				Appointment::whereId($id)->update([
 					'status' => 'cancelled',
+					'status_changed_by_user_id' => Auth::user()->id,
 					'updated_at' => date('Y-m-d H:i:s')
 				]);
 
@@ -264,6 +267,7 @@ class AppointmentController extends Controller
 			// Update granted appointment with rescheduled status
 			Appointment::whereId($aAppointment['id'])->update([
 				'status' => 'rescheduled',
+				'status_changed_by_user_id' => Auth::user()->id,
 				'updated_at' => date('Y-m-d H:i:s')
 			]);
 
@@ -290,6 +294,8 @@ class AppointmentController extends Controller
 				$request->input('time'),
 				current($request->attributes)['oBranch']->city,
 				current($request->attributes)['oBranch']->address,
+				current($request->attributes)['oBranch']->phone,
+				current($request->attributes)['oBranch']->email,
 				current($request->attributes)['oBranch']->prices->where('enable', 1)
 			);
 
@@ -359,9 +365,11 @@ class AppointmentController extends Controller
 	 * @param string $psTime
 	 * @param string $psCity
 	 * @param string $psAddress
+	 * @param string $psPhone
+	 * @param string $psEmail
 	 * @param array $paPrices OPTIONAL
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress, $paPrices=[])
+	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress, $psPhone, $psEmail, $paPrices=[])
 	{
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
@@ -372,6 +380,8 @@ class AppointmentController extends Controller
 		$oContent->sTime = $oDateTime->format('H:i a');
 		$oContent->sCity = $psCity;
 		$oContent->sAddress = $psAddress;
+		$oContent->sPhone = $psPhone;
+		$oContent->sEmail = $psEmail;
 		$oContent->sPrices = $this->formatPricesToSendEmail($paPrices);
 
 		// Send confirmation email
