@@ -205,6 +205,7 @@ class AppointmentController extends Controller
 
 				Appointment::whereId($id)->update([
 					'status' => 'cancelled',
+					'status_changed_by_user_id' => Auth::user()->id,
 					'updated_at' => date('Y-m-d H:i:s')
 				]);
 
@@ -266,6 +267,7 @@ class AppointmentController extends Controller
 			// Update granted appointment with rescheduled status
 			Appointment::whereId($aAppointment['id'])->update([
 				'status' => 'rescheduled',
+				'status_changed_by_user_id' => Auth::user()->id,
 				'updated_at' => date('Y-m-d H:i:s')
 			]);
 

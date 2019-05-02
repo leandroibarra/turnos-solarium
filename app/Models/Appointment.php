@@ -48,7 +48,8 @@ class Appointment extends Model
 	 * @param string $psDate
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getGrantedByDate($piBranchId, $psDate) {
+	public function getGrantedByDate($piBranchId, $psDate)
+	{
 		return DB::table($this->table)
 			->selectRaw("COUNT(*) AS amount, TIME_FORMAT(time, '%H:%i') AS time")
 			->where('branch_id', '=', $piBranchId)
@@ -66,7 +67,8 @@ class Appointment extends Model
 	 * @param string $psDateTo
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getGrantedBetweenDates($piBranchId, $psDateFrom, $psDateTo) {
+	public function getGrantedBetweenDates($piBranchId, $psDateFrom, $psDateTo)
+	{
 		return $this
 			->where('branch_id', '=', $piBranchId)
 			->where('date', '>=', $psDateFrom)
@@ -81,9 +83,29 @@ class Appointment extends Model
 	 * @param integer $piBranchId
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getTodayAndNextGranted($piBranchId) {
+	public function getTodayAndNextGranted($piBranchId)
+	{
 		return $this
 			->where('branch_id', '=', $piBranchId)
+			->where('date', '>=', date('Y-m-d'))
+			->where('status', '=', 'granted')
+			->orderBy('date', 'ASC')
+			->orderBy('time', 'ASC')
+			->get();
+	}
+
+	/**
+	 * Retrieve granted appointments belonging to branch and user for today and the future.
+	 *
+	 * @param integer $piBranchId
+	 * @param integer $piUserId
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getTodayAndNextGrantedByUser($piBranchId, $piUserId)
+	{
+		return $this
+			->where('branch_id', '=', $piBranchId)
+			->where('user_id', '=', $piUserId)
 			->where('date', '>=', date('Y-m-d'))
 			->where('status', '=', 'granted')
 			->orderBy('date', 'ASC')

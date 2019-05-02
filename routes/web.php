@@ -72,6 +72,10 @@ Route::group(
 		Route::post('/', 'AppointmentController@store')
 			->middleware(['check-appointment'])
 			->name('appointment.store');
+
+		Route::put('/{id}/cancel', 'AppointmentController@cancel')
+			->middleware(['check-appointment-cancellation'])
+			->name('appointment.cancel');
 	}
 );
 
