@@ -1,7 +1,7 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
-## [v4.0.1](https://github.com/leandroibarra/turnos-solarium/tree/v4.0.1) (2019-05-02)
+## [v4.1.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.1.0) (2019-05-02)
 **Agregado**
 - Datos de contacto (email y teléfono) a sucursales y etiquetas para su uso en email de confirmación de turno.
 - Listado de turnos reservados por un usuario en la sucursal seleccionada debajo de calendario con posibilidad de cancelación.
