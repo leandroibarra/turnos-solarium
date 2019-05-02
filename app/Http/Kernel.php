@@ -75,6 +75,7 @@ class Kernel extends HttpKernel
 		'check-https' => \App\Http\Middleware\CheckHttps::class,
 		'check-branch-select' => \App\Http\Middleware\CheckBranchSelect::class,
 		'check-branch' => \App\Http\Middleware\CheckBranch::class,
+		'check-appointment-cancellation' => \App\Http\Middleware\CheckAppointmentCancellation::class,
     ];
 
     /**

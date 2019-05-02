@@ -51,6 +51,56 @@
             </div>
         </div>
     </div>
+
+    @if (!$aGrantedAppointments->isEmpty())
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mt-4 mb-0">{{ __('Your appointments') }}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach ($aGrantedAppointments as $iKey=>$aAppointment)
+            @php
+            $sDateHeader = Date::createFromFormat('Y-m-d', $aAppointment->date)->format(__('l j \\of F'));
+            $sTimeBody = Date::createFromFormat('H:i:s', $aAppointment->time)->format('H:i a');
+            @endphp
+        <div class="col-12 col-lg-3 col-md-4 mt-3" data-appointment-id="{{ $aAppointment->id }}">
+            <div class="card-deck">
+                <div class="card box-shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col text-center align-self-center">
+                                <i class="far fa-calendar text-muted mr-2"></i>{{ $sDateHeader }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center align-self-center mt-2">
+                                <i class="far fa-clock text-muted mr-2"></i>{{ $sTimeBody }}
+                            </div>
+                        </div>
+                        @if ($aAppointment->date>date('Y-m-d') || ($aAppointment->date==date('Y-m-d') && $aAppointment->time>date('H:i:s')))
+                        <div class="row">
+                            <div class="col text-center align-self-center mt-2">
+                                <button class="btn btn-sm btn-block btn-gold" title="{{ __('Cancel') }}"
+                                        data-appointment-id="{{ $aAppointment->id }}"
+                                        data-date-header="{{ $sDateHeader }}"
+                                        data-time-body="{{ $sTimeBody }}"
+                                        data-target="#cancelModal"
+                                        data-toggle="modal"
+                                >
+                                    {{ __('Cancel') }}
+                                </button>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
 </div>
 
 <div class="spinner-container d-none">
@@ -59,7 +109,7 @@
     </svg>
 </div>
 
-<!-- Modal -->
+<!-- Modals -->
 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -73,6 +123,24 @@
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-grey" data-dismiss="modal">{{ __('Cancel') }}</button>
                 <button type="button" class="btn btn-gold" id="readyAppointment" disabled>{{ __('Ready') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{ __('Appointment cancellation') }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('Close') }}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center"></div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-grey" data-dismiss="modal">{{ __('No') }}</button>
+                <button type="button" class="btn btn-gold" id="readyCancel">{{ __('Yes') }}</button>
             </div>
         </div>
     </div>
@@ -201,6 +269,79 @@ jQuery(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')
                     window.location.href = '{{ route('login') }}';
+            }
+        });
+    });
+
+    // Open cancel modal
+    jQuery('#cancelModal').on('show.bs.modal', function(event) {
+        var oTarget = jQuery(event.relatedTarget);
+        var oModal = jQuery(this);
+
+        var sContent = '' +
+            '{{ __('Are you sure you want to cancel the scheduled appointment to day') }} <strong>' + oTarget.data('date-header') + '</strong> {{ __('to') }} <strong>' + oTarget.data('time-body') + '</strong>?' +
+            '<form method="POST">' +
+            '<input type="hidden" name="appointment-id" id="appointment-id" value="'+oTarget.data('appointment-id')+'" />' +
+            '<input type="hidden" name="date-header" id="date-header" value="'+oTarget.data('date-header')+'" />' +
+            '</form>';
+
+        oModal.find('.modal-body').html(sContent);
+    });
+
+    // Send request and close cancel modal
+    jQuery('#readyCancel').on('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var oModal = jQuery(this);
+
+        var iAppointmentId = jQuery('#appointment-id').val();
+
+        // Close modal
+        jQuery('#cancelModal').modal('hide');
+
+        // Ajax request time
+        var iRequest = new Date().getTime();
+
+        // Show spinner
+        oModal.find('.modal-body').html(
+            '<div class="my-2 py-4">\n' +
+            '    <svg class="spinner" viewBox="0 0 50 50">\n' +
+            '        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>\n' +
+            '    </svg>\n' +
+            '</div>'
+        );
+
+        // Make request
+        jQuery.ajax({
+            type: 'PUT',
+            url: '/appointments/' + iAppointmentId + '/cancel',
+            data: {
+                _token: '{{ csrf_token() }}',
+                appointment_id: iAppointmentId
+            },
+            success: function (result) {
+                // Remove appointment card wrapper
+                jQuery('button[data-appointment-id=' + iAppointmentId + ']').closest('.card-deck').parent().remove()
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 401 && jqXHR.responseJSON.message == 'Unauthenticated.')
+                    window.location.href = '{{ route('admin.login') }}';
+
+                if (jqXHR.status == 403)
+                    window.location.reload();
+            },
+            complete: function(jqXHR, textStatus) {
+                // Ajax complete time
+                var iComplete = new Date().getTime();
+
+                // Calculate time remaining to hide spinner
+                var iRemainig = (iComplete-iRequest < 600) ? 600-(iComplete-iRequest) : 0;
+
+                // Hide loading
+                setTimeout(function() {
+                    jQuery('.spinner-container').addClass('d-none');
+                }, iRemainig);
             }
         });
     });
