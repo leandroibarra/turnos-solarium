@@ -3,12 +3,6 @@
 @section('content')
 <div class="container">
     <div class="row mt-3">
-        <div class="col-12">
-            @include('flash::message')
-        </div>
-    </div>
-
-    <div class="row">
         @foreach (array_chunk($aEnabledBranches->toArray(), 4, true) as $aBranches)
             @php
             $sClassFirst = $sClassLast = '';
