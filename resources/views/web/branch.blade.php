@@ -5,8 +5,6 @@
     <div class="row">
         <div class="col-12">
             <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Branches') }}</h2>
-
-            @include('flash::message')
         </div>
     </div>
 

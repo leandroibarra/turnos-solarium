@@ -5,8 +5,6 @@
     <div class="row">
         <div class="col-12">
             <h2 class="text-center text-uppercase mt-0 mb-3">{{ __('Book online') }}</h2>
-
-            @include('flash::message')
         </div>
     </div>
 
@@ -340,14 +338,17 @@ jQuery(document).ready(function() {
             },
             success: function (result) {
                 // Remove appointment card wrapper
-                jQuery('button[data-appointment-id=' + iAppointmentId + ']').closest('.card-deck').parent().remove()
+                jQuery('button[data-appointment-id=' + iAppointmentId + ']').closest('.card-deck').parent().remove();
+
+                // Show success message
+                showNotify(result.message, result.status);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status == 401 && jqXHR.responseJSON.message == 'Unauthenticated.')
                     window.location.href = '{{ route('admin.login') }}';
 
-                if (jqXHR.status == 403)
-                    window.location.reload();
+                if (jqXHR.status == 404)
+                    showNotify(jqXHR.responseJSON.message, 'danger');
             },
             complete: function(jqXHR, textStatus) {
                 // Ajax complete time

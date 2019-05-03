@@ -4,12 +4,6 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-12">
-            @include('flash::message')
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
             <form method="POST" action="{{ route('site-parameters.update', ['id' => $aSiteParameter['id']]) }}" id="siteParametersForm">
                 @method('PUT')
 

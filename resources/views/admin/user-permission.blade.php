@@ -4,12 +4,6 @@
 <div class="container">
     <div class="row mt-3">
         <div class="col-12">
-            @include('flash::message')
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
             <h4 class="mb-3">
                 {{ __('Permissions').' '.__('of').' '.$aUser->email }}
             </h4>

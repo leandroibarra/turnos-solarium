@@ -4,19 +4,7 @@
 <div class="container">
     <div class="row mt-3">
         <div class="col-12">
-            @include('flash::message')
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <h4 class="mb-3 overflow-hidden">
-                {{ __('Appointments') }}
-                <!--a href="javascript:void(0);" class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
-                    {{ __('Create') }}
-                </a-->
-            </h4>
+            <h4 class="mb-3 overflow-hidden">{{ __('Appointments') }}</h4>
         </div>
     </div>
 
@@ -171,11 +159,8 @@ jQuery(document).ready(function() {
                 appointment_id: iAppointmentId
             },
             success: function (result) {
-                var sClass = 'danger';
 
                 if (result.status == 'success') {
-                    sClass = 'success';
-
                     // Remove element from list
                     jQuery('button[data-appointment-id=' + iAppointmentId + ']').closest('li.list-group-item:not(.list-group-item-secondary)').remove();
 
@@ -184,16 +169,8 @@ jQuery(document).ready(function() {
                         jQuery('li:contains(' + sDateHeader + ')').remove();
                 }
 
-                // Add message from result process
-                jQuery('<div />', {
-                    'class': 'alert alert-dismissible show alert-' + sClass,
-                    'role': 'alert'
-                }).html(
-                    result.message +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">&times;</span>' +
-                    '</button>'
-                ).prependTo(jQuery('.appointments-container'));
+                // Show message from result process
+                showNotify(result.message, result.status);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status == 401 && jqXHR.responseJSON.message == 'Unauthenticated.')
