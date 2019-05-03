@@ -22,8 +22,8 @@ class CheckAppointmentCancellation
 			'id' => $request->route('id')
 		])->get();
 
-		if (!(bool) $oAppointment)
-			abort(403);
+		if ($oAppointment->isEmpty())
+			abort(404, __('Parameters are not valid'));
 
         return $next($request);
     }

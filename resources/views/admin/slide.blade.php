@@ -4,12 +4,6 @@
 <div class="container">
     <div class="row mt-3">
         <div class="col-12">
-            @include('flash::message')
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
             <h4 class="mb-3 overflow-hidden">
                 {{ __('Slides') }}
 
@@ -160,25 +154,13 @@ jQuery(document).ready(function() {
                 slide_id: iSlideId
             },
             success: function(result) {
-                var sClass = 'danger';
-
                 if (result.status == 'success') {
-                    sClass = 'success';
-
                     // Remove element from list
                     jQuery('button[data-slide-id=' + iSlideId + ']').closest('li.list-group-item').remove();
                 }
 
-                // Add message from result process
-                jQuery('<div />', {
-                    'class': 'alert alert-dismissible show alert-' + sClass,
-                    'role': 'alert'
-                }).html(
-                    result.message +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '   <span aria-hidden="true">&times;</span>' +
-                    '</button>'
-                ).prependTo(jQuery('.slides-container'));
+                // Show message from result process
+                showNotify(result.message, result.status);
 
                 // Update index and order for each slide
                 updateIndexAndOrder();

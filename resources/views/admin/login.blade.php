@@ -6,8 +6,6 @@
         <div class="col-12 col-sm-10 col-md-8">
             <h2 class="text-center text-uppercase mb-3">{{ __('Administration') }}</h2>
 
-            @include('flash::message')
-
             <form method="POST" action="{{ route('admin.create') }}" id="loginForm" class="loginForm">
                 @csrf
 
