@@ -30,10 +30,11 @@
     <script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
-    @if (request()->session()->has('flash_notification'))
+    @if (session()->has('flash_notification'))
         @foreach (session('flash_notification', collect())->toArray() as $aMessage)
         showNotify('{{ $aMessage['message'] }}', '{{ $aMessage['level'] }}', '{{ $aMessage['important'] ? false : true }}');
         @endforeach
+        {{ session()->forget('flash_notification') }}
     @endif
     </script>
 
