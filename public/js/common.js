@@ -7,6 +7,7 @@
  */
 function showNotify(psMessage, psType='info', pbAllowDismiss=false) {
     var sType = '';
+    var bAllowDismiss = (pbAllowDismiss.toString() == 'true') ? true : false;
 
     switch (psType.toLowerCase()) {
         case 'primary':
@@ -30,7 +31,7 @@ function showNotify(psMessage, psType='info', pbAllowDismiss=false) {
         },
         {
             type: sType,
-            allow_dismiss: pbAllowDismiss,
+            allow_dismiss: bAllowDismiss,
             mouse_over: 'pause',
             placement: {
                 from: 'top',
