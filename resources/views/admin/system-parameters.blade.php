@@ -53,9 +53,53 @@
                     </div>
                     @endif
                 </div>
+
+                @php
+                $aEmails = [
+                    'confirmed' => [
+                        'subject' => [
+                            'key' => 'appointment_confirmed_email_subject',
+                            'label' => 'Confirmation email subject',
+                            'small' => 'Email subject that will be sent after booking an appointment'
+                        ],
+                        'body' => [
+                            'key' => 'appointment_confirmed_email_body',
+                            'label' => 'Confirmation email body',
+                            'small' => 'Email body that will be sent after booking an appointment in which you can use the following tags that will be replaced with corresponding data'
+                        ]
+                    ],
+                    'cancelled' => [
+                        'subject' => [
+                            'key' => 'appointment_cancelled_email_subject',
+                            'label' => 'Cancellation email subject',
+                            'small' => 'Email subject that will be sent after an appointment cancellation from administration section'
+                        ],
+                        'body' => [
+                            'key' => 'appointment_cancelled_email_body',
+                            'label' => 'Cancellation email body',
+                            'small' => 'Email body that will be sent after an appointment cancellation from administration section in which you can use the following tags that will be replaced with corresponding data'
+                        ]
+                    ]
+                ];
+                @endphp
+                @foreach ($aEmails as $sKey=>$aEmail)
                 <div class="form-group">
-                    <label for="appointment_confirmed_email_body" class="mb-0">{{ __('Confirmation email body') }}</label>
-                    <small class="form-text text-muted mt-0 mb-1">{{ __('Email body that will be sent after booking an appointment in which you can use the following tags that will be replaced with corresponding data') }}:</small>
+                    <label for="{{ $aEmail['subject']['key'] }}" class="mb-0">{{ __($aEmail['subject']['label']) }}</label>
+                    <small class="form-text text-muted mt-0 mb-2">{{ __($aEmail['subject']['small']) }}</small>
+
+                    <input id="{{ $aEmail['subject']['key'] }}" name="{{ $aEmail['subject']['key'] }}" type="text"
+                           class="form-control{{ $errors->has($aEmail['subject']['key']) ? ' is-invalid' : '' }}"
+                           value="{{ old($aEmail['subject']['key'], $aSystemParameter[$aEmail['subject']['key']]) }}" />
+
+                    @if ($errors->has($aEmail['subject']['key']))
+                    <div class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $errors->first($aEmail['subject']['key']) }}</strong>
+                    </div>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="{{ $aEmail['body']['key'] }}" class="mb-0">{{ __($aEmail['body']['label']) }}</label>
+                    <small class="form-text text-muted mt-0 mb-1">{{ __($aEmail['body']['small']) }}:</small>
                     <small class="form-text text-muted mt-0 mb-2">
                         <span class="font-weight-bold mr-1">@_NAME_@</span>{{ __('Name of the user who booked the appointment') }}<br />
                         <span class="font-weight-bold mr-1">@_DATE_@</span>{{ __('Date of the appointment booked (For example: 21 of January)') }}<br />
@@ -67,17 +111,18 @@
                         <span class="font-weight-bold mr-1">@_EMAIL_@</span>{{ __('E-mail address of the branch') }}
                     </small>
 
-                    <textarea id="appointment_confirmed_email_body" name="appointment_confirmed_email_body"
-                              class="form-control{{ $errors->has('appointment_confirmed_email_body') ? ' is-invalid' : '' }} no-resize">
-                        {{ html_entity_decode(old('appointment_confirmed_email_body', $aSystemParameter['appointment_confirmed_email_body'])) }}
+                    <textarea id="{{ $aEmail['body']['key'] }}" name="{{ $aEmail['body']['key'] }}"
+                              class="form-control{{ $errors->has($aEmail['body']['key']) ? ' is-invalid' : '' }} no-resize">
+                        {{ html_entity_decode(old($aEmail['body']['key'], $aSystemParameter[$aEmail['body']['key']])) }}
                     </textarea>
 
-                    @if ($errors->has('appointment_confirmed_email_body'))
-                    <div class="invalid-feedback appointment_confirmed_email_body d-block" role="alert">
-                        <strong>{{ $errors->first('appointment_confirmed_email_body') }}</strong>
+                    @if ($errors->has($aEmail['body']['key']))
+                    <div class="invalid-feedback {{ $aEmail['body']['key'] }} d-block" role="alert">
+                        <strong>{{ $errors->first($aEmail['body']['key']) }}</strong>
                     </div>
                     @endif
                 </div>
+                @endforeach
 
                 <div class="form-group my-3 text-center">
                     <button type="submit" class="btn btn-block btn-primary shadow-none">{{ __('Save') }}</button>
@@ -100,8 +145,8 @@ jQuery(document).ready(function() {
 
     var sLang = '{{ $aLang[app()->getLocale()] }}';
 
-    // Summernote configs
-    jQuery('#appointment_confirmed_email_body').summernote({
+    // Summernote elements configurations
+    jQuery('{{ implode(', ', ['#'.$aEmails['confirmed']['body']['key'], '#'.$aEmails['cancelled']['body']['key']]) }}').summernote({
         toolbar: [
             ['style', ['bold', 'italic', 'underline']],
             ['fontsize', ['fontsize']],
@@ -122,8 +167,10 @@ jQuery(document).ready(function() {
 
     // Clean on submit form
     jQuery('#systemParametersForm').on('submit', function() {
-        if (jQuery(jQuery('#appointment_confirmed_email_body').summernote('code')).text().replace(/\s+/g, '').length == 0)
-            jQuery('#appointment_confirmed_email_body').val('');
+        @foreach (['#'.$aEmails['confirmed']['body']['key'], '#'.$aEmails['cancelled']['body']['key']] as $sBodyKey)
+        if (jQuery(jQuery('{{ $sBodyKey  }}').summernote('code')).text().replace(/\s+/g, '').length == 0)
+            jQuery('{{ $sBodyKey }}').val('');
+        @endforeach
 
         // Prevent multiple clicks
         jQuery('button[type=submit]', this)
