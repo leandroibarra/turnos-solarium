@@ -39,7 +39,9 @@ class SystemParameterController extends Controller
 					'in:15,30,60,90,120'
 				],
 				'appointment_confirmed_email_subject' => 'required',
-				'appointment_confirmed_email_body' => 'required'
+				'appointment_confirmed_email_body' => 'required',
+				'appointment_cancelled_email_subject' => 'required',
+				'appointment_cancelled_email_body' => 'required'
 			],
 			[],
 			[
@@ -53,7 +55,9 @@ class SystemParameterController extends Controller
 		SystemParameter::whereId($id)->update([
 			'appointment_until_days' => $request->input('appointment_until_days'),
 			'appointment_confirmed_email_subject' => strip_tags($request->input('appointment_confirmed_email_subject')),
-			'appointment_confirmed_email_body' => htmlentities($request->input('appointment_confirmed_email_body'))
+			'appointment_confirmed_email_body' => htmlentities($request->input('appointment_confirmed_email_body')),
+			'appointment_cancelled_email_subject' => strip_tags($request->input('appointment_cancelled_email_subject')),
+			'appointment_cancelled_email_body' => htmlentities($request->input('appointment_cancelled_email_body'))
 		]);
 
 		Flash()->success(__('Parameters were saved successfully'))->important();

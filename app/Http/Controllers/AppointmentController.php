@@ -7,6 +7,7 @@ use App\Models\Exception;
 use App\Models\SystemParameter;
 use App\Models\User;
 use App\Mails\AppointmentConfirmed;
+use App\Mails\AppointmentCancelled;
 
 use Jenssegers\Date\Date;
 
@@ -147,7 +148,7 @@ class AppointmentController extends Controller
 			$oAppointment->save();
 
 			// Send confirmation email to the user
-			$this->sendConfirmationEmail(
+			$this->sendEmailToUser(
 				Auth::user()->email,
 				$request->input('name'),
 				Session::get('date'),
@@ -156,7 +157,8 @@ class AppointmentController extends Controller
 				current($request->attributes)['oBranch']->address,
 				current($request->attributes)['oBranch']->phone,
 				current($request->attributes)['oBranch']->email,
-				current($request->attributes)['oBranch']->prices->where('enable', 1)
+				current($request->attributes)['oBranch']->prices->where('enable', 1),
+				'confirm'
 			);
 
 			Flash()->success(__('Appointment has been granted successfully. We sent you an email with appointment data.'))->important();
@@ -201,13 +203,28 @@ class AppointmentController extends Controller
 		if ($request->ajax()) {
 			try {
 				// Validate if appointment is valid and has still granted status
-				$this->validateAppointmentIdAndStatus(current($request->attributes)['oBranch']->id, $id, 'granted', true);
+				$aAppointment = $this->validateAppointmentIdAndStatus(current($request->attributes)['oBranch']->id, $id, 'granted', true);
 
 				Appointment::whereId($id)->update([
 					'status' => 'cancelled',
 					'status_changed_by_user_id' => Auth::user()->id,
 					'updated_at' => date('Y-m-d H:i:s')
 				]);
+
+				// Send cancellation email to the user, only when action is executed from administration section
+				if ((bool) (explode('/', trim($request->getPathInfo(), '/'))[0] == 'admin'))
+					$this->sendEmailToUser(
+						User::find($aAppointment['user_id'])->email,
+						$aAppointment['name'],
+						$aAppointment['date'],
+						$aAppointment['time'],
+						current($request->attributes)['oBranch']->city,
+						current($request->attributes)['oBranch']->address,
+						current($request->attributes)['oBranch']->phone,
+						current($request->attributes)['oBranch']->email,
+						current($request->attributes)['oBranch']->prices->where('enable', 1),
+						'cancel'
+					);
 
 				$aResponse = [
 					'status' => 'success',
@@ -287,7 +304,7 @@ class AppointmentController extends Controller
 			$oAppointment->save();
 
 			// Send confirmation email to the user
-			$this->sendConfirmationEmail(
+			$this->sendEmailToUser(
 				User::find($aAppointment['user_id'])->email,
 				$aAppointment['name'],
 				$request->input('date'),
@@ -296,7 +313,8 @@ class AppointmentController extends Controller
 				current($request->attributes)['oBranch']->address,
 				current($request->attributes)['oBranch']->phone,
 				current($request->attributes)['oBranch']->email,
-				current($request->attributes)['oBranch']->prices->where('enable', 1)
+				current($request->attributes)['oBranch']->prices->where('enable', 1),
+				'confirm'
 			);
 
 			Flash()->success(__('Appointment has been rescheduled successfully. An email was sent to the user with appointment data.'))->important();
@@ -357,7 +375,7 @@ class AppointmentController extends Controller
 	}
 
 	/**
-	 * Send confirmation email to the user with the given information.
+	 * Send correspond email to the user with the given information.
 	 *
 	 * @param string $psTo
 	 * @param string $psName
@@ -368,9 +386,9 @@ class AppointmentController extends Controller
 	 * @param string $psPhone
 	 * @param string $psEmail
 	 * @param array $paPrices OPTIONAL
+	 * @param string $psAction OPTIONAL
 	 */
-	public function sendConfirmationEmail($psTo, $psName, $psDate, $psTime, $psCity, $psAddress, $psPhone, $psEmail, $paPrices=[])
-	{
+	public function sendEmailToUser($psTo, $psName, $psDate, $psTime, $psCity, $psAddress, $psPhone, $psEmail, $paPrices=[], $psAction='confirm') {
 		$oDateTime = new Date("{$psDate} {$psTime}");
 
 		$oContent = new \stdClass();
@@ -384,8 +402,19 @@ class AppointmentController extends Controller
 		$oContent->sEmail = $psEmail;
 		$oContent->sPrices = $this->formatPricesToSendEmail($paPrices);
 
-		// Send confirmation email
-		Mail::to($psTo)->send(new AppointmentConfirmed($oContent));
+		switch ($psAction) {
+			case 'confirm':
+			default:
+				// Send confirmation email
+				Mail::to($psTo)->send(new AppointmentConfirmed($oContent));
+
+				break;
+			case 'cancel':
+				// Send cancellation email
+				Mail::to($psTo)->send(new AppointmentCancelled($oContent));
+
+				break;
+		}
 	}
 
 	/**
