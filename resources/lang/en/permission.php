@@ -8,6 +8,7 @@ return [
 	'module.admin.price' => 'Prices',
 	'module.admin.slide' => 'Slides',
 	'module.admin.branch' => 'Branches',
+	'module.admin.branch-working-week' => 'Branches Schedules',
 	'permission.admin.system-parameters.edit' => 'List system parameters.',
 	'permission.admin.system-parameters.update' => 'Save edited system parameters.',
 	'permission.admin.appointment.list' => 'List granted appointments.',
@@ -44,5 +45,7 @@ return [
 	'permission.admin.branch.store' => 'Save created branches.',
 	'permission.admin.branch.edit' => 'Edit branches.',
 	'permission.admin.branch.update' => 'Save edited branches.',
-	'permission.admin.branch.delete' => 'Delete branches.'
+	'permission.admin.branch.delete' => 'Delete branches.',
+	'permission.admin.branch-working-week.edit' => 'Edit branches schedules.',
+	'permission.admin.branch-working-week.update' => 'Save edited branches schedules.'
 ];

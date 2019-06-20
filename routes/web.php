@@ -258,6 +258,28 @@ Route::group(
 
 		Route::group(
 			[
+				'prefix' => '/schedule/{id}',
+				'middleware' => [
+					'role:Sysadmin|Admin|Employee',
+					'check-branch'
+				],
+				'where' => [
+					'id' => '^[0-9][0-9]*$'
+				]
+			],
+			function() {
+				Route::get('/edit', 'BranchWorkingWeekController@edit')
+					->middleware(['permission:admin.branch-working-week.edit'])
+					->name('schedule.edit');
+
+				Route::put('/', 'BranchWorkingWeekController@update')
+					->middleware(['permission:admin.branch-working-week.update'])
+					->name('schedule.update');
+			}
+		);
+
+		Route::group(
+			[
 				'prefix' => '/users',
 				'middleware' => [
 					'role:Sysadmin'
