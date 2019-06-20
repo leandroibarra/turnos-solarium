@@ -247,7 +247,7 @@ class BranchController extends Controller
 	{
 		$oBranch = Branch::find($id);
 
-		// Validate slide status
+		// Validate branch status
 		if (!(bool) $oBranch || !(bool) $oBranch->enable) {
 			Flash()->error(__('The branch is not valid or has been deleted.'))->important();
 

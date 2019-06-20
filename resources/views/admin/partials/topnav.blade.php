@@ -64,7 +64,7 @@ $sRouteName = request()->route()->getName();
 
         <div class="collapse navbar-collapse navMenu">
             @if (isset(current(request()->attributes)['oBranch']))
-                @if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list']))
+                @if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list', 'schedule.edit']))
                 <div class="dropdown mt-3 mb-2 my-lg-0">
                     <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ current(request()->attributes)['oBranch']->name }}</button>
                     <div class="dropdown-menu change-branch-menu">
@@ -85,29 +85,44 @@ $sRouteName = request()->route()->getName();
             @endif
 
             <ul class="navbar-nav mx-auto">
-                @can ('admin.appointment.list')
-                <li class="nav-item {{ (in_array($sRouteName, ['appointment.list', 'appointment.reschedule'])) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('appointment.list') }}">{{ __('Appointments') }}</a>
-                </li>
-                @endcan
-
-                @can ('admin.exception.list')
-                <li class="nav-item {{ (in_array($sRouteName, ['exception.list', 'exception.create', 'exception.edit'])) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('exception.list') }}">{{ __('Exceptions') }}</a>
-                </li>
-                @endcan
-
-                @can ('admin.price.list')
-                <li class="nav-item {{ (in_array($sRouteName, ['price.list', 'price.create', 'price.edit'])) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('price.list') }}">{{ __('Prices') }}</a>
-                </li>
-                @endcan
+				@foreach ([
+				    [
+						'aPermission' => ['admin.appointment.list'],
+						'aActiveRoutes' => ['appointment.list', 'appointment.reschedule'],
+						'sHref' => route('appointment.list'),
+						'sLabel' => 'Appointments'
+					],
+					[
+						'aPermission' => ['admin.exception.list'],
+						'aActiveRoutes' => ['exception.list', 'exception.create', 'exception.edit'],
+						'sHref' => route('exception.list'),
+						'sLabel' => 'Exceptions'
+					],
+					[
+						'aPermission' => ['admin.price.list'],
+						'aActiveRoutes' => ['price.list', 'price.create', 'price.edit'],
+						'sHref' => route('price.list'),
+						'sLabel' => 'Prices'
+					],
+					[
+						'aPermission' => ['admin.branch-working-week.edit', 'admin.branch-working-week.update'],
+						'aActiveRoutes' => ['schedule.edit'],
+						'sHref' => route('schedule.edit', ['id' => (isset(current(request()->attributes)['oBranch'])) ? current(request()->attributes)['oBranch'] : 0]),
+						'sLabel' => 'Schedules'
+					]
+				] as $aNavLink)
+                    @can($aNavLink['aPermission'])
+                    <li class="nav-item {{ (in_array($sRouteName, $aNavLink['aActiveRoutes'])) ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ $aNavLink['sHref'] }}">{{ __($aNavLink['sLabel']) }}</a>
+                    </li>
+                    @endcan
+				@endforeach
             </ul>
         </div>
     </div>
 </nav>
 
-@if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list']))
+@if (Auth::user()->hasRole(['Admin', 'Sysadmin']) && in_array($sRouteName, ['appointment.list', 'exception.list', 'price.list', 'schedule.edit']))
     @push('page-scripts')
     <script type="text/javascript">
         // Prevent multiple clicks
@@ -126,7 +141,11 @@ $sRouteName = request()->route()->getName();
                     branch_id: jQuery(this).data('branch-id')
                 },
                 success: function(data) {
+					@if (request()->route()->getName() == 'schedule.edit')
+                    location.replace('{{ route('schedule.edit', ['id' => Session::get('branch_id')]) }}');
+                	@else
                     location.reload();
+                    @endif
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')

@@ -8,6 +8,7 @@ return [
 	'module.admin.price' => 'Precios',
 	'module.admin.slide' => 'Slides',
 	'module.admin.branch' => 'Sucursales',
+	'module.admin.branch-working-week' => 'Horarios de Sucursales',
 	'permission.admin.system-parameters.edit' => 'Listar parámetros del sistema.',
 	'permission.admin.system-parameters.update' => 'Guardar parámetros del sistema editados.',
 	'permission.admin.appointment.list' => 'Listar turnos reservados.',
@@ -44,5 +45,7 @@ return [
 	'permission.admin.branch.store' => 'Guardar sucursales creadas.',
 	'permission.admin.branch.edit' => 'Editar sucursales.',
 	'permission.admin.branch.update' => 'Guardar sucursales editadas.',
-	'permission.admin.branch.delete' => 'Borrar sucursales.'
+	'permission.admin.branch.delete' => 'Borrar sucursales.',
+	'permission.admin.branch-working-week.edit' => 'Editar horarios de sucursales.',
+	'permission.admin.branch-working-week.update' => 'Guardar horarios editados de sucursales.'
 ];
