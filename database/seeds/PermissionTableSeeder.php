@@ -49,7 +49,9 @@ class PermissionTableSeeder extends Seeder
 			'admin.branch.store',
 			'admin.branch.edit',
 			'admin.branch.update',
-			'admin.branch.delete'
+			'admin.branch.delete',
+			'admin.branch-working-week.edit',
+			'admin.branch-working-week.update'
 		];
 
     	foreach ($aPermissions as $sPermission)

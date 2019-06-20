@@ -205,5 +205,8 @@
   "Please select a branch and try again": "Por favor, seleccione una sucursal y vuelva a intentarlo",
   "Branch is not valid, please select a branch and try again": "La sucursal no es válida. Por favor, seleccione una sucursal y vuelva a intentarlo",
   "Select": "Seleccionar",
-  "Your appointments": "Tus turnos"
+  "Your appointments": "Tus turnos",
+  "Schedules": "Horarios",
+  "Schedule edition": "Edición de horarios",
+  "The branch schedule has been edited successfully.": "Los horarios de la sucursal han sido editados exitosamente."
 }
