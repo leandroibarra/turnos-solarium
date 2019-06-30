@@ -27,7 +27,8 @@
                         (
                             ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
-                        )
+                        ) &&
+                        $oRequestDate->format('H:i:s') <= $sUntil
                     )
                         @php
                         $iCount++;
@@ -80,7 +81,8 @@
                         (
                             ($oToday->format('Y-m-d') < $oRequestDate->format('Y-m-d')) ||
                             ($oToday->format('Y-m-d')==$oRequestDate->format('Y-m-d') && $oToday->format('H:i')<$oRequestDate->format('H:i'))
-                        )
+                        ) &&
+                        $oRequestDate->format('H:i:s') <= $sUntil
                     )
                         @php
                         $iCount++;
