@@ -258,13 +258,10 @@ Route::group(
 
 		Route::group(
 			[
-				'prefix' => '/schedule/{id}',
+				'prefix' => '/schedule',
 				'middleware' => [
 					'role:Sysadmin|Admin|Employee',
 					'check-branch'
-				],
-				'where' => [
-					'id' => '^[0-9][0-9]*$'
 				]
 			],
 			function() {
