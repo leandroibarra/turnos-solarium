@@ -107,7 +107,7 @@ $sRouteName = request()->route()->getName();
 					[
 						'aPermission' => ['admin.branch-working-week.edit', 'admin.branch-working-week.update'],
 						'aActiveRoutes' => ['schedule.edit'],
-						'sHref' => route('schedule.edit', ['id' => (isset(current(request()->attributes)['oBranch'])) ? current(request()->attributes)['oBranch'] : 0]),
+						'sHref' => route('schedule.edit'),
 						'sLabel' => 'Schedules'
 					]
 				] as $aNavLink)
@@ -141,11 +141,7 @@ $sRouteName = request()->route()->getName();
                     branch_id: jQuery(this).data('branch-id')
                 },
                 success: function(data) {
-					@if (request()->route()->getName() == 'schedule.edit')
-                    location.replace('{{ route('schedule.edit', ['id' => Session::get('branch_id')]) }}');
-                	@else
                     location.reload();
-                    @endif
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status==401 && jqXHR.responseJSON.message=='Unauthenticated.')

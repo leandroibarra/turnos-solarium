@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('schedule.update', ['id' => $oBranch->id]) }}" id="branchWorkingWeekEditForm" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('schedule.update') }}" id="branchWorkingWeekEditForm" enctype="multipart/form-data">
                 @method('PUT')
 
                 @csrf

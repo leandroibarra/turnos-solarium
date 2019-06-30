@@ -1,6 +1,11 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v4.4.1](https://github.com/leandroibarra/turnos-solarium/tree/v4.4.1) (2019-06-30)
+**Corregido**
+- Errores de carga y guardado de horarios de sucursales.
+- Mostrado de horario límite en día laborable.
+
 ## [v4.4.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.4.0) (2019-06-20)
 **Agregado**
 - Sección para administrar días y horarios de trabajo de sucursales.

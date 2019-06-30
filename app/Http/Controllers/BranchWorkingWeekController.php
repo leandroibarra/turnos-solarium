@@ -8,6 +8,7 @@ use App\Models\SystemParameter;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class BranchWorkingWeekController extends Controller
 {
@@ -27,12 +28,11 @@ class BranchWorkingWeekController extends Controller
 	/**
 	 * Show branch working week edition form.
 	 *
-	 * @param integer $id
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		$oBranch = Branch::find($id);
+		$oBranch = Branch::find(Session::get('branch_id'));
 
 		// Validate slide status
 		if (!(bool) $oBranch || !(bool) $oBranch->enable) {
@@ -51,13 +51,12 @@ class BranchWorkingWeekController extends Controller
 	 * Update the give branch working week.
 	 *
 	 * @param Request $request
-	 * @param integer $id
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 * @throws \Illuminate\Validation\ValidationException
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request)
 	{
-		$oBranch = Branch::find($id);
+		$oBranch = Branch::find(Session::get('branch_id'));
 
 		// Validate branch status
 		if (!(bool) $oBranch || !(bool) $oBranch->enable) {
@@ -76,7 +75,7 @@ class BranchWorkingWeekController extends Controller
 			// Update working week
 			for ($iWeekDay=0; $iWeekDay<7; $iWeekDay++)
 				Branch_Working_Week::where([
-					'branch_id' => $id,
+					'branch_id' => $oBranch->id,
 					'day_number' => $iWeekDay
 				])->update([
 					'is_working_day' => ((bool) $request->input("is_working_day.{$iWeekDay}")) ? 1 : 0,
@@ -89,7 +88,7 @@ class BranchWorkingWeekController extends Controller
 
 			Flash()->success(__('The branch schedule has been edited successfully.'))->important();
 
-			return redirect('/admin/schedule/'.$oBranch->id.'/edit');
+			return redirect('/admin/schedule/edit');
 		} catch (\Illuminate\Validation\ValidationException $oException) {
 			DB::rollBack();
 
