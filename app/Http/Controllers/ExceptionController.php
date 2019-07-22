@@ -228,7 +228,7 @@ class ExceptionController extends Controller
 							} else {
 								$oAppointment = new Appointment();
 
-								$iAppointment = count($oAppointment->getGrantedBetweenDates(
+								$iAppointment = count($oAppointment->getGrantedBetweenDateTimes(
 									current($poRequest->attributes)['oBranch']->id,
 									$sDateTimeFrom,
 									$sDateTimeTo
