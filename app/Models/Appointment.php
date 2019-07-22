@@ -63,17 +63,14 @@ class Appointment extends Model
 	 * Retrieve granted appointments belonging to branch between two date and times.
 	 *
 	 * @param integer $piBranchId
-	 * @param string $psDateFrom
-	 * @param string $psDateTo
+	 * @param string $psDateTimeFrom
+	 * @param string $psDateTimeTo
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function getGrantedBetweenDates($piBranchId, $psDateFrom, $psDateTo)
+	public function getGrantedBetweenDateTimes($piBranchId, $psDateTimeFrom, $psDateTimeTo)
 	{
 		return $this
-			->where('branch_id', '=', $piBranchId)
-			->where('date', '>=', $psDateFrom)
-			->where('date', '<=', $psDateTo)
-			->where('status', '=', 'granted')
+			->whereRaw('branch_id=? AND status=? AND (CONCAT(date, \' \', time) BETWEEN ? AND ?)', [$piBranchId, 'granted', $psDateTimeFrom, $psDateTimeTo])
 			->get();
 	}
 
