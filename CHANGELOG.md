@@ -1,6 +1,10 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v4.4.2](https://github.com/leandroibarra/turnos-solarium/tree/v4.4.2) (2019-07-22)
+**Corregido**
+- Consulta SQL en método de modelo de turnos.
+
 ## [v4.4.1](https://github.com/leandroibarra/turnos-solarium/tree/v4.4.1) (2019-06-30)
 **Corregido**
 - Errores de carga y guardado de horarios de sucursales.
