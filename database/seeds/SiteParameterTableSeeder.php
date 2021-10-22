@@ -17,6 +17,7 @@ class SiteParameterTableSeeder extends Seeder
 			'facebook_url' => null,
 			'twitter_url' => null,
 			'instagram_url' => null,
+			'store_url' => null,
 			'created_at' => date('Y-m-d H:m:s'),
 			'updated_at' => date('Y-m-d H:m:s')
 		]);

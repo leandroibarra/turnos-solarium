@@ -18,7 +18,7 @@ class Slide extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['title', 'image', 'order'];
+	protected $fillable = ['title', 'image', 'link', 'order'];
 
 	/**
 	 * Retrieve enabled slides.
