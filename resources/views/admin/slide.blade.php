@@ -51,7 +51,12 @@
                                         <img src="{{ $aSlide->fullPath }}" alt="{{ $aSlide->image }}" title="{{ $aSlide->image }}" border="0" class="img-fluid" />
                                     </div>
                                     <div class="col-12 col-md-8 text-center text-md-left">
-                                        <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aSlide->title }}
+                                        <div>
+                                            <label class="text-muted mb-0 mr-1">{{ __('Title') }}:</label>{{ $aSlide->title }}
+                                        </div>
+                                        <div>
+                                            <label class="text-muted mb-0 mr-1">{{ __('Link') }}:</label>{{ ($aSlide->link) ? $aSlide->link : '-' }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

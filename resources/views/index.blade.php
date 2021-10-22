@@ -51,6 +51,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Book online') }}</a>
                     </li>
+                    @if ($aSiteParameter['store_url'] != '')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ $aSiteParameter['store_url'] }}" target="_blank">{{ __('Buy online') }}</a>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -66,7 +71,13 @@
             <div id="my-slider">
                 @foreach ($aEnabledSlides as $aSlide)
                 <div class="my-slide" data-duration="8000" data-transition="2">
-                    <img class="my-slide-background" src="{{ $aSlide->fullPath }}" alt="{{ $aSlide->image }}" data-size="cover">
+                    @if ($aSlide->link)
+                    <a href="{{ $aSlide->link }}" target="_blank">
+                    @endif
+                    <img class="my-slide-background" src="{{ $aSlide->fullPath }}" alt="{{ $aSlide->image }}" data-size="cover" />
+                    @if ($aSlide->link)
+                    </a>
+                    @endif
                     <h1 class="my-slider-slide slide-title color-light text-center"
                         style="top:300px; width:100%; text-align:center;"
                         data-transitionin="offsety:500; duration:1800; delay:500; easing:easeInOutExpo;"
@@ -114,6 +125,11 @@
                         <li class="list-inline-item">
                             <a href="{{ route('login') }}">{{ __('Book online') }}</a>
                         </li>
+                        @if ($aSiteParameter['store_url'] != '')
+                        <li class="list-inline-item">
+                            <a href="{{ $aSiteParameter['store_url'] }}" target="_blank">{{ __('Buy online') }}</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
 

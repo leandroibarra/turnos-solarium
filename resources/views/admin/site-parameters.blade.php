@@ -39,6 +39,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="store_url" class="mb-0">{{ __('Store URL') }}</label>
+                    <small class="form-text text-muted mt-0 mb-2">{{ __('Store URL used header menu link and footer link') }}</small>
+
+                    <input id="store_url" name="store_url" type="text" class="form-control{{ $errors->has('store_url') ? ' is-invalid' : '' }} mb-2" value="{{ old('store_url', $aSiteParameter['store_url']) }}" />
+
+                    @if ($errors->has('store_url'))
+                    <div class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $errors->first('store_url') }}</strong>
+                    </div>
+                    @endif
+                </div>
+
                 <div class="form-group my-3 text-center">
                     <button type="submit" class="btn btn-block btn-primary shadow-none">{{ __('Save') }}</button>
                 </div>
