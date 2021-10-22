@@ -31,9 +31,21 @@
                     <input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}" />
 
                     @if ($errors->has('title'))
-                        <div class="invalid-feedback d-block" role="alert">
-                            <strong>{{ $errors->first('title') }}</strong>
-                        </div>
+                    <div class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="link" class="mb-1">{{ __('Link') }}</label>
+
+                    <input id="link" type="text" class="form-control{{ $errors->has('link') ? ' is-invalid' : '' }}" name="link" value="{{ old('link') }}" />
+
+                    @if ($errors->has('link'))
+                    <div class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $errors->first('link') }}</strong>
+                    </div>
                     @endif
                 </div>
 

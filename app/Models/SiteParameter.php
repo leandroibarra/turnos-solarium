@@ -18,5 +18,5 @@ class SiteParameter extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['about_tanning_text', 'pinterest_url', 'facebook_url', 'twitter_url', 'instagram_url'];
+	protected $fillable = ['about_tanning_text', 'pinterest_url', 'facebook_url', 'twitter_url', 'instagram_url', 'store_url'];
 }

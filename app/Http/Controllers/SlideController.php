@@ -131,6 +131,7 @@ class SlideController extends Controller
 		$aData = [
 			'title' => $request->input('title'),
 			'image' => $sFileName,
+			'link' => $request->input('link'),
 			'order' => $oSlide->getAmountEnabled() + 1
 		];
 
@@ -193,6 +194,7 @@ class SlideController extends Controller
 		// Build new slide data
 		$aData = [
 			'title' => $request->input('title'),
+			'link' => $request->input('link'),
 			'updated_at' => date('Y-m-d H:i:s')
 		];
 
@@ -294,12 +296,14 @@ class SlideController extends Controller
 			$poRequest,
 			[
 				'title' => 'required',
-				'image' => $sRequired.'|image|mimes:jpeg,jpg,png|max:2048'
+				'image' => $sRequired.'|image|mimes:jpeg,jpg,png|max:2048',
+				'link' => 'nullable|url'
 			],
 			[],
 			[
 				'title' => strtolower(__('Title')),
-				'image' => strtolower(__('Image'))
+				'image' => strtolower(__('Image')),
+				'link' => strtolower(__('Link'))
 			]
 		);
 	}
