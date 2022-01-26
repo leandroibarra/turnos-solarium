@@ -615,6 +615,13 @@ span {
 /*
  * Prices
  */
+ #prices .nav-tabs .nav-link {
+    text-decoration: none;
+ }
+ #prices .tab-pane {
+    border: 1px solid #DEE2E6;
+    border-top: 0;
+}
 .prices {
     background: #F6F6F6;
     border-radius: 2px;
