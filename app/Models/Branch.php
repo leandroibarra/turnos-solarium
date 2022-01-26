@@ -61,6 +61,16 @@ class Branch extends Model
 	}
 
 	/**
+	 * The enabled prices records belonging to the branch.
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function enabledPrices()
+	{
+		return $this->prices()->where('enable', '=', 1);
+	}
+
+	/**
 	 * Retrieve enabled branches.
 	 *
 	 * @return \Illuminate\Support\Collection
