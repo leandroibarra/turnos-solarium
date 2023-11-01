@@ -84,6 +84,7 @@ class AppointmentController extends Controller
 				current($request->attributes)['oBranch']->id,
 				$oRequestDate->format('Y-m-d')
 			)->toArray(),
+			'sFrom' => $aWorkingHoursPerDay[0],
 			'sUntil' => $aWorkingHoursPerDay[1]
 		]);
 	}
