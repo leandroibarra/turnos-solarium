@@ -1,6 +1,10 @@
 # Changelog
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
+## [v4.6.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.6.1) (2023-10-30)
+**Corregido**
+- Horario de inicio en cada franja horaria.
+
 ## [v4.6.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.6.0) (2022-01-26)
 **Agregado**
 - Precios por sucursal en sitio público.
