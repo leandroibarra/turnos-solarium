@@ -15,6 +15,10 @@
     <link href="{{ asset('css/animate-3.7.0.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/web.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/joinchat/joinchat.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .joinchat { --red: 37; --green: 211; --blue: 102; }
+    </style>
 </head>
 <body>
     @include('web.partials.topnav')
@@ -40,5 +44,7 @@
 
     <!-- Page Scripts -->
     @yield('page-scripts')
+
+    @include('web.partials.whatsapp')
 </body>
 </html>

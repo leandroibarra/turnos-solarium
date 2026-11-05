@@ -13,6 +13,10 @@
     <link href="{{ asset('css/fontawesome-5.3.1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('plugins/my-slider/css/my-slider.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/public.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/joinchat/joinchat.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .joinchat { --red: 37; --green: 211; --blue: 102; }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".navscroll">
@@ -341,5 +345,7 @@
          */
     });
     </script>
+
+    @include('web.partials.whatsapp')
 </body>
 </html>
