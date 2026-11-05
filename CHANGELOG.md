@@ -2,7 +2,7 @@
 Todos los cambios notables a este proyecto serán documentados en este archivo.
 
 ## [v4.7.0](https://github.com/leandroibarra/turnos-solarium/tree/v4.7.0) (2026-11-04)
-**Corregido**
+**Agregado**
 - Implementación plugin joinchat.
 
 ## [v4.6.1](https://github.com/leandroibarra/turnos-solarium/tree/v4.6.1) (2023-10-30)
